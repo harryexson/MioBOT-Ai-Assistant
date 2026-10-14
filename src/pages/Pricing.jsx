@@ -60,17 +60,17 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <main className="min-h-screen pt-28 pb-24 px-4 sm:px-6 relative overflow-hidden">
+    <main className="min-h-screen bg-white pt-28 pb-24 px-4 sm:px-6 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-violet-900/15 rounded-full blur-[80px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-violet-100/60 rounded-full blur-[80px]" />
       </div>
 
       <div className="relative max-w-5xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="font-display font-800 text-5xl sm:text-6xl text-white mb-4 leading-tight">
+          <h1 className="font-display font-800 text-5xl sm:text-6xl text-[#0f1035] mb-4 leading-tight">
             Simple, <span className="gradient-text">honest pricing.</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-xl mx-auto">
+          <p className="text-[#0f1035]/60 text-lg max-w-xl mx-auto">
             Start free. Upgrade when you're ready. No hidden fees, no surprises.
           </p>
         </div>
@@ -82,32 +82,32 @@ export default function Pricing() {
               className={`relative rounded-3xl p-8 flex flex-col ${
                 plan.featured
                   ? "gradient-bg shadow-2xl glow-violet"
-                  : "glass"
+                  : "bg-white border border-[#e8e4ff] shadow-sm shadow-violet-50"
               }`}
             >
               {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-violet-700 text-xs font-semibold px-4 py-1 rounded-full shadow-sm whitespace-nowrap">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-violet-700 text-xs font-semibold px-4 py-1 rounded-full shadow-sm whitespace-nowrap border border-[#e8e4ff]">
                   {plan.badge}
                 </div>
               )}
 
               <div className="mb-6">
-                <p className={`font-display font-700 text-lg mb-1 ${plan.featured ? "text-white" : "text-white/80"}`}>{plan.name}</p>
+                <p className={`font-display font-700 text-lg mb-1 ${plan.featured ? "text-white" : "text-[#0f1035]"}`}>{plan.name}</p>
                 <div className="flex items-end gap-1 mb-2">
-                  <span className={`font-display font-800 text-5xl ${plan.featured ? "text-white" : "text-white"}`}>{plan.price}</span>
-                  <span className={`text-sm pb-2 ${plan.featured ? "text-white/80" : "text-white/50"}`}>/{plan.period}</span>
+                  <span className={`font-display font-800 text-5xl ${plan.featured ? "text-white" : "text-[#0f1035]"}`}>{plan.price}</span>
+                  <span className={`text-sm pb-2 ${plan.featured ? "text-white/80" : "text-[#0f1035]/50"}`}>/{plan.period}</span>
                 </div>
-                <p className={`text-sm ${plan.featured ? "text-white/80" : "text-white/55"}`}>{plan.desc}</p>
+                <p className={`text-sm ${plan.featured ? "text-white/80" : "text-[#0f1035]/60"}`}>{plan.desc}</p>
               </div>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2.5">
                     <CheckIcon
-                      className={`w-4 h-4 shrink-0 mt-0.5 ${plan.featured ? "text-white/90" : "text-violet-soft"}`}
+                      className={`w-4 h-4 shrink-0 mt-0.5 ${plan.featured ? "text-white" : "text-[#7c3aed]"}`}
                       aria-hidden="true"
                     />
-                    <span className={`text-sm ${plan.featured ? "text-white/90" : "text-white/70"}`}>{f}</span>
+                    <span className={`text-sm ${plan.featured ? "text-white/90" : "text-[#0f1035]/75"}`}>{f}</span>
                   </li>
                 ))}
               </ul>
@@ -117,7 +117,7 @@ export default function Pricing() {
                 className={`flex items-center justify-center gap-2 font-semibold py-3.5 rounded-xl transition-all ${
                   plan.featured
                     ? "bg-white text-violet-700 hover:bg-white/90"
-                    : "gradient-bg text-white hover:opacity-90"
+                    : "gradient-bg text-white hover:opacity-90 shadow-md shadow-violet-200"
                 }`}
               >
                 {plan.cta}
@@ -127,7 +127,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        <p className="text-white/65 text-sm text-center mt-10">
+        <p className="text-[#0f1035]/55 text-sm text-center mt-10">
           All plans include a 14-day money-back guarantee. Cancel anytime.
         </p>
       </div>
