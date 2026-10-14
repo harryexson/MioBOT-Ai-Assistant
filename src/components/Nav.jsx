@@ -6,23 +6,24 @@ import ChevronDownIcon from "icon:chevron-down";
 
 const NAV_GROUPS = [
   {
-    label: "Features",
+    label: "Product",
     items: [
       { to: "/features", label: "Features", desc: "All 10 service modules" },
       { to: "/pricing", label: "Pricing", desc: "Free, Pro & Business tiers" },
-      { to: "/widget", label: "Widget Demo", desc: "Embed Mio anywhere" },
+      { to: "/onboarding", label: "Get Started", desc: "Create your account" },
     ],
   },
   {
-    label: "Solutions",
+    label: "Commerce",
     items: [
       { to: "/checkout", label: "Payments", desc: "How Mio handles checkout" },
       { to: "/easytap", label: "EasyTap Go", desc: "NFC in-store experience" },
       { to: "/providers", label: "Provider Status", desc: "Live gateway health" },
+      { to: "/widget", label: "Widget Demo", desc: "Embed Mio anywhere" },
     ],
   },
   {
-    label: "Integrations",
+    label: "Business",
     items: [
       { to: "/merchant", label: "Merchant Dashboard", desc: "Orders, menus, analytics" },
       { to: "/developers", label: "Developer Portal", desc: "API docs and SDKs" },
@@ -32,7 +33,7 @@ const NAV_GROUPS = [
 
 function DropdownMenu({ group, onClose }) {
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white border border-[#e8e4ff] rounded-2xl shadow-xl overflow-hidden z-50">
+    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 glass border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50">
       <div className="p-2">
         {group.items.map((item) => (
           <NavLink
@@ -41,13 +42,13 @@ function DropdownMenu({ group, onClose }) {
             onClick={onClose}
             className={({ isActive }) =>
               `flex items-start gap-3 px-3 py-2.5 rounded-xl transition-all group ${
-                isActive ? "bg-violet-50" : "hover:bg-[#f8f7ff]"
+                isActive ? "bg-violet-500/15" : "hover:bg-white/8"
               }`
             }
           >
             <div>
-              <div className="text-[#0f1035] text-sm font-medium leading-tight">{item.label}</div>
-              <div className="text-[#0f1035]/50 text-xs mt-0.5">{item.desc}</div>
+              <div className="text-white text-sm font-medium leading-tight">{item.label}</div>
+              <div className="text-white/45 text-xs mt-0.5">{item.desc}</div>
             </div>
           </NavLink>
         ))}
@@ -78,22 +79,23 @@ export default function Nav() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  const allItems = NAV_GROUPS.flatMap((g) => g.items);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-[#e8e4ff] py-3 shadow-sm"
-          : "bg-white py-4 border-b border-[#f0edff]"
+        scrolled ? "glass border-b border-white/10 py-3" : "py-5"
       }`}
       ref={navRef}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group shrink-0" aria-label="Mio AI home">
-          <div className="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center shadow-md">
+          <div className="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center shadow-lg">
             <span className="text-white font-display font-800 text-base leading-none">M</span>
           </div>
-          <span className="font-display font-700 text-[#0f1035] text-xl tracking-tight">Mio</span>
+          <span className="font-display font-700 text-white text-xl tracking-tight">Mio</span>
+          <span className="hidden sm:inline text-white/30 text-xs font-sans ml-1">AI</span>
         </Link>
 
         {/* Desktop nav */}
@@ -102,9 +104,7 @@ export default function Nav() {
             <div key={group.label} className="relative">
               <button
                 className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  openGroup === group.label
-                    ? "text-[#0f1035] bg-[#f0edff]"
-                    : "text-[#0f1035]/70 hover:text-[#0f1035] hover:bg-[#f8f7ff]"
+                  openGroup === group.label ? "text-white bg-white/8" : "text-white/70 hover:text-white hover:bg-white/5"
                 }`}
                 onClick={() => setOpenGroup(openGroup === group.label ? null : group.label)}
                 aria-expanded={openGroup === group.label}
@@ -121,26 +121,6 @@ export default function Nav() {
               )}
             </div>
           ))}
-          <NavLink
-            to="/pricing"
-            className={({ isActive }) =>
-              `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive ? "text-[#7c3aed] bg-[#f0edff]" : "text-[#0f1035]/70 hover:text-[#0f1035] hover:bg-[#f8f7ff]"
-              }`
-            }
-          >
-            Pricing
-          </NavLink>
-          <NavLink
-            to="/developers"
-            className={({ isActive }) =>
-              `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive ? "text-[#7c3aed] bg-[#f0edff]" : "text-[#0f1035]/70 hover:text-[#0f1035] hover:bg-[#f8f7ff]"
-              }`
-            }
-          >
-            Developers
-          </NavLink>
         </nav>
 
         {/* Desktop CTA */}
@@ -150,8 +130,8 @@ export default function Nav() {
             className={({ isActive }) =>
               `text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
                 isActive
-                  ? "border-red-200 bg-red-50 text-red-600"
-                  : "border-[#e8e4ff] text-[#0f1035]/50 hover:text-[#0f1035]/80 hover:bg-[#f8f7ff]"
+                  ? "border-red-500/40 bg-red-500/15 text-red-300"
+                  : "border-white/10 text-white/50 hover:text-white/80 hover:bg-white/5"
               }`
             }
           >
@@ -159,13 +139,13 @@ export default function Nav() {
           </NavLink>
           <Link
             to="/onboarding"
-            className="text-sm text-[#0f1035]/70 hover:text-[#0f1035] transition-colors px-3 py-2 font-medium"
+            className="text-sm text-white/70 hover:text-white transition-colors px-3 py-2"
           >
             Sign In
           </Link>
           <Link
             to="/onboarding"
-            className="gradient-bg text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity shadow-md"
+            className="gradient-bg text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity shadow-lg"
           >
             Get Started
           </Link>
@@ -173,7 +153,7 @@ export default function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden text-[#0f1035]/70 hover:text-[#0f1035] transition-colors p-2"
+          className="lg:hidden text-white/80 hover:text-white transition-colors p-2"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -184,11 +164,11 @@ export default function Nav() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden bg-white border-t border-[#e8e4ff] mt-0">
+        <div className="lg:hidden glass border-t border-white/10 mt-2">
           <nav className="flex flex-col px-4 py-4 gap-1" aria-label="Mobile navigation">
             {NAV_GROUPS.map((group) => (
               <div key={group.label}>
-                <div className="text-[#0f1035]/40 text-xs font-semibold uppercase tracking-wider px-2 py-2 mt-2">
+                <div className="text-white/40 text-xs font-semibold uppercase tracking-wider px-2 py-2 mt-2">
                   {group.label}
                 </div>
                 {group.items.map(({ to, label }) => (
@@ -197,8 +177,8 @@ export default function Nav() {
                     to={to}
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
-                      `py-2.5 px-2 text-base font-medium border-b border-[#f0edff] transition-colors block ${
-                        isActive ? "text-[#7c3aed]" : "text-[#0f1035]/80 hover:text-[#0f1035]"
+                      `py-2.5 px-2 text-base font-medium border-b border-white/5 transition-colors block ${
+                        isActive ? "text-violet-300" : "text-white/80 hover:text-white"
                       }`
                     }
                   >
@@ -210,7 +190,7 @@ export default function Nav() {
             <NavLink
               to="/admin"
               onClick={() => setMenuOpen(false)}
-              className="mt-3 py-2.5 px-2 text-base font-medium text-[#0f1035]/40 block"
+              className="mt-3 py-2.5 px-2 text-base font-medium text-white/50 block"
             >
               Admin ↗
             </NavLink>

@@ -142,7 +142,7 @@ export default function Providers() {
   const degraded = PROVIDERS.filter(p => p.status === "degraded").length;
 
   return (
-    <main className="min-h-screen bg-white pt-28 pb-24 px-4 sm:px-6">
+    <main className="min-h-screen pt-28 pb-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}

@@ -75,7 +75,7 @@ export default function Checkout() {
   const total = subtotal + DEMO_ORDER.delivery + DEMO_ORDER.tax;
 
   return (
-    <main className="min-h-screen bg-white pt-28 pb-24 px-4 sm:px-6">
+    <main className="min-h-screen pt-28 pb-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
 
         {/* Hero */}
