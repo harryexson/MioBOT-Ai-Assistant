@@ -16,7 +16,9 @@ export default function Nav() {
   const links = [
     { to: "/features", label: "Features" },
     { to: "/pricing", label: "Pricing" },
-    { to: "/onboarding", label: "Get Started" },
+    { to: "/merchant", label: "Merchants" },
+    { to: "/developers", label: "Developers" },
+    { to: "/widget", label: "Widget Demo" },
   ];
 
   return (
@@ -53,9 +55,21 @@ export default function Nav() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              `text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
+                isActive
+                  ? "border-red-500/40 bg-red-500/15 text-red-300"
+                  : "border-white/10 text-white/50 hover:text-white/80 hover:bg-white/5"
+              }`
+            }
+          >
+            Admin
+          </NavLink>
           <Link
             to="/onboarding"
-            className="text-sm text-white/70 hover:text-white transition-colors px-4 py-2"
+            className="text-sm text-white/70 hover:text-white transition-colors px-3 py-2"
           >
             Sign In
           </Link>
@@ -96,6 +110,17 @@ export default function Nav() {
                 {label}
               </NavLink>
             ))}
+            <NavLink
+              to="/admin"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `py-3 text-base font-medium border-b border-white/5 transition-colors ${
+                  isActive ? "text-violet-light" : "text-white/80 hover:text-white"
+                }`
+              }
+            >
+              Admin
+            </NavLink>
             <Link
               to="/onboarding"
               onClick={() => setMenuOpen(false)}
