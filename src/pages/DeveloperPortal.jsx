@@ -85,7 +85,7 @@ function CopyButton({ text }) {
   return (
     <button
       onClick={handleCopy}
-      className="flex items-center gap-1 px-2 py-1 rounded text-white/60 hover:text-white/90 text-xs transition-colors"
+      className="flex items-center gap-1 px-2 py-1 rounded text-gray-500 hover:text-gray-800 text-xs transition-colors"
       aria-label={copied ? "Copied" : "Copy to clipboard"}
     >
       {copied ? <CheckIcon size={12} className="text-emerald-400" /> : <CopyIcon size={12} />}
@@ -98,10 +98,10 @@ function CodeBlock({ code, lang = "bash" }) {
   return (
     <div className="relative bg-black/40 border border-white/10 rounded-lg overflow-hidden">
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/8">
-        <span className="text-white/40 text-xs">{lang}</span>
+        <span className="text-gray-400 text-xs">{lang}</span>
         <CopyButton text={code} />
       </div>
-      <pre className="p-4 text-sm text-white/80 overflow-x-auto font-mono leading-relaxed">
+      <pre className="p-4 text-sm text-gray-700 overflow-x-auto font-mono leading-relaxed">
         <code>{code}</code>
       </pre>
     </div>
@@ -146,25 +146,25 @@ export default function DeveloperPortal() {
   const [selectedEndpoint, setSelectedEndpoint] = useState(null);
 
   return (
-    <main className="min-h-screen bg-navy pt-16">
+    <main className="min-h-screen bg-white pt-16">
       {/* Hero */}
       <section className="border-b border-white/8 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-violet-500/30 text-violet-300 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border shadow-sm border border-violet-500/30 text-violet-300 text-xs font-medium mb-6">
             <CodeIcon size={12} />
             Developer Portal — API v1.0
           </div>
-          <h1 className="text-4xl sm:text-5xl font-display font-bold text-white mb-4">
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-navy mb-4">
             Build with <span className="gradient-text">Mio AI</span>
           </h1>
-          <p className="text-white/70 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
             Integrate voice-first commerce, booking, and payments into your app or website using the Mio API. One integration, every service category.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <button className="px-5 py-2.5 rounded-xl gradient-bg text-white font-semibold text-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+            <button className="px-5 py-2.5 rounded-xl gradient-bg text-navy font-semibold text-sm hover:opacity-90 transition-opacity flex items-center gap-2">
               Get API Key <ArrowRightIcon size={14} />
             </button>
-            <button className="px-5 py-2.5 rounded-xl glass border border-white/12 text-white text-sm hover:bg-white/8 transition-colors flex items-center gap-2">
+            <button className="px-5 py-2.5 rounded-xl bg-white border border-border shadow-sm border border-white/12 text-navy text-sm hover:bg-white/8 transition-colors flex items-center gap-2">
               <BookOpenIcon size={14} /> Read Docs
             </button>
           </div>
@@ -175,15 +175,15 @@ export default function DeveloperPortal() {
 
         {/* API Key box */}
         <section>
-          <div className="glass rounded-xl p-6 border border-violet-500/20">
+          <div className="bg-white border border-border shadow-sm rounded-xl p-6 border border-violet-500/20">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg gradient-bg flex items-center justify-center">
-                  <KeyIcon size={18} className="text-white" />
+                  <KeyIcon size={18} className="text-navy" />
                 </div>
                 <div>
-                  <h2 className="text-white font-semibold">Your API Keys</h2>
-                  <p className="text-white/60 text-sm">Sandbox mode active — safe for testing</p>
+                  <h2 className="text-navy font-semibold">Your API Keys</h2>
+                  <p className="text-gray-500 text-sm">Sandbox mode active — safe for testing</p>
                 </div>
               </div>
               <div className="sm:ml-auto">
@@ -197,20 +197,20 @@ export default function DeveloperPortal() {
               ].map((k) => (
                 <div key={k.label} className="bg-black/30 border border-white/8 rounded-lg px-4 py-3 flex items-center justify-between">
                   <div>
-                    <p className="text-white/50 text-xs mb-1">{k.label}</p>
-                    <p className="text-white text-sm font-mono">{k.value}</p>
+                    <p className="text-gray-500 text-xs mb-1">{k.label}</p>
+                    <p className="text-navy text-sm font-mono">{k.value}</p>
                   </div>
                   <CopyButton text={k.value} />
                 </div>
               ))}
             </div>
-            <p className="text-white/60 text-xs mt-3">Secret keys must never be exposed in client-side code. Use environment variables only.</p>
+            <p className="text-gray-500 text-xs mt-3">Secret keys must never be exposed in client-side code. Use environment variables only.</p>
           </div>
         </section>
 
         {/* Quick start */}
         <section>
-          <h2 className="text-white font-display font-bold text-xl mb-5">Quick Start</h2>
+          <h2 className="text-navy font-display font-bold text-xl mb-5">Quick Start</h2>
           <div className="space-y-4">
             <CodeBlock lang="bash" code="npm install @mio-ai/sdk" />
             <CodeBlock lang="javascript" code={EXAMPLE_CODE} />
@@ -219,37 +219,37 @@ export default function DeveloperPortal() {
 
         {/* Embeddable widget */}
         <section>
-          <h2 className="text-white font-display font-bold text-xl mb-2">Embeddable Widget</h2>
-          <p className="text-white/60 text-sm mb-4">Drop a fully working Mio AI assistant onto any website — voice, chat, cards, and maps included.</p>
+          <h2 className="text-navy font-display font-bold text-xl mb-2">Embeddable Widget</h2>
+          <p className="text-gray-500 text-sm mb-4">Drop a fully working Mio AI assistant onto any website — voice, chat, cards, and maps included.</p>
           <CodeBlock lang="html" code={WIDGET_CODE} />
-          <div className="mt-4 p-4 glass rounded-xl border border-white/8 flex items-start gap-3">
+          <div className="mt-4 p-4 bg-white border border-border shadow-sm rounded-xl border border-white/8 flex items-start gap-3">
             <ZapIcon size={16} className="text-violet-400 mt-0.5 shrink-0" />
-            <p className="text-white/70 text-sm">The widget connects to your approved provider list only. No raw credentials are exposed — only your public key is needed in client-side code.</p>
+            <p className="text-gray-600 text-sm">The widget connects to your approved provider list only. No raw credentials are exposed — only your public key is needed in client-side code.</p>
           </div>
         </section>
 
         {/* API Reference */}
         <section>
-          <h2 className="text-white font-display font-bold text-xl mb-5">API Reference</h2>
+          <h2 className="text-navy font-display font-bold text-xl mb-5">API Reference</h2>
           <div className="space-y-3">
             {ENDPOINTS.map((ep) => (
               <div key={ep.path}>
                 <button
-                  className="w-full text-left p-4 glass rounded-xl border border-white/8 hover:border-violet-500/30 transition-colors"
+                  className="w-full text-left p-4 bg-white border border-border shadow-sm rounded-xl border border-white/8 hover:border-violet-500/30 transition-colors"
                   onClick={() => setSelectedEndpoint(selectedEndpoint === ep.path ? null : ep.path)}
                   aria-expanded={selectedEndpoint === ep.path}
                 >
                   <div className="flex items-center gap-3">
                     <span className={`px-2 py-0.5 rounded text-xs font-mono font-bold border ${METHOD_COLOR[ep.method]}`}>{ep.method}</span>
-                    <code className="text-white/90 text-sm font-mono">{ep.path}</code>
-                    <span className="text-white/50 text-xs hidden sm:block">{ep.desc}</span>
+                    <code className="text-gray-800 text-sm font-mono">{ep.path}</code>
+                    <span className="text-gray-500 text-xs hidden sm:block">{ep.desc}</span>
                   </div>
                 </button>
                 {selectedEndpoint === ep.path && (
                   <div className="mt-1 p-4 bg-black/30 border border-white/8 rounded-xl space-y-3">
-                    <p className="text-white/80 text-sm">{ep.desc}</p>
+                    <p className="text-gray-700 text-sm">{ep.desc}</p>
                     <div>
-                      <p className="text-white/50 text-xs font-medium mb-2">Parameters</p>
+                      <p className="text-gray-500 text-xs font-medium mb-2">Parameters</p>
                       <div className="flex flex-wrap gap-2">
                         {ep.params.map((p) => (
                           <code key={p} className="px-2 py-0.5 bg-white/6 border border-white/10 rounded text-xs text-violet-300">{p}</code>
@@ -265,18 +265,18 @@ export default function DeveloperPortal() {
 
         {/* SDKs */}
         <section>
-          <h2 className="text-white font-display font-bold text-xl mb-5">SDKs & Libraries</h2>
+          <h2 className="text-navy font-display font-bold text-xl mb-5">SDKs & Libraries</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SDKS.map((sdk) => (
-              <div key={sdk.name} className="glass rounded-xl p-4 border border-white/8 hover:border-violet-500/20 transition-colors">
+              <div key={sdk.name} className="bg-white border border-border shadow-sm rounded-xl p-4 border border-white/8 hover:border-violet-500/20 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-xl" aria-hidden="true">{sdk.icon}</span>
-                    <p className="text-white text-sm font-medium">{sdk.name}</p>
+                    <p className="text-navy text-sm font-medium">{sdk.name}</p>
                   </div>
                   <span className="px-2 py-0.5 bg-violet-500/20 text-violet-300 text-xs rounded-full border border-violet-500/30">{sdk.badge}</span>
                 </div>
-                <code className="text-white/50 text-xs font-mono">{sdk.install}</code>
+                <code className="text-gray-500 text-xs font-mono">{sdk.install}</code>
               </div>
             ))}
           </div>
@@ -284,16 +284,16 @@ export default function DeveloperPortal() {
 
         {/* Guides */}
         <section>
-          <h2 className="text-white font-display font-bold text-xl mb-5">Guides & Tutorials</h2>
+          <h2 className="text-navy font-display font-bold text-xl mb-5">Guides & Tutorials</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {GUIDES.map((g) => (
-              <button key={g.title} className="text-left glass rounded-xl p-4 border border-white/8 hover:border-violet-500/30 transition-colors group">
+              <button key={g.title} className="text-left bg-white border border-border shadow-sm rounded-xl p-4 border border-white/8 hover:border-violet-500/30 transition-colors group">
                 <div className="flex items-center justify-between mb-2">
                   <g.icon size={18} className="text-violet-400" />
-                  <span className="text-white/60 text-xs">{g.time} read</span>
+                  <span className="text-gray-500 text-xs">{g.time} read</span>
                 </div>
-                <p className="text-white font-medium text-sm mb-1">{g.title}</p>
-                <p className="text-white/60 text-xs leading-relaxed">{g.desc}</p>
+                <p className="text-navy font-medium text-sm mb-1">{g.title}</p>
+                <p className="text-gray-500 text-xs leading-relaxed">{g.desc}</p>
                 <div className="flex items-center gap-1 mt-3 text-violet-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                   Read guide <ArrowRightIcon size={10} />
                 </div>

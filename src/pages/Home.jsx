@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import CategoryCard from "../components/CategoryCard.jsx";
 import MicIcon from "icon:mic";
 import PlayIcon from "icon:play-circle";
 import ArrowRightIcon from "icon:arrow-right";
@@ -9,23 +8,26 @@ import StarIcon from "icon:star";
 import ZapIcon from "icon:zap";
 import ShieldIcon from "icon:shield-check";
 import SmartphoneIcon from "icon:smartphone";
+import SearchIcon from "icon:search";
+import ShoppingCartIcon from "icon:shopping-cart";
+import LockIcon from "icon:lock";
 
 const CATEGORIES = [
-  { icon: "🛍️", label: "Shopping", desc: "Find and buy anything" },
-  { icon: "🍔", label: "Food & Dining", desc: "Order pickup or delivery" },
-  { icon: "✈️", label: "Travel & Hotels", desc: "Book flights and hotels" },
-  { icon: "📅", label: "Services", desc: "Appointments & bookings" },
-  { icon: "💳", label: "Payments", desc: "Pay bills, invoices & more" },
-  { icon: "🎟️", label: "Events", desc: "Find and book tickets" },
-  { icon: "📡", label: "NFC & In-Store", desc: "Tap, order and pay" },
-  { icon: "✨", label: "And More", desc: "Explore all possibilities" },
+  { emoji: "🛍️", label: "Shopping", desc: "Find and buy anything", color: "#f0e6ff" },
+  { emoji: "🍔", label: "Food & Dining", desc: "Order pickup or delivery", color: "#fff0e6" },
+  { emoji: "✈️", label: "Travel & Hotels", desc: "Book flights and hotels", color: "#e6f0ff" },
+  { emoji: "📅", label: "Services", desc: "Appointments & bookings", color: "#e6fff0" },
+  { emoji: "💳", label: "Payments", desc: "Pay bills, invoices & more", color: "#ffe6f0" },
+  { emoji: "🎟️", label: "Events", desc: "Find and book tickets", color: "#fff8e6" },
+  { emoji: "📡", label: "NFC & In-Store", desc: "Tap, order and pay", color: "#e6f8ff" },
+  { emoji: "✨", label: "And More", desc: "Explore all possibilities", color: "#f5e6ff" },
 ];
 
 const CHAT_STEPS = [
   { role: "user", text: "Mio, order my usual from McDonald's." },
   { role: "mio", text: "Found your usual — Big Mac combo. Estimated arrival 25 min. Confirm?" },
   { role: "user", text: "Yes, confirm." },
-  { role: "mio", text: "Order placed! Track it live in the app." },
+  { role: "mio", text: "Order placed! Track it live in the app. 🎉" },
 ];
 
 const STATS = [
@@ -35,36 +37,110 @@ const STATS = [
   { value: "All in One", label: "Shop. Book. Pay." },
 ];
 
-const TESTIMONIALS = [
+const PHONE_SCREENS = [
   {
-    name: "Sarah K.",
-    role: "Frequent traveller",
-    text: "I booked flights, a hotel, and airport transfers in one conversation. Mio understood exactly what I needed without me having to repeat myself.",
-    rating: 5,
+    title: "Welcome",
+    content: (
+      <div className="flex flex-col h-full items-center justify-between py-6 px-4">
+        <div className="flex flex-col items-center gap-3 mt-4">
+          <div style={{ width: 52, height: 52, borderRadius: 16, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ color: "#fff", fontWeight: 800, fontSize: 22, fontFamily: "Syne, sans-serif" }}>M</span>
+          </div>
+          <p style={{ fontWeight: 700, fontSize: 17, color: "#0f1035", margin: 0, textAlign: "center" }}>Mio</p>
+          <p style={{ fontSize: 11, color: "#6b7280", margin: 0, textAlign: "center" }}>Your AI Assistant for Everyday Life</p>
+        </div>
+        <div style={{ width: "100%", gap: 10, display: "flex", flexDirection: "column" }}>
+          <div style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 12, padding: "10px 0", textAlign: "center", fontSize: 13, fontWeight: 600 }}>Get Started</div>
+          <div style={{ border: "1.5px solid #e5e7eb", color: "#374151", borderRadius: 12, padding: "10px 0", textAlign: "center", fontSize: 13, fontWeight: 600 }}>Sign In</div>
+          <p style={{ textAlign: "center", fontSize: 10, color: "#9ca3af", margin: "4px 0 0" }}>Skip for now</p>
+        </div>
+      </div>
+    )
   },
   {
-    name: "Marcus T.",
-    role: "Small business owner",
-    text: "My customers love ordering through Mio. It's like having a 24/7 personal assistant for everyone who walks through my door.",
-    rating: 5,
+    title: "AI Shopping",
+    content: (
+      <div className="flex flex-col h-full py-3 px-3">
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#0f1035", marginBottom: 8 }}>AI Shopping Assistant</div>
+        <div style={{ background: "#f5f3ff", borderRadius: 10, padding: "8px 10px", marginBottom: 8 }}>
+          <p style={{ fontSize: 10, color: "#7c3aed", margin: 0, fontWeight: 600 }}>Top pick for you</p>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 8, background: "linear-gradient(135deg,#ede9fe,#ddd6fe)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>🎧</div>
+            <div>
+              <p style={{ margin: 0, fontSize: 10, fontWeight: 700, color: "#0f1035" }}>Sony WH-1000XMS</p>
+              <p style={{ margin: 0, fontSize: 9, color: "#6b7280" }}>Best noise cancelling headphones</p>
+              <p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#7c3aed" }}>$399</p>
+            </div>
+          </div>
+          <div style={{ marginTop: 6, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 8, padding: "5px 0", textAlign: "center", fontSize: 10, fontWeight: 600 }}>Add to cart</div>
+        </div>
+        <div style={{ background: "#f9fafb", borderRadius: 8, padding: "6px 10px", display: "flex", alignItems: "center", gap: 6 }}>
+          <div style={{ width: 16, height: 16, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontSize: 8, color: "#fff" }}>M</span>
+          </div>
+          <p style={{ margin: 0, fontSize: 9, color: "#374151" }}>Ask anything...</p>
+          <div style={{ marginLeft: "auto", width: 20, height: 20, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontSize: 10 }}>🎤</span>
+          </div>
+        </div>
+      </div>
+    )
   },
   {
-    name: "Priya M.",
-    role: "Busy parent",
-    text: "From grocery deliveries to booking the kids' appointments — Mio handles everything. The voice feature is a game-changer.",
-    rating: 5,
+    title: "Travel",
+    content: (
+      <div className="flex flex-col h-full py-3 px-3">
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#0f1035", marginBottom: 8 }}>Hotels in Chicago</div>
+        {[
+          { name: "The Langham Chicago", stars: "4.8", price: "$229", img: "🏨" },
+          { name: "Renaissance Chicago", stars: "4.6", price: "$189", img: "🏩" },
+        ].map((h, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", background: "#f8f7ff", borderRadius: 10, padding: "7px 8px", marginBottom: 6 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: "linear-gradient(135deg,#ede9fe,#c4b5fd)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>{h.img}</div>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: 0, fontSize: 9, fontWeight: 700, color: "#0f1035" }}>{h.name}</p>
+              <p style={{ margin: 0, fontSize: 8, color: "#f59e0b" }}>★ {h.stars} (347 reviews)</p>
+              <p style={{ margin: 0, fontSize: 9, fontWeight: 700, color: "#7c3aed" }}>{h.price}/night</p>
+            </div>
+            <div style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 6, padding: "4px 7px", fontSize: 8, fontWeight: 600 }}>View</div>
+          </div>
+        ))}
+      </div>
+    )
+  },
+  {
+    title: "Payment",
+    content: (
+      <div className="flex flex-col h-full py-3 px-3">
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#0f1035", marginBottom: 8 }}>Add a payment method</div>
+        {[
+          { icon: "💳", label: "Credit or Debit Card", sub: "Secured with Stripe" },
+          { icon: "🍎", label: "Apple Pay", sub: "" },
+          { icon: "G", label: "Google Pay", sub: "" },
+          { icon: "🔗", label: "Link (Stripe)", sub: "" },
+          { icon: "🅿️", label: "PayPal", sub: "" },
+        ].map((m, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: i < 4 ? "1px solid #f3f4f6" : "none" }}>
+            <div style={{ width: 28, height: 28, borderRadius: 8, background: "#f3f4f6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#374151" }}>{m.icon}</div>
+            <div>
+              <p style={{ margin: 0, fontSize: 10, fontWeight: 600, color: "#0f1035" }}>{m.label}</p>
+              {m.sub && <p style={{ margin: 0, fontSize: 8, color: "#9ca3af" }}>{m.sub}</p>}
+            </div>
+            <div style={{ marginLeft: "auto", width: 16, height: 16, borderRadius: "50%", border: "1.5px solid #e5e7eb" }}></div>
+          </div>
+        ))}
+        <div style={{ marginTop: 8, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 10, padding: "8px 0", textAlign: "center", fontSize: 11, fontWeight: 600 }}>Continue</div>
+        <p style={{ textAlign: "center", fontSize: 9, color: "#9ca3af", marginTop: 4 }}>Your payment info is safe and securely encrypted.</p>
+      </div>
+    )
   },
 ];
 
 function WaveIcon() {
   return (
-    <div className="flex items-end gap-[3px] h-5" aria-hidden="true">
-      {[0.3, 0.6, 1, 0.7, 0.4, 0.8, 1, 0.5, 0.3].map((h, i) => (
-        <span
-          key={i}
-          className="wave-bar"
-          style={{ height: `${h * 100}%`, animationDelay: `${i * 0.1}s` }}
-        />
+    <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 20 }}>
+      {[0.6, 1, 0.7, 1, 0.5].map((h, i) => (
+        <div key={i} className="wave-bar" style={{ width: 3, height: `${h * 100}%`, borderRadius: 2, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", transformOrigin: "bottom", animationDelay: `${i * 0.1}s` }} />
       ))}
     </div>
   );
@@ -72,650 +148,458 @@ function WaveIcon() {
 
 function ChatDemo() {
   const [visible, setVisible] = useState(0);
-
   useEffect(() => {
     if (visible >= CHAT_STEPS.length) return;
-    const t = setTimeout(() => setVisible((v) => v + 1), 1200 + visible * 400);
+    const t = setTimeout(() => setVisible(v => v + 1), 1400);
     return () => clearTimeout(t);
   }, [visible]);
 
   return (
-    <div className="flex flex-col gap-3 p-4">
-      {CHAT_STEPS.slice(0, visible).map((step, i) => (
-        <div
-          key={i}
-          className={`flex ${step.role === "user" ? "justify-end" : "justify-start"} chat-bubble`}
-          style={{ animationDelay: `${i * 0.15}s` }}
-        >
-          {step.role === "mio" && (
-            <div className="w-7 h-7 rounded-full gradient-bg flex items-center justify-center text-xs font-display font-700 text-white mr-2 shrink-0 mt-auto">
-              M
+    <div className="glass rounded-2xl p-5" style={{ maxWidth: 340 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+        <div style={{ width: 32, height: 32, borderRadius: 10, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ color: "#fff", fontWeight: 800, fontSize: 14, fontFamily: "Syne, sans-serif" }}>M</span>
+        </div>
+        <div>
+          <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: "#0f1035" }}>Mio AI Assistant</p>
+          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#10b981" }}></div>
+            <p style={{ margin: 0, fontSize: 11, color: "#6b7280" }}>Online</p>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, minHeight: 160 }}>
+        {CHAT_STEPS.slice(0, visible).map((msg, i) => (
+          <div key={i} className="animate-slide-up" style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start" }}>
+            <div style={{
+              background: msg.role === "user" ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "#f5f3ff",
+              color: msg.role === "user" ? "#fff" : "#0f1035",
+              borderRadius: msg.role === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
+              padding: "8px 14px",
+              fontSize: 13,
+              maxWidth: "80%",
+              fontWeight: 500,
+            }}>
+              {msg.text}
             </div>
-          )}
-          <div
-            className={`max-w-[80%] px-3 py-2 rounded-2xl text-xs leading-relaxed ${
-              step.role === "user"
-                ? "bg-white/15 text-white rounded-br-sm"
-                : "bg-violet-600/70 text-white rounded-bl-sm"
-            }`}
-          >
-            {step.text}
           </div>
-        </div>
-      ))}
-      {visible < CHAT_STEPS.length && (
-        <div className="flex justify-start">
-          <div className="w-7 h-7 rounded-full gradient-bg flex items-center justify-center text-xs font-display font-700 text-white mr-2 shrink-0">M</div>
-          <div className="glass px-4 py-3 rounded-2xl rounded-bl-sm flex items-center gap-2">
-            <WaveIcon />
+        ))}
+        {visible < CHAT_STEPS.length && visible > 0 && (
+          <div style={{ display: "flex", gap: 3, padding: "4px 10px" }}>
+            {[0,1,2].map(i => (
+              <div key={i} className="wave-bar" style={{ width: 6, height: 6, borderRadius: "50%", background: "#c4b5fd", animationDelay: `${i * 0.15}s` }} />
+            ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
+      <button onClick={() => setVisible(0)} style={{ marginTop: 12, width: "100%", background: "transparent", border: "none", color: "#7c3aed", fontSize: 12, fontWeight: 600, cursor: "pointer", textAlign: "center" }}>
+        Replay ↺
+      </button>
+    </div>
+  );
+}
+
+function PhoneScreen({ screen }) {
+  return (
+    <div className="phone-mockup animate-float" style={{ width: 160, height: 300, flexShrink: 0 }}>
+      {/* notch */}
+      <div style={{ height: 24, background: "#0f1035", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ width: 50, height: 5, background: "#374151", borderRadius: 4 }}></div>
+      </div>
+      <div style={{ flex: 1, height: "calc(100% - 24px)", overflow: "hidden" }}>
+        {screen.content}
+      </div>
     </div>
   );
 }
 
 export default function Home() {
   return (
-    <main>
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-        {/* Background effects */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-700/20 rounded-full blur-3xl animate-pulse-glow" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-indigo-600/15 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-900/10 rounded-full blur-[80px]" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          {/* Left: copy */}
-          <div className="animate-slide-up">
-            <div className="inline-flex items-center gap-2 glass-light rounded-full px-4 py-1.5 text-xs font-medium text-violet-soft mb-6">
-              <ZapIcon className="w-3.5 h-3.5" aria-hidden="true" />
-              AI Powered Assistant
-            </div>
-
-            <h1 className="font-display font-800 text-5xl sm:text-6xl lg:text-7xl text-white leading-[0.95] tracking-tight mb-4">
-              Talk. Find. Book.
-              <br />
-              <span className="gradient-text">Order. Pay.</span>
-            </h1>
-
-            <p className="text-lg text-white/70 mb-3 font-medium">One assistant. Endless possibilities.</p>
-            <p className="text-white/50 text-base leading-relaxed max-w-md mb-8">
-              Mio helps you shop, dine, travel, book services and handle payments — all through natural conversation.
-            </p>
-
-            <div className="flex flex-wrap gap-3 mb-10">
-              <Link
-                to="/onboarding"
-                className="gradient-bg text-white font-semibold px-7 py-3.5 rounded-xl hover:opacity-90 transition-all shadow-lg glow-violet flex items-center gap-2"
-              >
-                Get Mio Free
-                <ArrowRightIcon className="w-4 h-4" aria-hidden="true" />
-              </Link>
-              <a
-                href="#demo"
-                className="glass-light text-white font-medium px-7 py-3.5 rounded-xl hover:bg-white/15 transition-all flex items-center gap-2"
-              >
-                <PlayIcon className="w-4 h-4 text-violet-soft" aria-hidden="true" />
-                Watch Video
-              </a>
-            </div>
-
-            {/* App badges */}
-            <div className="flex flex-wrap gap-3 mb-10">
-              <a href="#" className="glass border border-white/10 rounded-xl px-4 py-2.5 flex items-center gap-3 hover:bg-white/10 transition-all" aria-label="Download on App Store">
-                <span className="text-2xl" aria-hidden="true">🍎</span>
-                <div>
-                  <p className="text-white/50 text-[10px] uppercase tracking-wider">Download on the</p>
-                  <p className="text-white font-semibold text-sm leading-tight">App Store</p>
-                </div>
-              </a>
-              <a href="#" className="glass border border-white/10 rounded-xl px-4 py-2.5 flex items-center gap-3 hover:bg-white/10 transition-all" aria-label="Get it on Google Play">
-                <span className="text-2xl" aria-hidden="true">▶️</span>
-                <div>
-                  <p className="text-white/50 text-[10px] uppercase tracking-wider">Get it on</p>
-                  <p className="text-white font-semibold text-sm leading-tight">Google Play</p>
-                </div>
-              </a>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {STATS.map(({ value, label }) => (
-                <div key={label} className="text-center sm:text-left">
-                  <p className="font-display font-700 text-white text-xl gradient-text">{value}</p>
-                  <p className="text-white/50 text-xs mt-0.5">{label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: phone mockup + floating cards */}
-          <div className="relative flex justify-center animate-slide-up-2">
-            <div className="relative">
-              {/* Glow behind phone */}
-              <div className="absolute inset-0 gradient-bg rounded-[40px] blur-3xl opacity-20 scale-95" aria-hidden="true" />
-
-              {/* Phone */}
-              <div className="phone-mockup w-72 h-[580px] relative animate-float">
-                <div className="absolute inset-0 pt-12 pb-4 px-4 flex flex-col">
-                  {/* Phone header */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-xs font-display font-700 text-white">M</div>
-                    <div>
-                      <p className="text-white text-sm font-display font-700">Mio</p>
-                      <p className="text-white/50 text-xs">Your AI Assistant for Everyday Life</p>
-                    </div>
-                    <div className="ml-auto w-8 h-8 rounded-full gradient-bg flex items-center justify-center">
-                      <MicIcon className="w-4 h-4 text-white" aria-hidden="true" />
-                    </div>
-                  </div>
-
-                  {/* Chat area */}
-                  <div className="flex-1 overflow-hidden">
-                    <ChatDemo />
-                  </div>
-
-                  {/* Input bar */}
-                  <div className="glass-light rounded-2xl px-4 py-3 flex items-center gap-2 mt-2">
-                    <span className="text-white/60 text-xs flex-1">Ask Mio anything…</span>
-                    <div className="w-7 h-7 rounded-full gradient-bg flex items-center justify-center">
-                      <MicIcon className="w-3.5 h-3.5 text-white" aria-hidden="true" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating category chips */}
-              {[
-                { label: "Food & Dining", emoji: "🍔", pos: "top-16 -right-24 sm:-right-32", delay: "0s" },
-                { label: "Hotels & Travel", emoji: "🏨", pos: "top-1/2 -right-20 sm:-right-28", delay: "0.4s" },
-                { label: "Shopping", emoji: "🛍️", pos: "bottom-24 -right-16 sm:-right-24", delay: "0.8s" },
-                { label: "Bookings & Services", emoji: "📅", pos: "bottom-8 -left-4 sm:-left-8", delay: "1.2s" },
-              ].map(({ label, emoji, pos, delay }) => (
-                <div
-                  key={label}
-                  className={`absolute ${pos} glass-light rounded-2xl px-3 py-2 flex items-center gap-2 animate-float-delay hidden sm:flex`}
-                  style={{ animationDelay: delay }}
-                  aria-hidden="true"
-                >
-                  <span className="text-base">{emoji}</span>
-                  <span className="text-white text-xs font-medium whitespace-nowrap">{label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Everything You Need */}
-      <section id="demo" className="py-24 px-4 sm:px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-900/10 rounded-full blur-[100px]" />
-        </div>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display font-700 text-4xl sm:text-5xl text-white mb-3">
-              Everything You Need.{" "}
-              <span className="gradient-text">Just Ask Mio.</span>
-            </h2>
-            <p className="text-white/50 text-lg max-w-xl mx-auto">
-              One conversation unlocks every service category — no switching apps, no searching.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {CATEGORIES.map((cat, i) => (
-              <CategoryCard key={cat.label} {...cat} delay={i * 60} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* AI in action — product screenshot */}
-      <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="glass rounded-3xl overflow-hidden p-8 sm:p-12 lg:p-16 grid lg:grid-cols-2 gap-12 items-center">
-            {/* Copy */}
+    <div style={{ background: "#ffffff" }}>
+      {/* ── Hero ── */}
+      <section style={{ paddingTop: 80, background: "#ffffff", overflow: "hidden" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left */}
             <div>
-              <div className="inline-flex items-center gap-2 bg-violet-600/20 border border-violet-500/30 rounded-full px-4 py-1.5 text-xs font-medium text-violet-soft mb-6">
-                <SmartphoneIcon className="w-3.5 h-3.5" aria-hidden="true" />
-                Voice-First Experience
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#f5f3ff", border: "1px solid #ede9fe", borderRadius: 50, padding: "6px 14px", marginBottom: 20 }}>
+                <ZapIcon size={13} style={{ color: "#7c3aed" }} />
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#7c3aed" }}>AI POWERED ASSISTANT</span>
               </div>
-              <h2 className="font-display font-700 text-3xl sm:text-4xl text-white mb-4 leading-tight">
-                Just speak naturally.<br />
-                <span className="gradient-text">Mio understands.</span>
-              </h2>
-              <p className="text-white/60 leading-relaxed mb-8">
-                No menus to navigate. No forms to fill. Mio listens, understands your intent across every service category, compares options, and only acts with your confirmation.
+
+              <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(40px,6vw,68px)", lineHeight: 1.08, color: "#0f1035", margin: "0 0 12px" }}>
+                Talk. Find. Book.<br />
+                <span className="gradient-text">Order. Pay.</span>
+              </h1>
+
+              <p style={{ fontSize: 18, color: "#374151", lineHeight: 1.6, marginBottom: 8, fontWeight: 600 }}>
+                One assistant. Endless possibilities.
+              </p>
+              <p style={{ fontSize: 15, color: "#6b7280", lineHeight: 1.7, marginBottom: 32, maxWidth: 440 }}>
+                Mio helps you shop, dine, travel, book services and handle payments — all through natural conversation.
               </p>
 
-              <ul className="space-y-4">
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 40 }}>
+                <Link to="/onboarding" className="btn-primary" style={{ fontSize: 15 }}>
+                  Get Mio Free <ArrowRightIcon size={16} />
+                </Link>
+                <Link to="/features" className="btn-secondary" style={{ fontSize: 15 }}>
+                  <PlayIcon size={16} style={{ color: "#7c3aed" }} /> Watch Video
+                </Link>
+              </div>
+
+              {/* App store badges */}
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 40 }}>
                 {[
-                  "Searches multiple providers instantly",
-                  "Compares prices, availability, and reviews",
-                  "Requires your confirmation before any purchase",
-                  "Remembers your preferences across sessions",
-                ].map((point) => (
-                  <li key={point} className="flex items-start gap-3">
-                    <CheckIcon className="w-5 h-5 text-violet-light shrink-0 mt-0.5" aria-hidden="true" />
-                    <span className="text-white/75 text-sm">{point}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                to="/onboarding"
-                className="inline-flex items-center gap-2 gradient-bg text-white font-semibold px-6 py-3 rounded-xl mt-8 hover:opacity-90 transition-all"
-              >
-                Try Mio Free
-                <ArrowRightIcon className="w-4 h-4" aria-hidden="true" />
-              </Link>
-            </div>
-
-            {/* Product visual */}
-            <div className="relative flex justify-center">
-              <div className="relative">
-                <div className="absolute inset-0 gradient-bg rounded-3xl blur-2xl opacity-15 scale-110" aria-hidden="true" />
-                <div className="phone-mockup w-64 h-[520px] relative animate-float">
-                  <div className="absolute inset-0 pt-12 pb-6 px-4 flex flex-col gap-2">
-                    <p className="text-white/50 text-[10px] uppercase tracking-widest text-center mb-2">AI Shopping Assistant</p>
-                    {/* Product card */}
-                    <div className="glass-light rounded-2xl p-3 flex flex-col gap-2">
-                      <div className="w-full h-24 bg-gradient-to-br from-violet-600/30 to-indigo-600/30 rounded-xl flex items-center justify-center text-4xl">
-                        🎧
-                      </div>
-                      <div className="flex items-start justify-between gap-1">
-                        <div>
-                          <p className="text-white text-xs font-semibold leading-tight">Sony WH-1000XMS</p>
-                          <p className="text-white/50 text-[10px]">Best noise-cancelling headphones</p>
-                        </div>
-                        <div className="glass px-1.5 py-0.5 rounded text-[9px] text-emerald-400 font-semibold whitespace-nowrap">Top rated</div>
-                      </div>
-                      <p className="text-white font-display font-700 text-xl">$399</p>
-                      <button className="gradient-bg text-white text-xs font-semibold py-2 rounded-xl w-full">Add to cart</button>
-                    </div>
-
-                    {/* Hotel results */}
-                    {[
-                      { name: "The Langham Chicago", price: "$229/night", stars: "4.8" },
-                      { name: "Renaissance Chicago", price: "$189/night", stars: "4.6" },
-                    ].map((h) => (
-                      <div key={h.name} className="glass-light rounded-xl p-2.5 flex items-center gap-2">
-                        <div className="w-10 h-10 bg-gradient-to-br from-violet-600/30 to-indigo-600/30 rounded-lg flex items-center justify-center text-lg shrink-0">🏨</div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white text-[10px] font-semibold truncate">{h.name}</p>
-                          <p className="text-white/50 text-[9px]">★ {h.stars} · {h.price}</p>
-                        </div>
-                        <button className="text-violet-soft text-[9px] font-semibold shrink-0">View</button>
-                      </div>
-                    ))}
-
-                    {/* Bottom input */}
-                    <div className="glass-light rounded-xl px-3 py-2 flex items-center gap-2 mt-auto">
-                      <span className="text-white/60 text-[10px] flex-1">Ask a follow up…</span>
-                      <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center">
-                        <MicIcon className="w-3 h-3 text-white" aria-hidden="true" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating query bubble */}
-                <div className="absolute -top-4 -right-4 sm:-right-16 glass-light rounded-2xl px-4 py-3 max-w-[180px] hidden sm:block" aria-hidden="true">
-                  <p className="text-white text-xs font-medium">"Find me running shoes under $150"</p>
-                </div>
-
-                {/* Floating result chips */}
-                <div className="absolute -bottom-4 -right-2 sm:-right-16 flex flex-col gap-2 hidden sm:flex" aria-hidden="true">
-                  {["Found 5 great options", "Compare features", "Add to cart", "Secure checkout"].map((item, i) => (
-                    <div key={item} className="glass-light rounded-xl px-3 py-2 flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-lg gradient-bg flex items-center justify-center text-xs">
-                        {["🔍", "📋", "🛒", "🔒"][i]}
-                      </div>
-                      <span className="text-white text-[11px] font-medium whitespace-nowrap">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mobile App Onboarding Preview */}
-      <section className="py-24 px-4 sm:px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-violet-900/20 rounded-full blur-[80px]" />
-        </div>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="font-display font-700 text-4xl sm:text-5xl text-white mb-3">
-              Mobile App — <span className="gradient-text">Beautifully Simple</span>
-            </h2>
-            <p className="text-white/50 text-lg max-w-xl mx-auto">
-              Get started in seconds. Mio walks you through everything.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
-            {/* Screen 1: Welcome */}
-            <div className="phone-mockup h-[420px] sm:h-[460px] lg:h-[500px] relative col-span-1">
-              <div className="absolute inset-0 pt-10 pb-4 px-4 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center mt-4 mb-3">
-                  <span className="text-white font-display font-800 text-xl">M</span>
-                </div>
-                <p className="text-white font-display font-700 text-base leading-tight mb-1">Mio</p>
-                <p className="text-white/65 text-[10px] mb-6">Your AI Assistant for Everyday Life</p>
-                <div className="w-full mt-auto space-y-2">
-                  <div className="gradient-bg rounded-xl py-2.5 w-full text-white text-xs font-semibold">Get Started</div>
-                  <div className="glass-light rounded-xl py-2.5 w-full text-white/70 text-xs font-medium">Sign In</div>
-                  <p className="text-white/60 text-[9px] pt-1">Skip for now</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Screen 2: Onboarding choice */}
-            <div className="phone-mockup h-[420px] sm:h-[460px] lg:h-[500px] relative col-span-1">
-              <div className="absolute inset-0 pt-10 pb-4 px-4 flex flex-col">
-                <p className="text-white text-xs font-semibold text-center mb-1">What would you like to use Mio for?</p>
-                <p className="text-white/60 text-[9px] text-center mb-4">Choose one or add more later</p>
-                {["🛍️ Shopping", "🍔 Food & Restaurants", "✈️ Travel & Hotels", "📅 Services & Bookings", "💳 Pay Bills & Invoices", "🎟️ Events & Tickets", "⚡ Other"].map((item) => (
-                  <div key={item} className="glass-light rounded-xl px-3 py-2.5 mb-1.5 flex items-center gap-2">
-                    <span className="text-[11px] text-white">{item}</span>
-                  </div>
-                ))}
-                <div className="mt-auto gradient-bg rounded-xl py-2.5 text-white text-xs font-semibold text-center">Continue</div>
-              </div>
-            </div>
-
-            {/* Screen 3: AI Shopping — center + taller */}
-            <div className="phone-mockup h-[460px] sm:h-[500px] lg:h-[560px] relative col-span-2 sm:col-span-1" style={{ transform: "translateY(-20px)" }}>
-              <div className="absolute inset-0 pt-10 pb-4 px-4 flex flex-col">
-                <p className="text-white text-xs font-semibold text-center mb-4">AI Shopping Assistant</p>
-                {/* Product */}
-                <div className="glass-light rounded-2xl p-3 mb-3">
-                  <div className="w-full h-20 bg-gradient-to-br from-violet-600/30 to-indigo-600/30 rounded-xl flex items-center justify-center text-3xl mb-2">🎧</div>
-                  <p className="text-white text-xs font-semibold">Sony WH-1000XMS</p>
-                  <p className="text-white/50 text-[9px]">Best noise-cancelling headphones</p>
-                  <p className="text-white font-display font-700 text-lg">$399</p>
-                  <div className="flex gap-1 mt-1">
-                    <div className="glass rounded px-1.5 py-0.5 text-[8px] text-emerald-400 font-semibold">Top rated</div>
-                    <div className="glass rounded px-1.5 py-0.5 text-[8px] text-violet-soft font-semibold">Best quality</div>
-                  </div>
-                  <button className="gradient-bg text-white text-xs font-semibold py-2 rounded-xl w-full mt-2">Add to cart</button>
-                </div>
-                <div className="glass-light rounded-xl px-3 py-2 flex items-center gap-2">
-                  <span className="text-white/60 text-[10px] flex-1">Ask anything…</span>
-                  <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center">
-                    <MicIcon className="w-3 h-3 text-white" aria-hidden="true" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Screen 4: Hotel results */}
-            <div className="phone-mockup h-[420px] sm:h-[460px] lg:h-[500px] relative col-span-1 hidden sm:block">
-              <div className="absolute inset-0 pt-10 pb-4 px-4 flex flex-col gap-2">
-                <p className="text-white text-xs font-semibold text-center mb-1">Find me a hotel in Chicago next weekend.</p>
-                <p className="text-white/60 text-[9px] text-center mb-2">Oct 24 – Oct 26 (2 nights)</p>
-                {[
-                  { name: "The Langham Chicago", stars: "4.8", reviews: "347 reviews", price: "$229/night" },
-                  { name: "Renaissance Chicago", stars: "4.6", reviews: "193 reviews", price: "$189/night" },
-                  { name: "Hyatt Place Chicago", stars: "4.4", reviews: "822 reviews", price: "$179/night" },
-                ].map((h) => (
-                  <div key={h.name} className="glass-light rounded-xl p-2.5">
-                    <div className="w-full h-12 bg-gradient-to-br from-violet-600/20 to-indigo-600/20 rounded-lg mb-1.5 flex items-center justify-center text-xl">🏨</div>
-                    <p className="text-white text-[10px] font-semibold">{h.name}</p>
-                    <p className="text-white/50 text-[9px]">★ {h.stars} · ({h.reviews})</p>
-                    <div className="flex items-center justify-between mt-1">
-                      <p className="text-white text-[10px] font-semibold">{h.price}</p>
-                      <button className="gradient-bg text-white text-[9px] px-2 py-1 rounded-lg">View Details</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Screen 5: Payment */}
-            <div className="phone-mockup h-[420px] sm:h-[460px] lg:h-[500px] relative col-span-1 hidden lg:block">
-              <div className="absolute inset-0 pt-10 pb-4 px-4 flex flex-col gap-3">
-                <p className="text-white text-xs font-semibold text-center mb-1">Add a payment method</p>
-                {[
-                  { icon: "💳", label: "Credit or Debit Card", desc: "Secured safely with Stripe" },
-                  { icon: "🍎", label: "Apple Pay", desc: "" },
-                  { icon: "🔵", label: "Google Pay", desc: "" },
-                  { icon: "🔗", label: "Link (Stripe)", desc: "" },
-                  { icon: "🅿️", label: "PayPal", desc: "" },
-                ].map((pm) => (
-                  <div key={pm.label} className="glass-light rounded-xl px-3 py-2.5 flex items-center gap-2.5">
-                    <span className="text-base">{pm.icon}</span>
+                  { icon: "🍎", label: "Download on the", sub: "App Store" },
+                  { icon: "▶", label: "GET IT ON", sub: "Google Play" },
+                ].map((b, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, background: "#0f1035", color: "#fff", borderRadius: 10, padding: "8px 16px", cursor: "pointer" }}>
+                    <span style={{ fontSize: 20 }}>{b.icon}</span>
                     <div>
-                      <p className="text-white text-xs font-medium">{pm.label}</p>
-                      {pm.desc && <p className="text-white/60 text-[9px]">{pm.desc}</p>}
+                      <p style={{ margin: 0, fontSize: 9, color: "#d1d5db" }}>{b.label}</p>
+                      <p style={{ margin: 0, fontSize: 13, fontWeight: 700 }}>{b.sub}</p>
                     </div>
                   </div>
                 ))}
-                <div className="glass-light rounded-xl px-3 py-2.5 flex items-center gap-2.5">
-                  <span className="text-base text-violet-soft">+</span>
-                  <span className="text-white/60 text-xs">Add Later</span>
-                </div>
-                <div className="mt-auto">
-                  <p className="text-white/60 text-[9px] text-center mb-2">Your payment information is safe and securely encrypted.</p>
-                  <div className="gradient-bg rounded-xl py-2.5 text-white text-xs font-semibold text-center">Continue</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Business Dashboard Teaser */}
-      <section className="py-20 px-4 sm:px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="glass rounded-3xl p-8 sm:p-12 overflow-hidden relative">
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-violet-700/10 rounded-full blur-3xl" />
-            </div>
-
-            <div className="relative grid lg:grid-cols-2 gap-10 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-violet-600/20 border border-violet-500/30 rounded-full px-4 py-1.5 text-xs font-medium text-violet-soft mb-6">
-                  🏢 For Businesses
-                </div>
-                <h2 className="font-display font-700 text-3xl sm:text-4xl text-white mb-4 leading-tight">
-                  Your business,<br />
-                  <span className="gradient-text">inside Mio.</span>
-                </h2>
-                <p className="text-white/60 leading-relaxed mb-6">
-                  Reach customers where they already are. Mio surfaces your menu, services, and availability — and handles orders, bookings, and payments automatically.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  {["Real-time orders and revenue dashboard", "Menu & catalog management", "Customer analytics and insights", "NFC in-store tap-to-order integration"].map((f) => (
-                    <li key={f} className="flex items-start gap-3">
-                      <CheckIcon className="w-5 h-5 text-violet-light shrink-0 mt-0.5" aria-hidden="true" />
-                      <span className="text-white/75 text-sm">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <a href="#" className="inline-flex items-center gap-2 gradient-bg text-white font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-all">
-                  Add Your Business
-                  <ArrowRightIcon className="w-4 h-4" aria-hidden="true" />
-                </a>
               </div>
 
-              {/* Dashboard preview */}
-              <div className="glass-light rounded-2xl p-5 border border-white/10">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <p className="text-white font-display font-700 text-base">Good morning, Alex!</p>
-                    <p className="text-white/50 text-xs">Here's what's happening at Bella Vista Restaurant today.</p>
+              {/* Stats */}
+              <div style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>
+                {STATS.map((s, i) => (
+                  <div key={i}>
+                    <div className="stat-value" style={{ fontSize: "1.5rem" }}>{s.value}</div>
+                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 2 }}>{s.label}</div>
                   </div>
-                  <div className="w-9 h-9 rounded-full bg-violet-600/40 border border-violet-500/40 flex items-center justify-center text-sm">👤</div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — floating category cards + phone */}
+            <div style={{ position: "relative", height: 520, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {/* Soft glow orb */}
+              <div style={{ position: "absolute", width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(124,58,237,0.08) 0%, rgba(124,58,237,0) 70%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }}></div>
+
+              {/* Hero image placeholder with real-feeling mockup */}
+              <div style={{ position: "relative", zIndex: 1 }}>
+                {/* Phone */}
+                <div className="phone-mockup animate-float" style={{ width: 200, height: 400, margin: "0 auto", position: "relative", zIndex: 2 }}>
+                  <div style={{ height: 28, background: "#0f1035", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: 60, height: 6, background: "#374151", borderRadius: 4 }}></div>
+                  </div>
+                  <div style={{ padding: "12px 14px", height: "calc(100% - 28px)", display: "flex", flexDirection: "column", gap: 10 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ width: 28, height: 28, borderRadius: 8, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <span style={{ color: "#fff", fontWeight: 800, fontSize: 12 }}>M</span>
+                      </div>
+                      <div>
+                        <p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#0f1035" }}>Mio</p>
+                        <p style={{ margin: 0, fontSize: 9, color: "#9ca3af" }}>Your AI Assistant</p>
+                      </div>
+                    </div>
+                    <div style={{ background: "#f5f3ff", borderRadius: 12, padding: "10px 12px" }}>
+                      <p style={{ margin: 0, fontSize: 10, color: "#6b7280" }}>Ask Mio anything...</p>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                      {[["🛍️","Shopping"],["🍔","Food"],["✈️","Travel"],["🛎️","Services"]].map(([e,l]) => (
+                        <div key={l} style={{ background: "#f8f7ff", borderRadius: 10, padding: "8px", textAlign: "center" }}>
+                          <div style={{ fontSize: 18 }}>{e}</div>
+                          <p style={{ margin: 0, fontSize: 9, color: "#374151", fontWeight: 600 }}>{l}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p style={{ fontSize: 10, fontWeight: 600, color: "#0f1035", margin: "4px 0 0" }}>AI Picks for You</p>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      {[["🎧","$399"],["👟","$129"],["🧳","$89"]].map(([e,p]) => (
+                        <div key={p} style={{ flex: 1, background: "#f5f3ff", borderRadius: 10, padding: "6px", textAlign: "center" }}>
+                          <div style={{ fontSize: 18 }}>{e}</div>
+                          <p style={{ margin: 0, fontSize: 9, color: "#7c3aed", fontWeight: 700 }}>{p}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Stats row */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                  {[
-                    { label: "Total Orders", value: "1,248", change: "+12%", positive: true },
-                    { label: "Revenue", value: "$18,932", change: "+10%", positive: true },
-                    { label: "Customers", value: "892", change: "+14%", positive: true },
-                    { label: "Avg. Order Value", value: "$15.16", change: "+6.6%", positive: true },
-                  ].map((s) => (
-                    <div key={s.label} className="glass rounded-xl p-3">
-                      <p className="text-white/50 text-[10px] mb-1">{s.label}</p>
-                      <p className="text-white font-display font-700 text-base">{s.value}</p>
-                      <p className={`text-[10px] font-semibold ${s.positive ? "text-emerald-400" : "text-red-400"}`}>{s.change}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Top items */}
-                <div>
-                  <p className="text-white/50 text-xs mb-2 uppercase tracking-wide">Top Items</p>
-                  {[
-                    { name: "Margherita Pizza", orders: 342 },
-                    { name: "Chicken Alfredo", orders: 281 },
-                    { name: "Caesar Salad", orders: 214 },
-                  ].map((item) => (
-                    <div key={item.name} className="flex items-center justify-between py-1.5 border-b border-white/5">
-                      <span className="text-white/75 text-xs">{item.name}</span>
-                      <span className="text-white font-semibold text-xs">{item.orders}</span>
-                    </div>
-                  ))}
-                </div>
+                {/* Floating category chips */}
+                {[
+                  { label: "Food & Dining", emoji: "🍔", top: "5%", right: "-30%" },
+                  { label: "Hotels & Travel", emoji: "🏨", top: "38%", right: "-32%" },
+                  { label: "Shopping", emoji: "🛍️", top: "65%", right: "-25%" },
+                  { label: "Bookings & Services", emoji: "📅", top: "80%", left: "-35%" },
+                ].map((chip, i) => (
+                  <div
+                    key={i}
+                    className="animate-float"
+                    style={{
+                      position: "absolute",
+                      background: "#fff",
+                      border: "1.5px solid #ede9fe",
+                      borderRadius: 14,
+                      padding: "8px 14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      boxShadow: "0 4px 20px rgba(124,58,237,0.12)",
+                      top: chip.top,
+                      right: chip.right,
+                      left: chip.left,
+                      animationDelay: `${i * 0.6}s`,
+                      whiteSpace: "nowrap",
+                      zIndex: 3,
+                    }}
+                  >
+                    <span style={{ fontSize: 20 }}>{chip.emoji}</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: "#0f1035" }}>{chip.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* NFC In-Store */}
-      <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display font-700 text-4xl sm:text-5xl text-white mb-3">
-              NFC <span className="gradient-text">In-Store Experience</span>
+      {/* ── Everything You Need ── */}
+      <section className="section-alt" style={{ padding: "80px 0" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(28px,4vw,42px)", color: "#0f1035", margin: "0 0 8px" }}>
+              Everything You Need. <span className="gradient-text">Just Ask Mio.</span>
             </h2>
-            <p className="text-white/50 text-lg max-w-xl mx-auto">
-              Tap to open menus, customise your order, pay securely — all through Mio.
+            <p style={{ color: "#6b7280", fontSize: 16, maxWidth: 520, margin: "0 auto" }}>
+              One AI assistant that handles every part of your daily life — from shopping to travel to payments.
             </p>
           </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { icon: "📡", step: "1", title: "Tap NFC Tag", desc: "Open the full restaurant menu instantly" },
-              { icon: "🤖", step: "2", title: "Order with Mio", desc: "Customise your order conversationally" },
-              { icon: "🔒", step: "3", title: "Pay Securely", desc: "Using your saved card or digital wallet" },
-              { icon: "✅", step: "4", title: "Get Confirmation", desc: "Track your order in real time" },
-            ].map((card) => (
-              <div key={card.step} className="glass rounded-2xl p-6 flex flex-col gap-4 hover:bg-white/10 transition-all group">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                    {card.icon}
-                  </div>
-                  <span className="text-white/50 text-2xl font-display font-800">{card.step}</span>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 20 }}>
+            {CATEGORIES.map((cat) => (
+              <div key={cat.label} className="card-hover" style={{ background: "#fff", borderRadius: 20, padding: "24px 20px", border: "1px solid #ede9fe", textAlign: "center" }}>
+                <div style={{ width: 60, height: 60, borderRadius: 18, background: cat.color, margin: "0 auto 14px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>
+                  {cat.emoji}
                 </div>
-                <div>
-                  <p className="text-white font-display font-600 text-base mb-1">{card.title}</p>
-                  <p className="text-white/55 text-sm">{card.desc}</p>
-                </div>
+                <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 15, color: "#0f1035", margin: "0 0 4px" }}>{cat.label}</h3>
+                <p style={{ fontSize: 13, color: "#6b7280", margin: 0 }}>{cat.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display font-700 text-3xl sm:text-4xl text-white mb-3">
-              Loved by <span className="gradient-text">1 million+ people</span>
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="glass rounded-2xl p-6">
-                <div className="flex gap-1 mb-4" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <StarIcon key={i} className="w-4 h-4 text-amber-400 fill-amber-400" aria-hidden="true" />
-                  ))}
-                </div>
-                <p className="text-white/80 text-sm leading-relaxed mb-5">"{t.text}"</p>
-                <div>
-                  <p className="text-white font-semibold text-sm">{t.name}</p>
-                  <p className="text-white/60 text-xs">{t.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Security */}
-      <section className="py-16 px-4 sm:px-6">
-        <div className="max-w-5xl mx-auto glass rounded-3xl p-8 sm:p-12 text-center">
-          <ShieldIcon className="w-10 h-10 text-violet-light mx-auto mb-4" aria-hidden="true" />
-          <h2 className="font-display font-700 text-2xl sm:text-3xl text-white mb-3">
-            Secure by design. Private by default.
-          </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
-            Mio never invents inventory, booking availability, or payment confirmations. Every purchase and reservation requires your explicit confirmation. Your data stays yours.
-          </p>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 px-4 sm:px-6 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute inset-0 gradient-bg opacity-10" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-violet-700/20 rounded-full blur-[80px]" />
-        </div>
-        <div className="relative max-w-2xl mx-auto">
-          <h2 className="font-display font-800 text-5xl sm:text-6xl text-white mb-4 leading-tight">
-            Ready to talk<br />
-            <span className="gradient-text">to everything?</span>
-          </h2>
-          <p className="text-white/60 text-lg mb-8 max-w-lg mx-auto">
-            Join over a million people who shop, eat, travel, and pay through Mio.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              to="/onboarding"
-              className="gradient-bg text-white font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-all shadow-xl glow-violet text-lg"
-            >
-              Get Mio Free
-            </Link>
-            <a
-              href="#"
-              className="glass-light text-white font-medium px-8 py-4 rounded-xl hover:bg-white/15 transition-all text-lg"
-            >
-              For Businesses
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-white/10 py-10 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 gradient-bg rounded-lg flex items-center justify-center">
-              <span className="text-white font-display font-800 text-sm">M</span>
+      {/* ── Chat Demo + Phone ── */}
+      <section className="section-white" style={{ padding: "80px 0" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(26px,3.5vw,38px)", color: "#0f1035", marginBottom: 12 }}>
+                Understand exactly <span className="gradient-text">what you mean</span>
+              </h2>
+              <p style={{ color: "#6b7280", fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>
+                Ask in natural language. Mio searches multiple providers, compares prices, and confirms with you before any action.
+              </p>
+              <ChatDemo />
             </div>
-            <span className="font-display font-700 text-white text-lg">Mio</span>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
+              {/* AI response cards */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 280 }}>
+                {[
+                  { icon: <SearchIcon size={16} />, text: "Found 5 great options" },
+                  { icon: "≡", text: "Compare features" },
+                  { icon: <ShoppingCartIcon size={16} />, text: "Add to cart" },
+                  { icon: <LockIcon size={16} />, text: "Secure checkout" },
+                ].map((item, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, background: "#f8f7ff", borderRadius: 14, padding: "12px 16px", border: "1px solid #ede9fe" }}>
+                    <div style={{ width: 32, height: 32, borderRadius: 10, background: "#ede9fe", display: "flex", alignItems: "center", justifyContent: "center", color: "#7c3aed", fontSize: 16 }}>
+                      {item.icon}
+                    </div>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: "#0f1035" }}>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <p className="text-white/60 text-sm">© 2026 Mio AI. All rights reserved.</p>
-          <div className="flex gap-5">
-            {["Privacy", "Terms", "Contact"].map((l) => (
-              <a key={l} href="#" className="text-white/60 text-sm hover:text-white/80 transition-colors">{l}</a>
+        </div>
+      </section>
+
+      {/* ── Mobile App Screens ── */}
+      <section className="section-alt" style={{ padding: "80px 0" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(26px,3.5vw,38px)", color: "#0f1035", marginBottom: 8 }}>
+              Mobile App Screens — <span className="gradient-text">Onboarding & Key Flows</span>
+            </h2>
+            <p style={{ color: "#6b7280", fontSize: 15 }}>Available on iOS and Android. Beautifully designed for natural interaction.</p>
+          </div>
+          <div style={{ display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap", alignItems: "flex-end" }}>
+            {PHONE_SCREENS.map((screen, i) => (
+              <div key={i} className="phone-mockup" style={{ width: 160, height: 300, flexShrink: 0, animationDelay: `${i * 0.3}s` }} >
+                <div style={{ height: 24, background: "#0f1035", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 50, height: 5, background: "#374151", borderRadius: 4 }}></div>
+                </div>
+                <div style={{ height: "calc(100% - 24px)", overflow: "hidden" }}>
+                  {screen.content}
+                </div>
+              </div>
             ))}
+          </div>
+          <div style={{ textAlign: "center", marginTop: 32 }}>
+            <Link to="/onboarding" className="btn-primary">Try the Onboarding Flow <ArrowRightIcon size={16} /></Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Business Dashboard ── */}
+      <section className="section-white" style={{ padding: "80px 0" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(26px,3.5vw,38px)", color: "#0f1035", marginBottom: 12 }}>
+                Business Dashboard <span className="gradient-text">(Web)</span>
+              </h2>
+              <p style={{ color: "#6b7280", fontSize: 15, lineHeight: 1.7, marginBottom: 28 }}>
+                Run your restaurant, shop, or service business with a powerful real-time dashboard. Track orders, revenue, customers, and team — all in one place.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+                {["Real-time order tracking", "Revenue & analytics", "Menu & inventory management", "Team management with roles", "NFC & payment integrations"].map(f => (
+                  <div key={f} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <CheckIcon size={16} style={{ color: "#7c3aed", flexShrink: 0 }} />
+                    <span style={{ fontSize: 14, color: "#374151" }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <Link to="/merchant" className="btn-primary">View Dashboard <ArrowRightIcon size={16} /></Link>
+            </div>
+            {/* Dashboard preview */}
+            <div className="glass" style={{ borderRadius: 20, padding: 24, border: "1px solid #ede9fe" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 16, color: "#0f1035" }}>Good morning, Alex!</span>
+                <span style={{ fontSize: 11, color: "#9ca3af" }}>Last 7 days</span>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+                {[
+                  { label: "Total Orders", value: "1,248", change: "+12%" },
+                  { label: "Revenue", value: "$18,932", change: "+10%" },
+                  { label: "Customers", value: "892", change: "+14%" },
+                  { label: "Avg Order Value", value: "$15.16", change: "+6.6%" },
+                ].map(s => (
+                  <div key={s.label} style={{ background: "#f8f7ff", borderRadius: 12, padding: "12px 14px" }}>
+                    <p style={{ margin: "0 0 4px", fontSize: 11, color: "#9ca3af" }}>{s.label}</p>
+                    <p style={{ margin: 0, fontSize: 18, fontWeight: 700, color: "#0f1035" }}>{s.value}</p>
+                    <p style={{ margin: 0, fontSize: 11, color: "#10b981", fontWeight: 600 }}>{s.change}</p>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <p style={{ fontSize: 12, fontWeight: 600, color: "#0f1035", marginBottom: 8 }}>Top Items</p>
+                {["Margherita Pizza — 342", "Chicken Alfredo — 281", "Caesar Salad — 214"].map(item => (
+                  <div key={item} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#374151", padding: "4px 0", borderBottom: "1px solid #f3f4f6" }}>
+                    <span>{item.split(" — ")[0]}</span>
+                    <span style={{ color: "#7c3aed", fontWeight: 600 }}>{item.split(" — ")[1]}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── NFC Section ── */}
+      <section className="section-alt" style={{ padding: "80px 0" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="glass" style={{ borderRadius: 24, padding: 32, border: "1px solid #ede9fe" }}>
+              <h3 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 20, color: "#0f1035", marginBottom: 20 }}>Mio + NFC / In-Store Experience</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {[
+                  { icon: "📡", step: "Tap NFC Tag", desc: "Open menu instantly" },
+                  { icon: "🤖", step: "Order with Mio", desc: "Customise easily" },
+                  { icon: "💳", step: "Pay Securely", desc: "Using saved card" },
+                  { icon: "✅", step: "Get Confirmation", desc: "Track your order" },
+                ].map((s, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", background: "#ffffff", borderRadius: 14, border: "1px solid #ede9fe" }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 14, background: i === 3 ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "#f5f3ff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>
+                      {s.icon}
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: "#0f1035" }}>{s.step}</p>
+                      <p style={{ margin: 0, fontSize: 12, color: "#6b7280" }}>{s.desc}</p>
+                    </div>
+                    <span style={{ marginLeft: "auto", fontSize: 12, fontWeight: 600, color: "#7c3aed" }}>Step {i+1}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(26px,3.5vw,38px)", color: "#0f1035", marginBottom: 12 }}>
+                Tap. Order. <span className="gradient-text">Pay instantly.</span>
+              </h2>
+              <p style={{ color: "#6b7280", fontSize: 15, lineHeight: 1.7, marginBottom: 28 }}>
+                Place an NFC device in your restaurant, store, or venue. Customers tap, Mio opens their personalised menu, they order and pay — all in under 60 seconds.
+              </p>
+              <Link to="/easytap" className="btn-primary">Explore EasyTap Go <ArrowRightIcon size={16} /></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="section-dark" style={{ padding: "80px 0" }}>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(28px,4vw,48px)", color: "#ffffff", marginBottom: 16 }}>
+            Ready to experience the future of AI commerce?
+          </h2>
+          <p style={{ color: "#a5b4fc", fontSize: 16, marginBottom: 36, lineHeight: 1.7 }}>
+            Join over 1 million people who shop, dine, travel and pay with Mio every day.
+          </p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link to="/onboarding" className="btn-primary" style={{ fontSize: 16, padding: "15px 32px" }}>
+              Get Mio Free <ArrowRightIcon size={18} />
+            </Link>
+            <Link to="/features" className="btn-secondary" style={{ fontSize: 16, padding: "15px 32px", color: "#ffffff", borderColor: "rgba(255,255,255,0.3)" }}>
+              See All Features
+            </Link>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", gap: 32, marginTop: 48, flexWrap: "wrap" }}>
+            {[
+              { icon: <ShieldIcon size={16} />, label: "Enterprise security" },
+              { icon: <SmartphoneIcon size={16} />, label: "iOS & Android" },
+              { icon: <ZapIcon size={16} />, label: "Works everywhere" },
+            ].map(f => (
+              <div key={f.label} style={{ display: "flex", alignItems: "center", gap: 8, color: "#c4b5fd" }}>
+                {f.icon}
+                <span style={{ fontSize: 13, fontWeight: 500 }}>{f.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer style={{ background: "#0f1035", color: "#9ca3af", padding: "40px 0 24px" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+            <div>
+              <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 20, background: "linear-gradient(135deg,#7c3aed,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Mio</span>
+              <p style={{ fontSize: 13, lineHeight: 1.6, marginTop: 8, color: "#9ca3af" }}>Your AI assistant for everyday life — shop, dine, travel, and pay through conversation.</p>
+            </div>
+            {[
+              { title: "Product", links: ["Features", "Pricing", "Onboarding", "Widget Demo"] },
+              { title: "Business", links: ["Merchant Dashboard", "Admin Console", "Developer Portal", "Providers"] },
+              { title: "Legal", links: ["Privacy Policy", "Terms of Service", "Cookie Policy", "Contact"] },
+            ].map(col => (
+              <div key={col.title}>
+                <p style={{ fontWeight: 700, color: "#ffffff", fontSize: 13, marginBottom: 12 }}>{col.title}</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {col.links.map(l => <span key={l} style={{ fontSize: 13, color: "#9ca3af", cursor: "pointer" }}>{l}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ borderTop: "1px solid #1e2155", paddingTop: 20, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+            <p style={{ margin: 0, fontSize: 12, color: "#6b7280" }}>© 2026 Mio AI. All rights reserved.</p>
+            <p style={{ margin: 0, fontSize: 12, color: "#6b7280" }}>Talk. Find. Book. Order. Pay.</p>
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }

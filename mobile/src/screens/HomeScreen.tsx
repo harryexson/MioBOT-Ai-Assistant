@@ -87,7 +87,12 @@ export default function HomeScreen({ navigation }: any) {
               <TouchableOpacity
                 key={cat.id}
                 style={[styles.catCard, { backgroundColor: cat.color }]}
-                onPress={() => navigation.navigate("Chat", { category: cat.id })}
+                onPress={() => {
+                  if (cat.id === "food") navigation.navigate("Restaurant");
+                  else if (cat.id === "travel") navigation.navigate("HotelSearch");
+                  else if (cat.id === "nfc") navigation.navigate("NFC");
+                  else navigation.navigate("Chat", { category: cat.id });
+                }}
                 activeOpacity={0.8}
               >
                 <Text style={styles.catEmoji}>{cat.emoji}</Text>

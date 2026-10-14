@@ -14,8 +14,11 @@ import ProfileScreen from "../screens/ProfileScreen";
 import ProductDetailScreen from "../screens/ProductDetailScreen";
 import CartScreen from "../screens/CartScreen";
 import VoiceChatScreen from "../screens/VoiceChatScreen";
-
-// ── Tab icon ──────────────────────────────────────────────────────────────────
+import HotelSearchScreen from "../screens/HotelSearchScreen";
+import RestaurantScreen from "../screens/RestaurantScreen";
+import FlightSearchScreen from "../screens/FlightSearchScreen";
+import NFCScreen from "../screens/NFCScreen";
+import NotificationsScreen from "../screens/NotificationsScreen";
 
 function TabIcon({ emoji, focused, badge }: { emoji: string; focused: boolean; badge?: number }) {
   return (
@@ -45,8 +48,6 @@ function TabIcon({ emoji, focused, badge }: { emoji: string; focused: boolean; b
   );
 }
 
-// ── Bottom tab navigator ──────────────────────────────────────────────────────
-
 const Tab = createBottomTabNavigator();
 
 function MainTabs() {
@@ -57,23 +58,14 @@ function MainTabs() {
         tabBarStyle: {
           backgroundColor: "#fff",
           borderTopWidth: 1,
-          borderTopColor: "#f3f4f6",
+          borderTopColor: "#ede9fe",
+          paddingBottom: 8,
           paddingTop: 6,
-          paddingBottom: 10,
-          height: 76,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.06,
-          shadowRadius: 12,
-          elevation: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: 10,
-          fontWeight: "700",
-          marginTop: 2,
+          height: 72,
         },
         tabBarActiveTintColor: "#7c3aed",
         tabBarInactiveTintColor: "#9ca3af",
+        tabBarLabelStyle: { fontSize: 11, fontWeight: "600", marginTop: 2 },
       }}
     >
       <Tab.Screen
@@ -87,9 +79,8 @@ function MainTabs() {
       <Tab.Screen
         name="ChatTab"
         component={ChatScreen}
-        initialParams={{}}
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon emoji="💬" focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon emoji="🤖" focused={focused} />,
           tabBarLabel: "Ask Mio",
         }}
       />
@@ -112,8 +103,6 @@ function MainTabs() {
     </Tab.Navigator>
   );
 }
-
-// ── Root stack navigator ──────────────────────────────────────────────────────
 
 const Stack = createNativeStackNavigator();
 
@@ -139,14 +128,21 @@ export default function AppNavigator() {
         <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
         <Stack.Screen name="OrderDetail" component={OrdersScreen} />
 
-        {/* Profile sub-screens — all use ProfileScreen as placeholder until built */}
+        {/* Service screens */}
+        <Stack.Screen name="HotelSearch" component={HotelSearchScreen} />
+        <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+        <Stack.Screen name="FlightSearch" component={FlightSearchScreen} />
+        <Stack.Screen name="NFC" component={NFCScreen} />
+        <Stack.Screen name="Notifications" component={NotificationsScreen} />
+        <Stack.Screen name="Checkout" component={CartScreen} />
+
+        {/* Profile sub-screens */}
         <Stack.Screen name="EditProfile" component={ProfileScreen} />
         <Stack.Screen name="Addresses" component={ProfileScreen} />
         <Stack.Screen name="PaymentMethods" component={ProfileScreen} />
-        <Stack.Screen name="Notifications" component={ProfileScreen} />
         <Stack.Screen name="VoiceSettings" component={ProfileScreen} />
         <Stack.Screen name="ShoppingPrefs" component={ProfileScreen} />
-        <Stack.Screen name="History" component={ProfileScreen} />
+        <Stack.Screen name="History" component={OrdersScreen} />
         <Stack.Screen name="Privacy" component={ProfileScreen} />
         <Stack.Screen name="Help" component={ProfileScreen} />
         <Stack.Screen name="Support" component={ChatScreen} />

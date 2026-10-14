@@ -76,10 +76,10 @@ function Sidebar({ active, onSelect }) {
     <nav className="hidden lg:flex flex-col w-56 shrink-0 bg-white/[0.03] border-r border-white/8 py-6 px-3 gap-1" aria-label="Dashboard navigation">
       <div className="px-3 mb-6">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center font-display font-bold text-white text-sm">M</div>
+          <div className="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center font-display font-bold text-navy text-sm">M</div>
           <div>
-            <p className="text-white text-sm font-semibold leading-none">Mio Merchant</p>
-            <p className="text-white/60 text-xs mt-0.5">The Urban Bistro</p>
+            <p className="text-navy text-sm font-semibold leading-none">Mio Merchant</p>
+            <p className="text-gray-500 text-xs mt-0.5">The Urban Bistro</p>
           </div>
         </div>
       </div>
@@ -89,8 +89,8 @@ function Sidebar({ active, onSelect }) {
           onClick={() => onSelect(label)}
           className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all text-left w-full ${
             active === label
-              ? "bg-violet-600/30 text-white border border-violet-500/30"
-              : "text-white/60 hover:text-white hover:bg-white/5"
+              ? "bg-violet-600/30 text-navy border border-violet-500/30"
+              : "text-gray-500 hover:text-navy hover:bg-white/5"
           }`}
           aria-current={active === label ? "page" : undefined}
         >
@@ -118,10 +118,10 @@ function StatCard({ label, value, change, up, icon: Icon, color }) {
   return (
     <div className={`bg-gradient-to-br ${colors[color]} border rounded-xl p-4`}>
       <div className="flex items-start justify-between mb-3">
-        <p className="text-white/70 text-xs font-medium">{label}</p>
+        <p className="text-gray-600 text-xs font-medium">{label}</p>
         <Icon size={16} className={iconColors[color]} />
       </div>
-      <p className="text-white text-2xl font-display font-bold">{value}</p>
+      <p className="text-navy text-2xl font-display font-bold">{value}</p>
       <p className={`text-xs mt-1 ${up ? "text-emerald-400" : "text-red-400"}`}>{change} this week</p>
     </div>
   );
@@ -136,8 +136,8 @@ function OverviewTab() {
         {STATS.map((s) => <StatCard key={s.label} {...s} />)}
       </div>
       {/* Revenue chart */}
-      <div className="glass rounded-xl p-5">
-        <h3 className="text-white font-semibold mb-4">Weekly Revenue</h3>
+      <div className="bg-white border border-border shadow-sm rounded-xl p-5">
+        <h3 className="text-navy font-semibold mb-4">Weekly Revenue</h3>
         <div className="flex items-end gap-2 h-32">
           {chartBars.map((h, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -147,15 +147,15 @@ function OverviewTab() {
                 role="img"
                 aria-label={`${days[i]}: ${h}% of peak`}
               />
-              <span className="text-white/50 text-xs">{days[i]}</span>
+              <span className="text-gray-500 text-xs">{days[i]}</span>
             </div>
           ))}
         </div>
       </div>
       {/* Recent orders preview */}
-      <div className="glass rounded-xl p-5">
+      <div className="bg-white border border-border shadow-sm rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-white font-semibold">Recent Orders</h3>
+          <h3 className="text-navy font-semibold">Recent Orders</h3>
           <span className="text-xs text-violet-400 font-medium">Live updates</span>
         </div>
         <div className="space-y-3">
@@ -166,13 +166,13 @@ function OverviewTab() {
                 <div className="flex items-center gap-3">
                   <StatusIcon size={14} className={o.status === "delivered" ? "text-emerald-400" : o.status === "cancelled" ? "text-red-400" : "text-amber-400"} />
                   <div>
-                    <p className="text-white text-sm font-medium">{o.customer}</p>
-                    <p className="text-white/50 text-xs">{o.items}</p>
+                    <p className="text-navy text-sm font-medium">{o.customer}</p>
+                    <p className="text-gray-500 text-xs">{o.items}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-white text-sm font-semibold">{o.total}</p>
-                  <p className="text-white/50 text-xs">{o.time}</p>
+                  <p className="text-navy text-sm font-semibold">{o.total}</p>
+                  <p className="text-gray-500 text-xs">{o.time}</p>
                 </div>
               </div>
             );
@@ -185,10 +185,10 @@ function OverviewTab() {
 
 function OrdersTab() {
   return (
-    <div className="glass rounded-xl p-5">
+    <div className="bg-white border border-border shadow-sm rounded-xl p-5">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-white font-semibold">All Orders</h3>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/8 text-white/70 text-xs hover:bg-white/12 transition-colors">
+        <h3 className="text-navy font-semibold">All Orders</h3>
+        <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/8 text-gray-600 text-xs hover:bg-white/12 transition-colors">
           <FilterIcon size={12} /> Filter
         </button>
       </div>
@@ -196,25 +196,25 @@ function OrdersTab() {
         <table className="w-full min-w-[500px]">
           <thead>
             <tr className="text-left border-b border-white/8">
-              <th scope="col" className="pb-3 text-white/50 text-xs font-medium pr-4">Order</th>
-              <th scope="col" className="pb-3 text-white/50 text-xs font-medium pr-4">Customer</th>
-              <th scope="col" className="pb-3 text-white/50 text-xs font-medium pr-4 hidden sm:table-cell">Items</th>
-              <th scope="col" className="pb-3 text-white/50 text-xs font-medium pr-4">Total</th>
-              <th scope="col" className="pb-3 text-white/50 text-xs font-medium pr-4">Status</th>
-              <th scope="col" className="pb-3 text-white/50 text-xs font-medium">Time</th>
+              <th scope="col" className="pb-3 text-gray-500 text-xs font-medium pr-4">Order</th>
+              <th scope="col" className="pb-3 text-gray-500 text-xs font-medium pr-4">Customer</th>
+              <th scope="col" className="pb-3 text-gray-500 text-xs font-medium pr-4 hidden sm:table-cell">Items</th>
+              <th scope="col" className="pb-3 text-gray-500 text-xs font-medium pr-4">Total</th>
+              <th scope="col" className="pb-3 text-gray-500 text-xs font-medium pr-4">Status</th>
+              <th scope="col" className="pb-3 text-gray-500 text-xs font-medium">Time</th>
             </tr>
           </thead>
           <tbody>
             {ORDERS.map((o) => (
               <tr key={o.id} className="border-b border-white/5 last:border-0">
                 <td className="py-3 pr-4 text-violet-400 text-sm font-mono">{o.id}</td>
-                <td className="py-3 pr-4 text-white text-sm">{o.customer}</td>
-                <td className="py-3 pr-4 text-white/60 text-xs hidden sm:table-cell">{o.items}</td>
-                <td className="py-3 pr-4 text-white text-sm font-semibold">{o.total}</td>
+                <td className="py-3 pr-4 text-navy text-sm">{o.customer}</td>
+                <td className="py-3 pr-4 text-gray-500 text-xs hidden sm:table-cell">{o.items}</td>
+                <td className="py-3 pr-4 text-navy text-sm font-semibold">{o.total}</td>
                 <td className="py-3 pr-4">
                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium capitalize ${STATUS_STYLE[o.status]}`}>{o.status}</span>
                 </td>
-                <td className="py-3 text-white/50 text-xs">{o.time}</td>
+                <td className="py-3 text-gray-500 text-xs">{o.time}</td>
               </tr>
             ))}
           </tbody>
@@ -226,10 +226,10 @@ function OrdersTab() {
 
 function ProductsTab() {
   return (
-    <div className="glass rounded-xl p-5">
+    <div className="bg-white border border-border shadow-sm rounded-xl p-5">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-white font-semibold">Menu & Products</h3>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg gradient-bg text-white text-xs font-medium hover:opacity-90 transition-opacity">
+        <h3 className="text-navy font-semibold">Menu & Products</h3>
+        <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg gradient-bg text-navy text-xs font-medium hover:opacity-90 transition-opacity">
           <PlusIcon size={12} /> Add Item
         </button>
       </div>
@@ -239,17 +239,17 @@ function ProductsTab() {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-violet-600/20 flex items-center justify-center text-lg">🍽️</div>
               <div>
-                <p className="text-white text-sm font-medium">{p.name}</p>
-                <p className="text-white/50 text-xs">{p.category} · {p.orders} orders</p>
+                <p className="text-navy text-sm font-medium">{p.name}</p>
+                <p className="text-gray-500 text-xs">{p.category} · {p.orders} orders</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="hidden sm:flex items-center gap-1">
                 <StarIcon size={12} className="text-amber-400" />
-                <span className="text-white/70 text-xs">{p.rating}</span>
+                <span className="text-gray-600 text-xs">{p.rating}</span>
               </div>
               <span className={`px-2 py-0.5 rounded-full text-xs ${p.stock === "Available" ? "bg-emerald-500/20 text-emerald-300" : "bg-amber-500/20 text-amber-300"}`}>{p.stock}</span>
-              <p className="text-white font-semibold text-sm">{p.price}</p>
+              <p className="text-navy font-semibold text-sm">{p.price}</p>
             </div>
           </div>
         ))}
@@ -260,10 +260,10 @@ function ProductsTab() {
 
 function TeamTab() {
   return (
-    <div className="glass rounded-xl p-5">
+    <div className="bg-white border border-border shadow-sm rounded-xl p-5">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-white font-semibold">Team Members</h3>
-        <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg gradient-bg text-white text-xs font-medium hover:opacity-90 transition-opacity">
+        <h3 className="text-navy font-semibold">Team Members</h3>
+        <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg gradient-bg text-navy text-xs font-medium hover:opacity-90 transition-opacity">
           <PlusIcon size={12} /> Invite
         </button>
       </div>
@@ -271,16 +271,16 @@ function TeamTab() {
         {TEAM.map((m) => (
           <div key={m.name} className="flex items-center justify-between p-3 rounded-lg bg-white/4 border border-white/6">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center text-navy font-bold text-sm">
                 {m.name.split(" ").map(n => n[0]).join("")}
               </div>
               <div>
-                <p className="text-white text-sm font-medium">{m.name}</p>
-                <p className="text-white/50 text-xs">{m.email}</p>
+                <p className="text-navy text-sm font-medium">{m.name}</p>
+                <p className="text-gray-500 text-xs">{m.email}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-white/60 text-xs bg-white/8 px-2 py-0.5 rounded-full">{m.role}</span>
+              <span className="text-gray-500 text-xs bg-white/8 px-2 py-0.5 rounded-full">{m.role}</span>
               <span className={`w-2 h-2 rounded-full ${m.status === "active" ? "bg-emerald-400" : "bg-white/20"}`} aria-label={m.status} />
             </div>
           </div>
@@ -299,23 +299,23 @@ function IntegrationsTab() {
     { name: "Google Calendar", desc: "Booking sync & appointments", connected: false, icon: "📅" },
   ];
   return (
-    <div className="glass rounded-xl p-5">
-      <h3 className="text-white font-semibold mb-5">Connected Services</h3>
+    <div className="bg-white border border-border shadow-sm rounded-xl p-5">
+      <h3 className="text-navy font-semibold mb-5">Connected Services</h3>
       <div className="space-y-3">
         {integrations.map((i) => (
           <div key={i.name} className="flex items-center justify-between p-3 rounded-lg bg-white/4 border border-white/6">
             <div className="flex items-center gap-3">
               <span className="text-xl" aria-hidden="true">{i.icon}</span>
               <div>
-                <p className="text-white text-sm font-medium">{i.name}</p>
-                <p className="text-white/50 text-xs">{i.desc}</p>
+                <p className="text-navy text-sm font-medium">{i.name}</p>
+                <p className="text-gray-500 text-xs">{i.desc}</p>
               </div>
             </div>
             <button
               className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
                 i.connected
                   ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                  : "bg-white/8 text-white/60 hover:bg-white/12"
+                  : "bg-white/8 text-gray-500 hover:bg-white/12"
               }`}
               aria-pressed={i.connected}
             >
@@ -333,24 +333,24 @@ const TAB_CONTENT = {
   Orders: OrdersTab,
   Products: ProductsTab,
   Bookings: () => (
-    <div className="glass rounded-xl p-10 text-center">
+    <div className="bg-white border border-border shadow-sm rounded-xl p-10 text-center">
       <CalendarIcon size={32} className="text-violet-400 mx-auto mb-3" />
-      <p className="text-white font-semibold mb-1">Bookings & Appointments</p>
-      <p className="text-white/60 text-sm">Your upcoming reservations and service bookings appear here.</p>
+      <p className="text-navy font-semibold mb-1">Bookings & Appointments</p>
+      <p className="text-gray-500 text-sm">Your upcoming reservations and service bookings appear here.</p>
     </div>
   ),
   Customers: () => (
-    <div className="glass rounded-xl p-10 text-center">
+    <div className="bg-white border border-border shadow-sm rounded-xl p-10 text-center">
       <UsersIcon size={32} className="text-violet-400 mx-auto mb-3" />
-      <p className="text-white font-semibold mb-1">Customer Profiles</p>
-      <p className="text-white/60 text-sm">View customer order history, preferences, and engagement data.</p>
+      <p className="text-navy font-semibold mb-1">Customer Profiles</p>
+      <p className="text-gray-500 text-sm">View customer order history, preferences, and engagement data.</p>
     </div>
   ),
   Analytics: () => (
-    <div className="glass rounded-xl p-10 text-center">
+    <div className="bg-white border border-border shadow-sm rounded-xl p-10 text-center">
       <BarChart2Icon size={32} className="text-violet-400 mx-auto mb-3" />
-      <p className="text-white font-semibold mb-1">Advanced Analytics</p>
-      <p className="text-white/60 text-sm">Detailed revenue, conversion, and customer behaviour reports.</p>
+      <p className="text-navy font-semibold mb-1">Advanced Analytics</p>
+      <p className="text-gray-500 text-sm">Detailed revenue, conversion, and customer behaviour reports.</p>
     </div>
   ),
   Team: TeamTab,
@@ -362,21 +362,21 @@ export default function MerchantDashboard() {
   const TabContent = TAB_CONTENT[activeTab] || OverviewTab;
 
   return (
-    <main className="min-h-screen bg-navy pt-16">
+    <main className="min-h-screen bg-white pt-16">
       {/* Page header */}
-      <header className="border-b border-white/8 bg-navy/80 backdrop-blur-sm sticky top-16 z-30">
+      <header className="border-b border-white/8 bg-white/80 backdrop-blur-sm sticky top-16 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-3">
-              <h1 className="text-white font-display font-bold text-lg">Merchant Dashboard</h1>
+              <h1 className="text-navy font-display font-bold text-lg">Merchant Dashboard</h1>
               <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 text-xs rounded-full border border-emerald-500/30">Live</span>
             </div>
             <div className="flex items-center gap-3">
-              <button className="relative p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/8 transition-colors" aria-label="Notifications">
+              <button className="relative p-2 rounded-lg text-gray-500 hover:text-navy hover:bg-white/8 transition-colors" aria-label="Notifications">
                 <BellIcon size={18} />
                 <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-violet-400 rounded-full" aria-hidden="true" />
               </button>
-              <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-sm" aria-label="Merchant profile">J</div>
+              <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center text-navy font-bold text-sm" aria-label="Merchant profile">J</div>
             </div>
           </div>
           {/* Mobile tabs */}
@@ -387,8 +387,8 @@ export default function MerchantDashboard() {
                 onClick={() => setActiveTab(t)}
                 className={`shrink-0 px-3 py-2 text-xs font-medium border-b-2 transition-colors ${
                   activeTab === t
-                    ? "border-violet-400 text-white"
-                    : "border-transparent text-white/50 hover:text-white/80"
+                    ? "border-violet-400 text-navy"
+                    : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
                 aria-current={activeTab === t ? "page" : undefined}
               >

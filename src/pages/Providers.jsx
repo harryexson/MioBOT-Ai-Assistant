@@ -147,15 +147,15 @@ export default function Providers() {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 glass-light rounded-full px-4 py-1.5 text-xs font-medium text-violet-300 mb-6">
+          <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-1.5 text-xs font-medium text-violet-300 mb-6">
             <ZapIcon className="w-3.5 h-3.5" aria-hidden="true" />
             Provider Gateway
           </div>
-          <h1 className="font-display font-800 text-5xl sm:text-6xl text-white mb-4 leading-tight">
+          <h1 className="font-display font-800 text-5xl sm:text-6xl text-navy mb-4 leading-tight">
             Universal provider<br />
             <span className="gradient-text">connectivity</span>
           </h1>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Mio connects to verified providers across all 10 service categories through a unified gateway — with health monitoring, rate-limit policies, and graceful fallback.
           </p>
         </div>
@@ -168,11 +168,11 @@ export default function Providers() {
             { label: "Degraded", value: degraded, sub: "with active fallback", icon: <AlertIcon className="w-4 h-4" aria-hidden="true" />, color: "text-yellow-400" },
             { label: "Avg uptime", value: "99.87%", sub: "last 30 days", icon: <ClockIcon className="w-4 h-4" aria-hidden="true" /> },
           ].map((s) => (
-            <div key={s.label} className="glass rounded-2xl p-5 border border-white/10">
+            <div key={s.label} className="bg-white border border-border shadow-sm rounded-2xl p-5 border border-white/10">
               <div className={`mb-2 ${s.color || "text-violet-400"}`}>{s.icon}</div>
-              <div className={`font-display font-800 text-2xl text-white mb-0.5 ${s.color || ""}`}>{s.value}</div>
-              <div className="text-white/50 text-xs">{s.label}</div>
-              <div className="text-white/35 text-[10px] mt-0.5">{s.sub}</div>
+              <div className={`font-display font-800 text-2xl text-navy mb-0.5 ${s.color || ""}`}>{s.value}</div>
+              <div className="text-gray-500 text-xs">{s.label}</div>
+              <div className="text-navy/35 text-[10px] mt-0.5">{s.sub}</div>
             </div>
           ))}
         </div>
@@ -185,14 +185,14 @@ export default function Providers() {
               onClick={() => setFilter(f)}
               className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all border capitalize ${
                 filter === f
-                  ? "gradient-bg text-white border-transparent"
-                  : "glass border-white/10 text-white/60 hover:text-white"
+                  ? "gradient-bg text-navy border-transparent"
+                  : "bg-white border border-border shadow-sm border-white/10 text-gray-500 hover:text-navy"
               }`}
             >
               {f === "all" ? "All categories" : f.charAt(0).toUpperCase() + f.slice(1)}
             </button>
           ))}
-          <div className="ml-auto flex items-center gap-2 text-white/40 text-xs">
+          <div className="ml-auto flex items-center gap-2 text-gray-400 text-xs">
             <RefreshIcon className="w-3.5 h-3.5" aria-hidden="true" />
             Updated live
           </div>
@@ -201,7 +201,7 @@ export default function Providers() {
         {/* Provider cards */}
         <div className="space-y-3 mb-16">
           {filtered.map((p, i) => (
-            <div key={p.category} className={`glass rounded-2xl border transition-all ${expanded === i ? "border-violet-500/30" : "border-white/10 hover:border-white/20"}`}>
+            <div key={p.category} className={`bg-white border border-border shadow-sm rounded-2xl border transition-all ${expanded === i ? "border-violet-500/30" : "border-white/10 hover:border-white/20"}`}>
               {/* Row header */}
               <button
                 className="w-full flex items-center gap-4 p-5 text-left"
@@ -210,23 +210,23 @@ export default function Providers() {
               >
                 <span className="text-2xl shrink-0" aria-hidden="true">{p.emoji}</span>
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-white text-sm">{p.category}</div>
-                  <div className="text-white/45 text-xs mt-0.5 truncate">
+                  <div className="font-semibold text-navy text-sm">{p.category}</div>
+                  <div className="text-navy/45 text-xs mt-0.5 truncate">
                     {p.providers.slice(0, 3).join(", ")}{p.providers.length > 3 ? ` +${p.providers.length - 3} more` : ""}
                   </div>
                 </div>
                 <div className="hidden sm:flex items-center gap-6 shrink-0">
                   <div className="text-right">
-                    <div className="text-white/80 text-xs font-medium">{p.latency}</div>
-                    <div className="text-white/40 text-[10px]">latency</div>
+                    <div className="text-gray-700 text-xs font-medium">{p.latency}</div>
+                    <div className="text-gray-400 text-[10px]">latency</div>
                   </div>
                   <div className="text-right">
                     <div className="text-green-400 text-xs font-medium">{p.uptime}</div>
-                    <div className="text-white/40 text-[10px]">uptime</div>
+                    <div className="text-gray-400 text-[10px]">uptime</div>
                   </div>
                 </div>
                 <StatusBadge status={p.status} />
-                <span className="text-white/30 text-xs ml-2">{expanded === i ? "▲" : "▼"}</span>
+                <span className="text-navy/30 text-xs ml-2">{expanded === i ? "▲" : "▼"}</span>
               </button>
 
               {/* Expanded detail */}
@@ -240,25 +240,25 @@ export default function Providers() {
                   )}
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
-                      <h3 className="text-white/60 text-xs font-semibold uppercase tracking-wider mb-3">Connected providers</h3>
+                      <h3 className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Connected providers</h3>
                       <div className="flex flex-wrap gap-2">
                         {p.providers.map((pv) => (
-                          <span key={pv} className="glass px-2.5 py-1 rounded-lg text-xs text-white/70 border border-white/10">
+                          <span key={pv} className="bg-white border border-border shadow-sm px-2.5 py-1 rounded-lg text-xs text-gray-600 border border-white/10">
                             {pv}
                           </span>
                         ))}
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-white/60 text-xs font-semibold uppercase tracking-wider mb-3">Supported operations</h3>
+                      <h3 className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Supported operations</h3>
                       <div className="grid grid-cols-2 gap-1.5">
                         {OPS_FULL.map((op, oi) => {
                           const supported = p.ops.includes(op);
                           return (
-                            <div key={op} className={`flex items-center gap-1.5 text-xs ${supported ? "text-white/70" : "text-white/25"}`}>
+                            <div key={op} className={`flex items-center gap-1.5 text-xs ${supported ? "text-gray-600" : "text-navy/25"}`}>
                               {supported
                                 ? <CheckIcon className="w-3 h-3 text-green-400 shrink-0" aria-hidden="true" />
-                                : <span className="w-3 h-3 flex items-center justify-center text-white/20 shrink-0" aria-hidden="true">–</span>
+                                : <span className="w-3 h-3 flex items-center justify-center text-navy/20 shrink-0" aria-hidden="true">–</span>
                               }
                               {OPS_SHORT[oi]}
                             </div>
@@ -274,10 +274,10 @@ export default function Providers() {
         </div>
 
         {/* Architecture note */}
-        <div className="glass rounded-3xl p-10 border border-white/10 mb-16">
+        <div className="bg-white border border-border shadow-sm rounded-3xl p-10 border border-white/10 mb-16">
           <div className="flex items-center gap-3 mb-6">
             <ShieldIcon className="w-6 h-6 text-violet-400" aria-hidden="true" />
-            <h2 className="font-display font-700 text-white text-xl">Gateway architecture</h2>
+            <h2 className="font-display font-700 text-navy text-xl">Gateway architecture</h2>
           </div>
           <div className="grid sm:grid-cols-3 gap-6">
             {[
@@ -285,9 +285,9 @@ export default function Providers() {
               { title: "Health monitoring", desc: "Latency, error rates, and availability are checked continuously. Degraded providers trigger automatic fallback." },
               { title: "No unauthorised scraping", desc: "Mio only connects to providers through their official APIs or verified partnership agreements." },
             ].map((n) => (
-              <div key={n.title} className="glass rounded-xl p-5 border border-white/5">
-                <h3 className="font-semibold text-white text-sm mb-2">{n.title}</h3>
-                <p className="text-white/60 text-xs leading-relaxed">{n.desc}</p>
+              <div key={n.title} className="bg-white border border-border shadow-sm rounded-xl p-5 border border-white/5">
+                <h3 className="font-semibold text-navy text-sm mb-2">{n.title}</h3>
+                <p className="text-gray-500 text-xs leading-relaxed">{n.desc}</p>
               </div>
             ))}
           </div>
@@ -297,7 +297,7 @@ export default function Providers() {
         <div className="text-center">
           <Link
             to="/developers"
-            className="inline-flex items-center gap-2 gradient-bg text-white font-semibold px-10 py-4 rounded-xl hover:opacity-90 transition-all shadow-xl glow-violet text-lg"
+            className="inline-flex items-center gap-2 gradient-bg text-navy font-semibold px-10 py-4 rounded-xl hover:opacity-90 transition-all shadow-xl glow-violet text-lg"
           >
             View Developer Docs
             <ArrowRightIcon className="w-5 h-5" aria-hidden="true" />

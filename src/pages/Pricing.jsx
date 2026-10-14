@@ -60,74 +60,81 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <main className="min-h-screen pt-28 pb-24 px-4 sm:px-6 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-violet-900/15 rounded-full blur-[80px]" />
-      </div>
-
-      <div className="relative max-w-5xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="font-display font-800 text-5xl sm:text-6xl text-white mb-4 leading-tight">
+    <main style={{ minHeight: "100vh", paddingTop: 100, paddingBottom: 80, background: "#ffffff" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(32px,5vw,54px)", color: "#0f1035", margin: "0 0 12px", lineHeight: 1.1 }}>
             Simple, <span className="gradient-text">honest pricing.</span>
           </h1>
-          <p className="text-white/60 text-lg max-w-xl mx-auto">
+          <p style={{ color: "#6b7280", fontSize: 17, maxWidth: 480, margin: "0 auto" }}>
             Start free. Upgrade when you're ready. No hidden fees, no surprises.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 24 }}>
           {PLANS.map((plan) => (
             <div
               key={plan.name}
-              className={`relative rounded-3xl p-8 flex flex-col ${
-                plan.featured
-                  ? "gradient-bg shadow-2xl glow-violet"
-                  : "glass"
-              }`}
+              style={{
+                position: "relative",
+                borderRadius: 24,
+                padding: 32,
+                display: "flex",
+                flexDirection: "column",
+                background: plan.featured ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "#ffffff",
+                border: plan.featured ? "none" : "1.5px solid #ede9fe",
+                boxShadow: plan.featured ? "0 24px 60px rgba(124,58,237,0.28)" : "0 2px 16px rgba(124,58,237,0.06)",
+              }}
             >
               {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-violet-700 text-xs font-semibold px-4 py-1 rounded-full shadow-sm whitespace-nowrap">
+                <div style={{ position: "absolute", top: -14, left: "50%", transform: "translateX(-50%)", background: "#fff", color: "#7c3aed", fontSize: 11, fontWeight: 700, padding: "5px 16px", borderRadius: 50, boxShadow: "0 2px 8px rgba(124,58,237,0.15)", whiteSpace: "nowrap" }}>
                   {plan.badge}
                 </div>
               )}
 
-              <div className="mb-6">
-                <p className={`font-display font-700 text-lg mb-1 ${plan.featured ? "text-white" : "text-white/80"}`}>{plan.name}</p>
-                <div className="flex items-end gap-1 mb-2">
-                  <span className={`font-display font-800 text-5xl ${plan.featured ? "text-white" : "text-white"}`}>{plan.price}</span>
-                  <span className={`text-sm pb-2 ${plan.featured ? "text-white/80" : "text-white/50"}`}>/{plan.period}</span>
+              <div style={{ marginBottom: 24 }}>
+                <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 17, marginBottom: 4, color: plan.featured ? "#ffffff" : "#0f1035" }}>{plan.name}</p>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 4, marginBottom: 8 }}>
+                  <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 52, color: plan.featured ? "#ffffff" : "#0f1035", lineHeight: 1 }}>{plan.price}</span>
+                  <span style={{ fontSize: 13, paddingBottom: 10, color: plan.featured ? "rgba(255,255,255,0.75)" : "#9ca3af" }}>/{plan.period}</span>
                 </div>
-                <p className={`text-sm ${plan.featured ? "text-white/80" : "text-white/55"}`}>{plan.desc}</p>
+                <p style={{ fontSize: 13, color: plan.featured ? "rgba(255,255,255,0.8)" : "#6b7280", margin: 0 }}>{plan.desc}</p>
               </div>
 
-              <ul className="space-y-3 mb-8 flex-1">
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px", flex: 1, display: "flex", flexDirection: "column", gap: 10 }}>
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5">
-                    <CheckIcon
-                      className={`w-4 h-4 shrink-0 mt-0.5 ${plan.featured ? "text-white/90" : "text-violet-soft"}`}
-                      aria-hidden="true"
-                    />
-                    <span className={`text-sm ${plan.featured ? "text-white/90" : "text-white/70"}`}>{f}</span>
+                  <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                    <CheckIcon size={15} style={{ color: plan.featured ? "rgba(255,255,255,0.9)" : "#7c3aed", flexShrink: 0, marginTop: 1 }} aria-hidden="true" />
+                    <span style={{ fontSize: 13, color: plan.featured ? "rgba(255,255,255,0.9)" : "#374151" }}>{f}</span>
                   </li>
                 ))}
               </ul>
 
               <Link
                 to={plan.ctaLink}
-                className={`flex items-center justify-center gap-2 font-semibold py-3.5 rounded-xl transition-all ${
-                  plan.featured
-                    ? "bg-white text-violet-700 hover:bg-white/90"
-                    : "gradient-bg text-white hover:opacity-90"
-                }`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  fontWeight: 600,
+                  fontSize: 14,
+                  padding: "13px 0",
+                  borderRadius: 14,
+                  textDecoration: "none",
+                  background: plan.featured ? "#ffffff" : "linear-gradient(135deg,#7c3aed,#4f46e5)",
+                  color: plan.featured ? "#7c3aed" : "#ffffff",
+                  transition: "opacity 0.2s",
+                }}
               >
                 {plan.cta}
-                <ArrowRightIcon className="w-4 h-4" aria-hidden="true" />
+                <ArrowRightIcon size={15} aria-hidden="true" />
               </Link>
             </div>
           ))}
         </div>
 
-        <p className="text-white/65 text-sm text-center mt-10">
+        <p style={{ color: "#9ca3af", fontSize: 13, textAlign: "center", marginTop: 32 }}>
           All plans include a 14-day money-back guarantee. Cancel anytime.
         </p>
       </div>

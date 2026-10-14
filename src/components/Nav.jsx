@@ -1,209 +1,106 @@
-import { useState, useEffect, useRef } from "react";
-import { NavLink, Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router";
 import MenuIcon from "icon:menu";
 import XIcon from "icon:x";
-import ChevronDownIcon from "icon:chevron-down";
 
-const NAV_GROUPS = [
-  {
-    label: "Product",
-    items: [
-      { to: "/features", label: "Features", desc: "All 10 service modules" },
-      { to: "/pricing", label: "Pricing", desc: "Free, Pro & Business tiers" },
-      { to: "/onboarding", label: "Get Started", desc: "Create your account" },
-    ],
-  },
-  {
-    label: "Commerce",
-    items: [
-      { to: "/checkout", label: "Payments", desc: "How Mio handles checkout" },
-      { to: "/easytap", label: "EasyTap Go", desc: "NFC in-store experience" },
-      { to: "/providers", label: "Provider Status", desc: "Live gateway health" },
-      { to: "/widget", label: "Widget Demo", desc: "Embed Mio anywhere" },
-    ],
-  },
-  {
-    label: "Business",
-    items: [
-      { to: "/merchant", label: "Merchant Dashboard", desc: "Orders, menus, analytics" },
-      { to: "/developers", label: "Developer Portal", desc: "API docs and SDKs" },
-    ],
-  },
+const NAV_LINKS = [
+  { label: "Features", href: "/features" },
+  { label: "Solutions", href: "/providers" },
+  { label: "Integrations", href: "/easytap" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Developers", href: "/developers" },
 ];
 
-function DropdownMenu({ group, onClose }) {
-  return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 glass border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50">
-      <div className="p-2">
-        {group.items.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            onClick={onClose}
-            className={({ isActive }) =>
-              `flex items-start gap-3 px-3 py-2.5 rounded-xl transition-all group ${
-                isActive ? "bg-violet-500/15" : "hover:bg-white/8"
-              }`
-            }
-          >
-            <div>
-              <div className="text-white text-sm font-medium leading-tight">{item.label}</div>
-              <div className="text-white/45 text-xs mt-0.5">{item.desc}</div>
-            </div>
-          </NavLink>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function Nav() {
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [openGroup, setOpenGroup] = useState(null);
-  const navRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    function handleClick(e) {
-      if (navRef.current && !navRef.current.contains(e.target)) {
-        setOpenGroup(null);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  const allItems = NAV_GROUPS.flatMap((g) => g.items);
+  useEffect(() => { setOpen(false); }, [location]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass border-b border-white/10 py-3" : "py-5"
-      }`}
-      ref={navRef}
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      style={{
+        background: scrolled ? "rgba(255,255,255,0.97)" : "#ffffff",
+        boxShadow: scrolled ? "0 1px 24px rgba(124,58,237,0.08)" : "0 1px 0 #ede9fe",
+        backdropFilter: "blur(12px)",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group shrink-0" aria-label="Mio AI home">
-          <div className="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center shadow-lg">
-            <span className="text-white font-display font-800 text-base leading-none">M</span>
-          </div>
-          <span className="font-display font-700 text-white text-xl tracking-tight">Mio</span>
-          <span className="hidden sm:inline text-white/30 text-xs font-sans ml-1">AI</span>
+        <Link to="/" className="flex items-center gap-2 no-underline">
+          <span
+            className="text-2xl font-display font-bold"
+            style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+          >
+            Mio
+          </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-          {NAV_GROUPS.map((group) => (
-            <div key={group.label} className="relative">
-              <button
-                className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  openGroup === group.label ? "text-white bg-white/8" : "text-white/70 hover:text-white hover:bg-white/5"
-                }`}
-                onClick={() => setOpenGroup(openGroup === group.label ? null : group.label)}
-                aria-expanded={openGroup === group.label}
-                aria-haspopup="true"
-              >
-                {group.label}
-                <ChevronDownIcon
-                  className={`w-3.5 h-3.5 transition-transform ${openGroup === group.label ? "rotate-180" : ""}`}
-                  aria-hidden="true"
-                />
-              </button>
-              {openGroup === group.label && (
-                <DropdownMenu group={group} onClose={() => setOpenGroup(null)} />
-              )}
-            </div>
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map(l => (
+            <Link
+              key={l.href}
+              to={l.href}
+              className="text-sm font-medium no-underline transition-colors"
+              style={{ color: location.pathname === l.href ? "#7c3aed" : "#374151" }}
+            >
+              {l.label}
+            </Link>
           ))}
-        </nav>
+        </div>
 
-        {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-3">
-          <NavLink
-            to="/admin"
-            className={({ isActive }) =>
-              `text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
-                isActive
-                  ? "border-red-500/40 bg-red-500/15 text-red-300"
-                  : "border-white/10 text-white/50 hover:text-white/80 hover:bg-white/5"
-              }`
-            }
-          >
-            Admin ↗
-          </NavLink>
-          <Link
-            to="/onboarding"
-            className="text-sm text-white/70 hover:text-white transition-colors px-3 py-2"
-          >
+        {/* CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          <Link to="/onboarding" className="text-sm font-semibold no-underline" style={{ color: "#374151" }}>
             Sign In
           </Link>
-          <Link
-            to="/onboarding"
-            className="gradient-bg text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity shadow-lg"
-          >
+          <Link to="/onboarding" className="btn-primary text-sm px-5 py-2.5">
             Get Started
           </Link>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden text-white/80 hover:text-white transition-colors p-2"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          className="md:hidden p-2 rounded-lg"
+          style={{ color: "#374151" }}
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
         >
-          {menuOpen ? <XIcon className="w-6 h-6" aria-hidden="true" /> : <MenuIcon className="w-6 h-6" aria-hidden="true" />}
+          {open ? <XIcon size={22} /> : <MenuIcon size={22} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="lg:hidden glass border-t border-white/10 mt-2">
-          <nav className="flex flex-col px-4 py-4 gap-1" aria-label="Mobile navigation">
-            {NAV_GROUPS.map((group) => (
-              <div key={group.label}>
-                <div className="text-white/40 text-xs font-semibold uppercase tracking-wider px-2 py-2 mt-2">
-                  {group.label}
-                </div>
-                {group.items.map(({ to, label }) => (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    onClick={() => setMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `py-2.5 px-2 text-base font-medium border-b border-white/5 transition-colors block ${
-                        isActive ? "text-violet-300" : "text-white/80 hover:text-white"
-                      }`
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                ))}
-              </div>
+      {/* Mobile drawer */}
+      {open && (
+        <div className="md:hidden border-t" style={{ background: "#ffffff", borderColor: "#ede9fe" }}>
+          <div className="px-4 py-4 flex flex-col gap-1">
+            {NAV_LINKS.map(l => (
+              <Link
+                key={l.href}
+                to={l.href}
+                className="block px-3 py-2.5 rounded-lg text-sm font-medium no-underline"
+                style={{ color: location.pathname === l.href ? "#7c3aed" : "#374151", background: location.pathname === l.href ? "#f5f3ff" : "transparent" }}
+              >
+                {l.label}
+              </Link>
             ))}
-            <NavLink
-              to="/admin"
-              onClick={() => setMenuOpen(false)}
-              className="mt-3 py-2.5 px-2 text-base font-medium text-white/50 block"
-            >
-              Admin ↗
-            </NavLink>
-            <Link
-              to="/onboarding"
-              onClick={() => setMenuOpen(false)}
-              className="mt-4 gradient-bg text-white font-semibold text-center py-3.5 rounded-xl block"
-            >
-              Get Started Free
-            </Link>
-          </nav>
+            <div className="pt-3 mt-2 border-t flex flex-col gap-2" style={{ borderColor: "#ede9fe" }}>
+              <Link to="/onboarding" className="btn-secondary text-center justify-center">Sign In</Link>
+              <Link to="/onboarding" className="btn-primary text-center justify-center">Get Started Free</Link>
+            </div>
+          </div>
         </div>
       )}
-    </header>
+    </nav>
   );
 }

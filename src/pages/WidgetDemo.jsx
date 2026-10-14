@@ -62,14 +62,14 @@ function ProductCard({ card }) {
     <div className="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-white/12">
       <span className="text-2xl" aria-hidden="true">{card.img}</span>
       <div className="flex-1 min-w-0">
-        <p className="text-white text-xs font-medium truncate">{card.name}</p>
-        <p className="text-white/60 text-xs">{card.store}</p>
+        <p className="text-navy text-xs font-medium truncate">{card.name}</p>
+        <p className="text-gray-500 text-xs">{card.store}</p>
       </div>
       <div className="text-right shrink-0">
         <p className="text-violet-300 text-xs font-bold">{card.price}</p>
         <div className="flex items-center gap-0.5">
           <StarIcon size={9} className="text-amber-400" />
-          <span className="text-white/60 text-xs">{card.rating}</span>
+          <span className="text-gray-500 text-xs">{card.rating}</span>
         </div>
       </div>
     </div>
@@ -154,13 +154,13 @@ function MioWidget({ scenario, onClose }) {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/8 bg-gradient-to-r from-violet-600/20 to-indigo-600/20">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full gradient-bg flex items-center justify-center text-white font-display font-bold text-xs">M</div>
+          <div className="w-7 h-7 rounded-full gradient-bg flex items-center justify-center text-navy font-display font-bold text-xs">M</div>
           <div>
-            <p className="text-white text-sm font-semibold leading-none">Mio AI</p>
+            <p className="text-navy text-sm font-semibold leading-none">Mio AI</p>
             <p className="text-emerald-400 text-xs">Online</p>
           </div>
         </div>
-        <button onClick={onClose} className="text-white/40 hover:text-white/80 transition-colors p-1" aria-label="Close widget">
+        <button onClick={onClose} className="text-gray-400 hover:text-gray-700 transition-colors p-1" aria-label="Close widget">
           <XIcon size={16} />
         </button>
       </div>
@@ -170,13 +170,13 @@ function MioWidget({ scenario, onClose }) {
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
             {msg.role === "mio" && (
-              <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
+              <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-navy font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
             )}
             <div className={`max-w-[85%] space-y-1.5 ${msg.role === "user" ? "" : ""}`}>
               <div className={`px-3 py-2 rounded-2xl text-xs leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-violet-600/80 text-white rounded-br-sm"
-                  : "bg-white/10 text-white rounded-bl-sm"
+                  ? "bg-violet-600/80 text-navy rounded-br-sm"
+                  : "bg-white/10 text-navy rounded-bl-sm"
               }`}>
                 {msg.text}
               </div>
@@ -190,7 +190,7 @@ function MioWidget({ scenario, onClose }) {
         ))}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
+            <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-navy font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
             <div className="px-3 py-2 rounded-2xl rounded-bl-sm bg-white/10 flex items-center gap-1">
               {[0, 1, 2].map((i) => (
                 <span key={i} className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} aria-hidden="true" />
@@ -209,7 +209,7 @@ function MioWidget({ scenario, onClose }) {
           aria-label={listening ? "Stop listening" : "Start voice input"}
           aria-pressed={listening}
         >
-          <MicIcon size={14} className="text-white" />
+          <MicIcon size={14} className="text-navy" />
         </button>
         <label htmlFor="mio-input" className="sr-only">Type a message</label>
         <input
@@ -219,7 +219,7 @@ function MioWidget({ scenario, onClose }) {
           onChange={(e) => setInputVal(e.target.value)}
           onKeyDown={handleKey}
           placeholder="Type or tap the mic…"
-          className="flex-1 bg-white/8 border border-white/10 rounded-xl px-3 py-1.5 text-white text-xs placeholder:text-white/40 outline-hidden focus:border-violet-500/50"
+          className="flex-1 bg-white/8 border border-white/10 rounded-xl px-3 py-1.5 text-navy text-xs placeholder:text-gray-400 outline-hidden focus:border-violet-500/50"
         />
         <button
           onClick={handleSend}
@@ -227,7 +227,7 @@ function MioWidget({ scenario, onClose }) {
           className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center shrink-0 hover:opacity-90 transition-opacity disabled:opacity-40"
           aria-label="Send message"
         >
-          <SendIcon size={13} className="text-white" />
+          <SendIcon size={13} className="text-navy" />
         </button>
       </div>
     </div>
@@ -245,17 +245,17 @@ export default function WidgetDemo() {
   ];
 
   return (
-    <main className="min-h-screen bg-navy pt-16">
+    <main className="min-h-screen bg-white pt-16">
       {/* Hero */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 text-center border-b border-white/8">
         <div className="max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-violet-500/30 text-violet-300 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border shadow-sm border border-violet-500/30 text-violet-300 text-xs font-medium mb-6">
             Embeddable Mio Widget
           </div>
-          <h1 className="text-4xl sm:text-5xl font-display font-bold text-white mb-4">
+          <h1 className="text-4xl sm:text-5xl font-display font-bold text-navy mb-4">
             Add Mio to <span className="gradient-text">any website</span>
           </h1>
-          <p className="text-white/70 text-lg mb-3">
+          <p className="text-gray-600 text-lg mb-3">
             One line of code gives your visitors a fully capable voice and chat AI assistant — shopping, ordering, booking, and payments included.
           </p>
         </div>
@@ -267,7 +267,7 @@ export default function WidgetDemo() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Left: mock site */}
             <div className="relative">
-              <div className="glass rounded-2xl border border-white/8 overflow-hidden">
+              <div className="bg-white border border-border shadow-sm rounded-2xl border border-white/8 overflow-hidden">
                 {/* Mock browser bar */}
                 <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/3">
                   <div className="flex gap-1.5">
@@ -275,7 +275,7 @@ export default function WidgetDemo() {
                     <div className="w-3 h-3 rounded-full bg-amber-500/60" />
                     <div className="w-3 h-3 rounded-full bg-emerald-500/60" />
                   </div>
-                  <div className="flex-1 bg-white/6 rounded px-3 py-1 text-white/40 text-xs font-mono">yourwebsite.com</div>
+                  <div className="flex-1 bg-white/6 rounded px-3 py-1 text-gray-400 text-xs font-mono">yourwebsite.com</div>
                 </div>
                 {/* Mock site content */}
                 <div className="p-6 min-h-72 relative">
@@ -295,7 +295,7 @@ export default function WidgetDemo() {
                   {!widgetOpen && (
                     <button
                       onClick={() => setWidgetOpen(true)}
-                      className="absolute bottom-4 right-4 w-12 h-12 rounded-full gradient-bg shadow-lg shadow-violet-900/40 flex items-center justify-center text-white font-display font-bold text-lg animate-pulse-glow"
+                      className="absolute bottom-4 right-4 w-12 h-12 rounded-full gradient-bg shadow-lg shadow-violet-900/40 flex items-center justify-center text-navy font-display font-bold text-lg animate-pulse-glow"
                       aria-label="Open Mio assistant"
                     >
                       M
@@ -309,20 +309,20 @@ export default function WidgetDemo() {
                 </div>
               </div>
               {!widgetOpen && (
-                <p className="text-center text-white/50 text-sm mt-3">Click the Mio button to open the assistant</p>
+                <p className="text-center text-gray-500 text-sm mt-3">Click the Mio button to open the assistant</p>
               )}
             </div>
 
             {/* Right: controls + code */}
             <div className="space-y-6">
               <div>
-                <h2 className="text-white font-display font-bold text-2xl mb-2">Try a live demo</h2>
-                <p className="text-white/60 text-sm">Pick a scenario and interact with the Mio widget — type or tap the mic button.</p>
+                <h2 className="text-navy font-display font-bold text-2xl mb-2">Try a live demo</h2>
+                <p className="text-gray-500 text-sm">Pick a scenario and interact with the Mio widget — type or tap the mic button.</p>
               </div>
 
               {/* Scenario selector */}
               <div>
-                <p className="text-white/70 text-xs font-medium mb-2">Scenario</p>
+                <p className="text-gray-600 text-xs font-medium mb-2">Scenario</p>
                 <div className="flex gap-2">
                   {scenarios.map((s) => (
                     <button
@@ -330,8 +330,8 @@ export default function WidgetDemo() {
                       onClick={() => { setScenario(s.id); setWidgetOpen(true); }}
                       className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm transition-all ${
                         scenario === s.id
-                          ? "gradient-bg text-white"
-                          : "glass border border-white/12 text-white/70 hover:text-white hover:bg-white/8"
+                          ? "gradient-bg text-navy"
+                          : "bg-white border border-border shadow-sm border border-white/12 text-gray-600 hover:text-navy hover:bg-white/8"
                       }`}
                       aria-pressed={scenario === s.id}
                     >
@@ -350,11 +350,11 @@ export default function WidgetDemo() {
                   { icon: "🔒", title: "Secure by Design", desc: "No credentials in client code — public key only" },
                   { icon: "🎨", title: "Fully Themeable", desc: "Match your brand with a single data attribute" },
                 ].map((f) => (
-                  <div key={f.title} className="flex items-start gap-3 p-3 glass rounded-xl border border-white/8">
+                  <div key={f.title} className="flex items-start gap-3 p-3 bg-white border border-border shadow-sm rounded-xl border border-white/8">
                     <span className="text-xl" aria-hidden="true">{f.icon}</span>
                     <div>
-                      <p className="text-white text-sm font-medium">{f.title}</p>
-                      <p className="text-white/60 text-xs">{f.desc}</p>
+                      <p className="text-navy text-sm font-medium">{f.title}</p>
+                      <p className="text-gray-500 text-xs">{f.desc}</p>
                     </div>
                   </div>
                 ))}
