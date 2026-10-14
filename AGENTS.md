@@ -60,13 +60,16 @@ src/
     PhoneMockup.jsx     # Phone frame wrapper
   pages/
     Home.jsx              # Full landing page (hero, categories, mockups, dashboard, CTA)
-    Features.jsx          # All features detail page
-    Onboarding.jsx        # 5-step onboarding wizard
-    Pricing.jsx           # 3-tier pricing page
-    MerchantDashboard.jsx # Business/merchant dashboard — orders, products, team, integrations
-    AdminDashboard.jsx    # Platform admin — provider health, security events, merchant approvals
-    DeveloperPortal.jsx   # Developer portal — API reference, SDKs, guides, code samples
-    WidgetDemo.jsx        # Embeddable Mio widget live demo — shopping, food, travel scenarios
+    Features.jsx          # All 10 service modules, tabbed + core AI engine features (/features)
+    Onboarding.jsx        # 5-step onboarding wizard (/onboarding)
+    Pricing.jsx           # 3-tier pricing page (/pricing)
+    MerchantDashboard.jsx # Business/merchant dashboard — orders, products, team, integrations (/merchant)
+    AdminDashboard.jsx    # Platform admin — provider health, security events, merchant approvals (/admin)
+    DeveloperPortal.jsx   # Developer portal — API reference, SDKs, guides, code samples (/developers)
+    WidgetDemo.jsx        # Embeddable Mio widget live demo — shopping, food, travel scenarios (/widget)
+    EasyTapGo.jsx         # NFC/EasyTap Go integration — scenarios, security, SDK setup (/easytap)
+    Providers.jsx         # Universal provider gateway — live status, ops matrix, 10 categories (/providers)
+    Checkout.jsx          # Checkout & payments flow — live demo, steps, trust features (/checkout)
     NotFound.jsx          # 404 page
 public/
   favicon.svg           # Mio "M" mark in violet gradient

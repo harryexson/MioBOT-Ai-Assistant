@@ -8,6 +8,9 @@ import MerchantDashboard from "./pages/MerchantDashboard.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import DeveloperPortal from "./pages/DeveloperPortal.jsx";
 import WidgetDemo from "./pages/WidgetDemo.jsx";
+import EasyTapGo from "./pages/EasyTapGo.jsx";
+import Providers from "./pages/Providers.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -23,6 +26,9 @@ export default function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/developers" element={<DeveloperPortal />} />
         <Route path="/widget" element={<WidgetDemo />} />
+        <Route path="/easytap" element={<EasyTapGo />} />
+        <Route path="/providers" element={<Providers />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
