@@ -14,6 +14,7 @@ import WidgetDemo from "./pages/WidgetDemo.jsx";
 import EasyTapGo from "./pages/EasyTapGo.jsx";
 import Providers from "./pages/Providers.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import Integrations from "./pages/Integrations.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/easytap" element={<EasyTapGo />} />
         <Route path="/providers" element={<Providers />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/integrations" element={<Integrations />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>

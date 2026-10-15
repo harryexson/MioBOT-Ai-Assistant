@@ -9,7 +9,7 @@ import { useAuth } from "../lib/useAuth.jsx";
 const NAV_LINKS = [
   { label: "Features", href: "/features" },
   { label: "Solutions", href: "/providers" },
-  { label: "Integrations", href: "/easytap" },
+  { label: "Integrations", href: "/integrations" },
   { label: "Pricing", href: "/pricing" },
   { label: "Developers", href: "/developers" },
 ];
