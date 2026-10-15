@@ -1,5 +1,202 @@
 @import "tailwindcss";
-
-/* Theme customization lives in tailwind.config.js, bridged in via @config.
-   (You can also define theme tokens directly here with @theme { ... }.) */
 @config "../tailwind.config.cjs";
+
+@theme {
+  --font-display: "Syne", Georgia, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --color-navy: #0f1035;
+  --color-navy-800: #1a1b4b;
+  --color-navy-700: #23245a;
+  --color-violet: #7c3aed;
+  --color-violet-light: #8b5cf6;
+  --color-indigo: #4f46e5;
+  --color-purple-soft: #a78bfa;
+  --color-accent: #c084fc;
+  --color-surface: #f8f7ff;
+  --color-border: #ede9fe;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background: #ffffff;
+  color: #0f1035;
+  font-family: "DM Sans", system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+/* ── Gradient utilities ── */
+.gradient-text {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 60%, #6366f1 100%);
+}
+
+.gradient-bg-soft {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+}
+
+/* ── Glass card (light mode) ── */
+.glass {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(124,58,237,0.12);
+  box-shadow: 0 4px 24px rgba(124,58,237,0.08);
+}
+
+.glass-violet {
+  background: rgba(124,58,237,0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(124,58,237,0.2);
+}
+
+/* ── Category icon tiles ── */
+.icon-tile {
+  background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* ── Phone mockup ── */
+.phone-mockup {
+  background: #ffffff;
+  border-radius: 40px;
+  border: 2px solid #e0d9f7;
+  box-shadow: 0 32px 80px rgba(124,58,237,0.18), 0 8px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Animations ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124,58,237,0.4); }
+  70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(124,58,237,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes wave-bar {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-float-delayed { animation: float-delayed 5s ease-in-out infinite 1s; }
+.animate-pulse-ring { animation: pulse-ring 2s ease-in-out infinite; }
+.animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
+.animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
+
+/* Wave bars */
+.wave-bar { animation: wave-bar 1s ease-in-out infinite; }
+.wave-bar:nth-child(2) { animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { animation-delay: 0.3s; }
+.wave-bar:nth-child(5) { animation-delay: 0.2s; }
+
+/* ── Violet glow on cards ── */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(124,58,237,0.15);
+}
+
+/* ── Button styles ── */
+.btn-primary {
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 28px;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-secondary {
+  background: transparent;
+  color: #0f1035;
+  border: 1.5px solid #d4d0e8;
+  border-radius: 50px;
+  padding: 13px 28px;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.btn-secondary:hover { border-color: #7c3aed; background: #f5f3ff; }
+
+/* ── Stat badge ── */
+.stat-value {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #7c3aed;
+}
+
+/* ── Section backgrounds ── */
+.section-alt { background: #f8f7ff; }
+.section-white { background: #ffffff; }
+.section-dark {
+  background: linear-gradient(135deg, #0f1035 0%, #1a1b4b 100%);
+  color: #ffffff;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f0f8; }
+::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 3px; }
