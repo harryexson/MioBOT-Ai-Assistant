@@ -1,6 +1,6 @@
 # Project Setup
 
-Last updated: <!-- update this after each change -->
+Last updated: 2026-10-15
 
 Factual state of this project, for the assistant's reference. Record project
 state here only — structure, installed packages, active patterns. Keep it brief.
@@ -51,23 +51,38 @@ This is Tailwind **v4**, not v3. Almost all utilities are identical, but:
 
 ```
 src/
-  App.jsx      # Root component — replace with the user's app
-  main.jsx     # Entry point — renders <App/> into #root, imports index.css
-  index.css    # @import "tailwindcss" + @config bridge
+  App.jsx               # Root — sets up routes
+  main.jsx              # Entry point
+  index.css             # @import "tailwindcss" + @config + @theme tokens
+  components/
+    Nav.jsx             # Sticky navbar with mobile hamburger
+    CategoryCard.jsx    # Service category grid card
+    PhoneMockup.jsx     # Phone frame wrapper
+  pages/
+    Home.jsx              # Full landing page (hero, categories, mockups, dashboard, CTA)
+    Features.jsx          # All 10 service modules, tabbed + core AI engine features (/features)
+    Onboarding.jsx        # 5-step onboarding wizard (/onboarding)
+    Pricing.jsx           # 3-tier pricing page (/pricing)
+    MerchantDashboard.jsx # Business/merchant dashboard — orders, products, team, integrations (/merchant)
+    AdminDashboard.jsx    # Platform admin — provider health, security events, merchant approvals (/admin)
+    DeveloperPortal.jsx   # Developer portal — API reference, SDKs, guides, code samples (/developers)
+    WidgetDemo.jsx        # Embeddable Mio widget live demo — shopping, food, travel scenarios (/widget)
+    EasyTapGo.jsx         # NFC/EasyTap Go integration — scenarios, security, SDK setup (/easytap)
+    Providers.jsx         # Universal provider gateway — live status, ops matrix, 10 categories (/providers)
+    Checkout.jsx          # Checkout & payments flow — live demo, steps, trust features (/checkout)
+    NotFound.jsx          # 404 page
 public/
-  favicon.svg  # Placeholder — replace with the user's mark
-index.html
-package.json · vite.config.js · tailwind.config.cjs
+  favicon.svg           # Mio "M" mark in violet gradient
+index.html              # Title: "Mio AI — Talk. Find. Book. Order. Pay."
 ```
 
-`dist/` is committed (the deploy reads from it); `node_modules/` is ignored.
+## Design system
 
-## Starting point
-
-`App.jsx` ships a placeholder welcome page. Replace its contents with whatever
-the user is building. Also replace the placeholder `<title>`, meta
-description and `public/favicon.svg` with ones that match the
-business — see your instructions for the full checklist.
+- **Typefaces:** Syne (display/headings) + DM Sans (body) via Google Fonts vite-ignore link
+- **Palette:** White background (#ffffff), navy text (#0f1035), violet/purple gradient (#7c3aed → #4f46e5)
+- **Theme tokens:** `--font-display`, `--font-sans`, `--color-navy`, `--color-violet` in @theme
+- **Utilities:** `.glass`, `.glass-light`, `.gradient-bg`, `.gradient-text`, `.glow-violet`, `.phone-mockup`
+- **Animations:** float, pulse-glow, slide-up, wave (CSS keyframes in index.css)
 
 ## Routing & asset paths
 
@@ -101,3 +116,9 @@ works from any of them — so two rules keep links and assets from breaking:
 
   (or `<BrowserRouter basename={basename}>`). This makes the app mount
   correctly whether served from `/` or a longer prefix.
+
+## GitHub repo
+
+Remote: https://github.com/harryexson/MioBOT-Ai-Assistant.git
+Branch: dev
+Note: Push requires GitHub credentials — provide a personal access token or SSH key to push.
