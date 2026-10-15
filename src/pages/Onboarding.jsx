@@ -73,7 +73,7 @@ export default function Onboarding() {
               <button onClick={next} className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: 15, padding: "14px 0" }}>
                 Get Started <ArrowRightIcon size={18} aria-hidden="true" />
               </button>
-              <p style={{ color: "#9ca3af", fontSize: 13, marginTop: 14 }}>
+              <p style={{ color: "#71767f", fontSize: 13, marginTop: 14 }}>
                 Already have an account?{" "}
                 <Link to="/" style={{ color: "#7c3aed", fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
               </p>
@@ -84,7 +84,7 @@ export default function Onboarding() {
           {step === 1 && (
             <div>
               <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>What would you like to use Mio for?</h2>
-              <p style={{ color: "#9ca3af", fontSize: 13, marginBottom: 20 }}>Choose one or add more later</p>
+              <p style={{ color: "#71767f", fontSize: 13, marginBottom: 20 }}>Choose one or add more later</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
                 {INTERESTS.map(({ icon, label }) => (
                   <button
@@ -142,7 +142,7 @@ export default function Onboarding() {
                 <button onClick={back} style={{ background: "#f3f4f6", border: "none", borderRadius: 12, padding: "12px 16px", cursor: "pointer", color: "#374151" }}>
                   <ArrowLeftIcon size={16} aria-hidden="true" />
                 </button>
-                <button onClick={next} style={{ flex: 1, background: "transparent", border: "1.5px solid #e5e7eb", borderRadius: 12, padding: "12px 0", cursor: "pointer", color: "#9ca3af", fontSize: 13, fontWeight: 500 }}>
+                <button onClick={next} style={{ flex: 1, background: "transparent", border: "1.5px solid #e5e7eb", borderRadius: 12, padding: "12px 0", cursor: "pointer", color: "#71767f", fontSize: 13, fontWeight: 500 }}>
                   Skip for now
                 </button>
                 {voiceEnabled && (
@@ -158,7 +158,7 @@ export default function Onboarding() {
           {step === 3 && (
             <div>
               <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>Add a payment method</h2>
-              <p style={{ color: "#9ca3af", fontSize: 13, marginBottom: 18 }}>Your payment information is safe and securely encrypted.</p>
+              <p style={{ color: "#71767f", fontSize: 13, marginBottom: 18 }}>Your payment information is safe and securely encrypted.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 18 }}>
                 {PAYMENTS.map(({ icon, label, sub }) => (
                   <button
@@ -170,14 +170,14 @@ export default function Onboarding() {
                     <span style={{ fontSize: 22, width: 32, textAlign: "center" }} aria-hidden="true">{icon}</span>
                     <div style={{ textAlign: "left" }}>
                       <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#0f1035" }}>{label}</p>
-                      {sub && <p style={{ margin: 0, fontSize: 11, color: "#9ca3af" }}>{sub}</p>}
+                      {sub && <p style={{ margin: 0, fontSize: 11, color: "#71767f" }}>{sub}</p>}
                     </div>
                     {paymentChosen === label && <CheckIcon size={14} style={{ color: "#7c3aed", marginLeft: "auto" }} aria-hidden="true" />}
                   </button>
                 ))}
                 <button style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: "transparent", border: "1.5px dashed #e5e7eb", borderRadius: 12, cursor: "pointer" }}>
                   <span style={{ fontSize: 20, color: "#7c3aed", width: 32, textAlign: "center" }}>+</span>
-                  <span style={{ fontSize: 13, color: "#9ca3af" }}>Add Later</span>
+                  <span style={{ fontSize: 13, color: "#71767f" }}>Add Later</span>
                 </button>
               </div>
               <div style={{ display: "flex", gap: 10 }}>

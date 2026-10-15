@@ -172,7 +172,7 @@ export default function Providers() {
               <div className={`mb-2 ${s.color || "text-violet-400"}`}>{s.icon}</div>
               <div className={`font-display font-800 text-2xl text-navy mb-0.5 ${s.color || ""}`}>{s.value}</div>
               <div className="text-gray-500 text-xs">{s.label}</div>
-              <div className="text-navy/35 text-[10px] mt-0.5">{s.sub}</div>
+              <div className="text-gray-500 text-[10px] mt-0.5">{s.sub}</div>
             </div>
           ))}
         </div>
@@ -211,7 +211,7 @@ export default function Providers() {
                 <span className="text-2xl shrink-0" aria-hidden="true">{p.emoji}</span>
                 <div className="flex-1 min-w-0">
                   <div className="font-semibold text-navy text-sm">{p.category}</div>
-                  <div className="text-navy/45 text-xs mt-0.5 truncate">
+                  <div className="text-gray-500 text-xs mt-0.5 truncate">
                     {p.providers.slice(0, 3).join(", ")}{p.providers.length > 3 ? ` +${p.providers.length - 3} more` : ""}
                   </div>
                 </div>
@@ -226,7 +226,7 @@ export default function Providers() {
                   </div>
                 </div>
                 <StatusBadge status={p.status} />
-                <span className="text-navy/30 text-xs ml-2">{expanded === i ? "▲" : "▼"}</span>
+                <span className="text-gray-400 text-xs ml-2">{expanded === i ? "▲" : "▼"}</span>
               </button>
 
               {/* Expanded detail */}
@@ -255,7 +255,7 @@ export default function Providers() {
                         {OPS_FULL.map((op, oi) => {
                           const supported = p.ops.includes(op);
                           return (
-                            <div key={op} className={`flex items-center gap-1.5 text-xs ${supported ? "text-gray-600" : "text-navy/25"}`}>
+                            <div key={op} className={`flex items-center gap-1.5 text-xs ${supported ? "text-gray-600" : "text-gray-400"}`}>
                               {supported
                                 ? <CheckIcon className="w-3 h-3 text-green-400 shrink-0" aria-hidden="true" />
                                 : <span className="w-3 h-3 flex items-center justify-center text-navy/20 shrink-0" aria-hidden="true">–</span>

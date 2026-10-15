@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import MenuIcon from "icon:menu";
 import XIcon from "icon:x";
+import SearchIcon from "icon:search";
+import UserIcon from "icon:user";
+import { useAuth } from "../lib/useAuth.jsx";
 
 const NAV_LINKS = [
   { label: "Features", href: "/features" },
@@ -14,7 +17,9 @@ const NAV_LINKS = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, logout, isLoggedIn } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -22,56 +27,87 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); }, [location]);
+  useEffect(() => { setOpen(false); setUserMenuOpen(false); }, [location]);
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      role="navigation"
+      aria-label="Main navigation"
       style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
         background: scrolled ? "rgba(255,255,255,0.97)" : "#ffffff",
         boxShadow: scrolled ? "0 1px 24px rgba(124,58,237,0.08)" : "0 1px 0 #ede9fe",
         backdropFilter: "blur(12px)",
+        transition: "all 0.3s",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 no-underline">
-          <span
-            className="text-2xl font-display font-bold"
-            style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-          >
+        <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ width: 32, height: 32, borderRadius: 10, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ color: "#fff", fontWeight: 800, fontSize: 16, fontFamily: "Syne,sans-serif" }}>M</span>
+          </div>
+          <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 22, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Mio
           </span>
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div style={{ display: "none", gap: 32, alignItems: "center" }} className="md-nav-links">
+          <style>{`@media(min-width:768px){.md-nav-links{display:flex!important}.mobile-nav-btn{display:none!important}}`}</style>
           {NAV_LINKS.map(l => (
             <Link
               key={l.href}
               to={l.href}
-              className="text-sm font-medium no-underline transition-colors"
-              style={{ color: location.pathname === l.href ? "#7c3aed" : "#374151" }}
+              style={{ fontSize: 14, fontWeight: 500, textDecoration: "none", color: location.pathname === l.href ? "#7c3aed" : "#374151", transition: "color 0.2s" }}
             >
               {l.label}
             </Link>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link to="/onboarding" className="text-sm font-semibold no-underline" style={{ color: "#374151" }}>
-            Sign In
+        {/* Desktop CTA */}
+        <div style={{ display: "none", alignItems: "center", gap: 10 }} className="md-nav-links">
+          {/* Search shortcut */}
+          <Link to="/search" style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 50, background: "#f8f7ff", border: "1.5px solid #ede9fe", textDecoration: "none", color: "#6b7280", fontSize: 13 }}>
+            <SearchIcon size={14} />
+            Search
           </Link>
-          <Link to="/onboarding" className="btn-primary text-sm px-5 py-2.5">
-            Get Started
-          </Link>
+
+          {isLoggedIn ? (
+            <div style={{ position: "relative" }}>
+              <button
+                onClick={() => setUserMenuOpen(o => !o)}
+                style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 14px", borderRadius: 50, background: "#f5f3ff", border: "1.5px solid #ede9fe", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#7c3aed" }}
+                aria-label="User menu"
+                aria-expanded={userMenuOpen}
+              >
+                <div style={{ width: 26, height: 26, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <UserIcon size={14} style={{ color: "#fff" }} />
+                </div>
+                {user?.name?.split(" ")[0] || "Account"}
+              </button>
+              {userMenuOpen && (
+                <div style={{ position: "absolute", right: 0, top: "calc(100% + 8px)", background: "#fff", borderRadius: 16, border: "1.5px solid #ede9fe", boxShadow: "0 12px 40px rgba(124,58,237,0.14)", padding: "8px", minWidth: 180, zIndex: 100 }}>
+                  <p style={{ padding: "8px 12px", margin: 0, fontSize: 12, color: "#6b7280", borderBottom: "1px solid #f3f4f6" }}>{user?.email}</p>
+                  <Link to="/merchant" style={{ display: "block", padding: "9px 12px", fontSize: 13, color: "#374151", textDecoration: "none", borderRadius: 10 }}>Dashboard</Link>
+                  <Link to="/search" style={{ display: "block", padding: "9px 12px", fontSize: 13, color: "#374151", textDecoration: "none", borderRadius: 10 }}>My Orders</Link>
+                  <button onClick={logout} style={{ width: "100%", textAlign: "left", padding: "9px 12px", fontSize: 13, color: "#dc2626", background: "none", border: "none", cursor: "pointer", borderRadius: 10, fontFamily: "DM Sans,sans-serif" }}>Sign Out</button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <Link to="/signin" style={{ fontSize: 14, fontWeight: 600, textDecoration: "none", color: "#374151" }}>Sign In</Link>
+              <Link to="/signin" className="btn-primary" style={{ fontSize: 13, padding: "10px 20px" }}>Get Started</Link>
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2 rounded-lg"
-          style={{ color: "#374151" }}
+          className="mobile-nav-btn"
+          style={{ padding: "8px", borderRadius: 10, color: "#374151", background: "none", border: "none", cursor: "pointer" }}
           onClick={() => setOpen(o => !o)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -82,21 +118,32 @@ export default function Nav() {
 
       {/* Mobile drawer */}
       {open && (
-        <div className="md:hidden border-t" style={{ background: "#ffffff", borderColor: "#ede9fe" }}>
-          <div className="px-4 py-4 flex flex-col gap-1">
+        <div style={{ borderTop: "1px solid #ede9fe", background: "#ffffff" }}>
+          <div style={{ padding: "16px 24px", display: "flex", flexDirection: "column", gap: 4 }}>
+            <Link to="/search" style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 12px", borderRadius: 12, background: "#f8f7ff", border: "1.5px solid #ede9fe", textDecoration: "none", color: "#374151", fontSize: 14, fontWeight: 600, marginBottom: 8 }}>
+              <SearchIcon size={16} style={{ color: "#7c3aed" }} /> Search Mio
+            </Link>
             {NAV_LINKS.map(l => (
               <Link
                 key={l.href}
                 to={l.href}
-                className="block px-3 py-2.5 rounded-lg text-sm font-medium no-underline"
-                style={{ color: location.pathname === l.href ? "#7c3aed" : "#374151", background: location.pathname === l.href ? "#f5f3ff" : "transparent" }}
+                style={{ display: "block", padding: "10px 12px", borderRadius: 12, fontSize: 14, fontWeight: 500, textDecoration: "none", color: location.pathname === l.href ? "#7c3aed" : "#374151", background: location.pathname === l.href ? "#f5f3ff" : "transparent" }}
               >
                 {l.label}
               </Link>
             ))}
-            <div className="pt-3 mt-2 border-t flex flex-col gap-2" style={{ borderColor: "#ede9fe" }}>
-              <Link to="/onboarding" className="btn-secondary text-center justify-center">Sign In</Link>
-              <Link to="/onboarding" className="btn-primary text-center justify-center">Get Started Free</Link>
+            <div style={{ paddingTop: 12, marginTop: 8, borderTop: "1px solid #ede9fe", display: "flex", flexDirection: "column", gap: 8 }}>
+              {isLoggedIn ? (
+                <>
+                  <Link to="/merchant" className="btn-secondary" style={{ textAlign: "center", justifyContent: "center" }}>Dashboard</Link>
+                  <button onClick={logout} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>Sign Out</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/signin" className="btn-secondary" style={{ textAlign: "center", justifyContent: "center" }}>Sign In</Link>
+                  <Link to="/signin" className="btn-primary" style={{ textAlign: "center", justifyContent: "center" }}>Get Started Free</Link>
+                </>
+              )}
             </div>
           </div>
         </div>

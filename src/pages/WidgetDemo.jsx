@@ -170,7 +170,7 @@ function MioWidget({ scenario, onClose }) {
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
             {msg.role === "mio" && (
-              <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-navy font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
+              <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
             )}
             <div className={`max-w-[85%] space-y-1.5 ${msg.role === "user" ? "" : ""}`}>
               <div className={`px-3 py-2 rounded-2xl text-xs leading-relaxed ${
@@ -190,7 +190,7 @@ function MioWidget({ scenario, onClose }) {
         ))}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-navy font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
+            <div className="w-6 h-6 rounded-full gradient-bg flex items-center justify-center text-white font-bold text-xs mr-1.5 mt-auto shrink-0">M</div>
             <div className="px-3 py-2 rounded-2xl rounded-bl-sm bg-white/10 flex items-center gap-1">
               {[0, 1, 2].map((i) => (
                 <span key={i} className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} aria-hidden="true" />

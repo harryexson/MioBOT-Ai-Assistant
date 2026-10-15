@@ -134,7 +134,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        <p style={{ color: "#9ca3af", fontSize: 13, textAlign: "center", marginTop: 32 }}>
+        <p style={{ color: "#71767f", fontSize: 13, textAlign: "center", marginTop: 32 }}>
           All plans include a 14-day money-back guarantee. Cancel anytime.
         </p>
       </div>

@@ -1,6 +1,9 @@
 import { Routes, Route } from "react-router";
+import { AuthProvider } from "./lib/useAuth.jsx";
 import Nav from "./components/Nav.jsx";
 import Home from "./pages/Home.jsx";
+import Search from "./pages/Search.jsx";
+import SignIn from "./pages/SignIn.jsx";
 import Onboarding from "./pages/Onboarding.jsx";
 import Features from "./pages/Features.jsx";
 import Pricing from "./pages/Pricing.jsx";
@@ -15,10 +18,12 @@ import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   return (
-    <>
+    <AuthProvider>
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/features" element={<Features />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/pricing" element={<Pricing />} />
@@ -31,6 +36,6 @@ export default function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }

@@ -100,7 +100,7 @@ export default function Checkout() {
               <div className="w-9 h-9 gradient-bg rounded-xl flex items-center justify-center text-sm">🍔</div>
               <div>
                 <div className="text-navy font-semibold text-sm">{DEMO_ORDER.merchant}</div>
-                <div className="text-navy/45 text-xs">Food delivery · Est. 28 min</div>
+                <div className="text-gray-500 text-xs">Food delivery · Est. 28 min</div>
               </div>
             </div>
 
@@ -211,7 +211,7 @@ export default function Checkout() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-center gap-2 mt-4 text-navy/35 text-xs">
+                <div className="flex items-center justify-center gap-2 mt-4 text-gray-500 text-xs">
                   <LockIcon className="w-3 h-3" aria-hidden="true" />
                   End-to-end encrypted · Never stores card details
                 </div>
