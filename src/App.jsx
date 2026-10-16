@@ -18,6 +18,7 @@ import Integrations from "./pages/Integrations.jsx";
 import PartnerPortal from "./pages/PartnerPortal.jsx";
 import CommissionDashboard from "./pages/CommissionDashboard.jsx";
 import VoiceSearch from "./pages/VoiceSearch.jsx";
+import UserDashboard from "./pages/UserDashboard.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/partners" element={<PartnerPortal />} />
         <Route path="/commissions" element={<CommissionDashboard />} />
         <Route path="/voice" element={<VoiceSearch />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>

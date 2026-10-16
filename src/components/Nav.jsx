@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import MenuIcon from "icon:menu";
 import XIcon from "icon:x";
 import SearchIcon from "icon:search";
@@ -21,6 +21,7 @@ export default function Nav() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [authModal, setAuthModal] = useState(null); // "signup" | "signin" | null
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout, isLoggedIn } = useAuth();
 
   useEffect(() => {
@@ -87,9 +88,10 @@ export default function Nav() {
               {userMenuOpen && (
                 <div style={{ position: "absolute", right: 0, top: "calc(100% + 8px)", background: "#fff", borderRadius: 16, border: "1.5px solid #ede9fe", boxShadow: "0 12px 40px rgba(124,58,237,0.14)", padding: "8px", minWidth: 180, zIndex: 100 }}>
                   <p style={{ padding: "8px 12px", margin: 0, fontSize: 12, color: "#6b7280", borderBottom: "1px solid #f3f4f6" }}>{user?.email}</p>
-                  <Link to="/merchant" style={{ display: "block", padding: "9px 12px", fontSize: 13, color: "#374151", textDecoration: "none", borderRadius: 10 }}>Dashboard</Link>
-                  <Link to="/search" style={{ display: "block", padding: "9px 12px", fontSize: 13, color: "#374151", textDecoration: "none", borderRadius: 10 }}>My Orders</Link>
-                  <button onClick={logout} style={{ width: "100%", textAlign: "left", padding: "9px 12px", fontSize: 13, color: "#dc2626", background: "none", border: "none", cursor: "pointer", borderRadius: 10, fontFamily: "DM Sans,sans-serif" }}>Sign Out</button>
+                  <Link to="/dashboard" style={{ display: "block", padding: "9px 12px", fontSize: 13, color: "#374151", textDecoration: "none", borderRadius: 10 }}>My Dashboard</Link>
+                  <Link to="/voice" style={{ display: "block", padding: "9px 12px", fontSize: 13, color: "#374151", textDecoration: "none", borderRadius: 10 }}>Search & Shop</Link>
+                  <Link to="/pricing" style={{ display: "block", padding: "9px 12px", fontSize: 13, color: "#374151", textDecoration: "none", borderRadius: 10 }}>Upgrade Plan</Link>
+                  <button onClick={logout} style={{ width: "100%", textAlign: "left", padding: "9px 12px", fontSize: 13, color: "#dc2626", background: "none", border: "none", cursor: "pointer", borderRadius: 10, fontFamily: "Space Grotesk,sans-serif" }}>Sign Out</button>
                 </div>
               )}
             </div>
@@ -149,7 +151,7 @@ export default function Nav() {
         <AuthModal
           mode={authModal}
           onClose={() => setAuthModal(null)}
-          onSuccess={() => setAuthModal(null)}
+          onSuccess={() => { setAuthModal(null); navigate("/dashboard"); }}
         />
       )}
     </nav>
