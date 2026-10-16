@@ -179,25 +179,32 @@ function ScreenWelcome() {
 
 /* ─── Phone screen: Categories ───────────────────────────────────── */
 function ScreenCategories() {
+  const cats = [
+    { e:"🛍️", bg:"#fef3c7", c:"#d97706", l:"Shopping" },
+    { e:"🍔", bg:"#fee2e2", c:"#dc2626", l:"Food & Restaurants" },
+    { e:"✈️", bg:"#dbeafe", c:"#2563eb", l:"Travel & Hotels" },
+    { e:"📅", bg:"#d1fae5", c:"#059669", l:"Services & Bookings" },
+    { e:"💳", bg:"#ede9fe", c:"#7c3aed", l:"Pay Bills & Invoices" },
+    { e:"🎟️", bg:"#fce7f3", c:"#db2777", l:"Events & Tickets" },
+    { e:"✨", bg:"#f3f4f6", c:"#374151", l:"Other" },
+  ];
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 12px", background: "#fff", gap: 7 }}>
-      <p style={{ margin: 0, fontSize: 10, fontWeight: 700, color: "#0f1035" }}>What would you like to use Mio for?</p>
-      {[
-        ["🛍️", "Shopping"],
-        ["🍔", "Food & Restaurants"],
-        ["✈️", "Travel & Hotels"],
-        ["📅", "Services & Bookings"],
-        ["💳", "Pay Bills & Invoices"],
-        ["🎟️", "Events & Tickets"],
-        ["✨", "Other"],
-      ].map(([e, l]) => (
-        <div key={l} style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 10px", background: "#f8f7ff", borderRadius: 10, cursor: "pointer" }}>
-          <span style={{ fontSize: 14 }}>{e}</span>
-          <span style={{ fontSize: 11, fontWeight: 600, color: "#0f1035" }}>{l}</span>
-          <div style={{ marginLeft: "auto", width: 14, height: 14, borderRadius: "50%", border: "1.5px solid #d1d5db" }} />
+    <div style={{ display:"flex", flexDirection:"column", height:"100%", padding:"8px 10px 10px", background:"#fff", gap:4 }}>
+      <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:1 }}>
+        <div style={{ display:"flex", flexDirection:"column", gap:2, width:14, flexShrink:0 }}>
+          {[0,1,2].map(i=><div key={i} style={{ height:1.5, background:"#0f1035", borderRadius:1 }}/>)}
+        </div>
+        <p style={{ margin:0, fontSize:9.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035", lineHeight:1.2 }}>What would you like<br/>to use Mio for?</p>
+      </div>
+      <p style={{ margin:"0 0 2px", fontSize:7.5, color:"#6b7280" }}>Choose one or more. You can always add more later.</p>
+      {cats.map(({e,bg,c,l}) => (
+        <div key={l} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 7px", background:"#f9f7ff", borderRadius:8, border:"1px solid #f0eeff" }}>
+          <div style={{ width:22, height:22, borderRadius:6, background:bg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, flexShrink:0 }}>{e}</div>
+          <span style={{ fontSize:9.5, fontWeight:600, color:"#0f1035", fontFamily:"Manrope,sans-serif", flex:1 }}>{l}</span>
+          <div style={{ width:12, height:12, borderRadius:"50%", border:"1.5px solid #d1d5db", flexShrink:0 }}/>
         </div>
       ))}
-      <div style={{ marginTop: "auto", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 11, padding: "9px 0", textAlign: "center", fontSize: 11, fontWeight: 700 }}>Continue</div>
+      <div style={{ marginTop:"auto", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", borderRadius:10, padding:"8px 0", textAlign:"center", fontSize:10.5, fontWeight:700, fontFamily:"Manrope,sans-serif", boxShadow:"0 4px 12px rgba(124,58,237,0.3)" }}>Continue</div>
     </div>
   );
 }
@@ -205,37 +212,30 @@ function ScreenCategories() {
 /* ─── Phone screen: AI Shopping ─────────────────────────────────── */
 function ScreenShopping() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 12px", background: "#fff", gap: 8 }}>
-      <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: "#0f1035" }}>AI Shopping Assistant</p>
-      <div style={{ background: "#f5f3ff", borderRadius: 10, padding: "8px 10px" }}>
-        <p style={{ margin: "0 0 5px", fontSize: 9, color: "#7c3aed", fontWeight: 700 }}>⚡ Top rated</p>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <img src="/static/stock_product-headphones-dca952-0.jpg" alt="Wireless headphones" style={{ width: 40, height: 40, borderRadius: 10, objectFit: "cover", flexShrink: 0 }} />
+    <div style={{ display:"flex", flexDirection:"column", height:"100%", padding:"8px 10px", background:"#fff", gap:6 }}>
+      <p style={{ margin:0, fontSize:10.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>AI Shopping<br/>Assistant</p>
+      {/* Top-rated card */}
+      <div style={{ background:"linear-gradient(135deg,#f5f3ff,#ede9fe)", borderRadius:10, padding:"8px 10px", position:"relative", border:"1px solid #ddd6fe" }}>
+        <div style={{ display:"flex", gap:4, marginBottom:4 }}>
+          <span style={{ background:"#7c3aed", color:"#fff", borderRadius:4, padding:"2px 5px", fontSize:7, fontWeight:700 }}>Top rated</span>
+          <span style={{ background:"#10b981", color:"#fff", borderRadius:4, padding:"2px 5px", fontSize:7, fontWeight:700 }}>Best quality</span>
+          <span style={{ background:"#f59e0b", color:"#fff", borderRadius:4, padding:"2px 5px", fontSize:7, fontWeight:700 }}>Top budget</span>
+        </div>
+        <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+          <div style={{ width:52, height:52, borderRadius:10, background:"linear-gradient(135deg,#ede9fe,#c4b5fd)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:28 }}>🎧</div>
           <div>
-            <p style={{ margin: 0, fontSize: 9, fontWeight: 700, color: "#0f1035" }}>Sony WH-1000XMS</p>
-            <p style={{ margin: 0, fontSize: 8, color: "#6b7280" }}>Best noise-cancelling pick</p>
-            <p style={{ margin: 0, fontSize: 14, fontWeight: 800, color: "#7c3aed" }}>$399</p>
+            <p style={{ margin:0, fontSize:9, fontWeight:800, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>Sony WH-1000XMS</p>
+            <p style={{ margin:0, fontSize:7.5, color:"#6b7280" }}>Best noise-cancelling headphones</p>
+            <p style={{ margin:"3px 0 0", fontSize:18, fontWeight:800, color:"#7c3aed", fontFamily:"Manrope,sans-serif", lineHeight:1 }}>$399</p>
           </div>
         </div>
-        <div style={{ marginTop: 6, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 8, padding: "6px 0", textAlign: "center", fontSize: 10, fontWeight: 700 }}>Add to cart</div>
+        <div style={{ marginTop:6, background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", borderRadius:8, padding:"6px 0", textAlign:"center", fontSize:9.5, fontWeight:700, fontFamily:"Manrope,sans-serif" }}>Add to cart</div>
       </div>
-      <div style={{ display: "flex", gap: 5 }}>
-        {[
-          { img: "/static/stock_mio-shoes-9fc268-0.jpg", label: "Shoes", price: "$119", alt: "Running shoes" },
-          { img: "/static/stock_mio-shoes-9fc268-1.jpg", label: "Bags", price: "$89", alt: "Shopping bags" },
-          { img: "/static/stock_mio-food-cd2d10-0.jpg", label: "Food", price: "$14", alt: "Food delivery" },
-        ].map(p => (
-          <div key={p.label} style={{ flex: 1, background: "#f8f7ff", borderRadius: 8, overflow: "hidden", textAlign: "center" }}>
-            <img src={p.img} alt={p.alt} style={{ width: "100%", height: 36, objectFit: "cover" }} />
-            <p style={{ margin: "3px 0 0", fontSize: 8, fontWeight: 700, color: "#7c3aed", paddingBottom: 3 }}>{p.price}</p>
-          </div>
-        ))}
-      </div>
-      <div style={{ marginTop: "auto", display: "flex", alignItems: "center", gap: 6, background: "#f5f3ff", borderRadius: 10, padding: "7px 10px" }}>
-        <WaveBars size={14} color="#7c3aed" />
-        <p style={{ margin: 0, fontSize: 10, color: "#6b7280", flex: 1 }}>Ask anything...</p>
-        <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ fontSize: 10 }}>🎤</span>
+      {/* Voice bar */}
+      <div style={{ display:"flex", alignItems:"center", gap:6, background:"#f5f3ff", borderRadius:10, padding:"7px 10px", border:"1px solid #ede9fe" }}>
+        <span style={{ fontSize:9, color:"#9ca3af", flex:1 }}>Ask anything...</span>
+        <div style={{ width:22, height:22, borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+          <span style={{ fontSize:10 }}>🎤</span>
         </div>
       </div>
     </div>
@@ -245,56 +245,66 @@ function ScreenShopping() {
 /* ─── Phone screen: Hotel Travel ─────────────────────────────────── */
 function ScreenTravel() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 12px", background: "#fff", gap: 6 }}>
-      <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: "#0f1035" }}>Find a hotel in Chicago next weekend</p>
-      <div style={{ background: "#f5f3ff", borderRadius: 8, padding: "5px 8px", fontSize: 9, color: "#7c3aed", fontWeight: 600 }}>Here are some hotel options for you in Chicago this weekend:</div>
+    <div style={{ display:"flex", flexDirection:"column", height:"100%", padding:"8px 10px", background:"#fff", gap:5 }}>
+      <p style={{ margin:0, fontSize:9, fontWeight:600, color:"#6b7280" }}>Find a hotel in Chicago next weekend</p>
+      <div style={{ background:"#f5f3ff", borderRadius:8, padding:"5px 8px", fontSize:8.5, color:"#7c3aed", fontWeight:600, lineHeight:1.3, border:"1px solid #ede9fe" }}>Here are some top-rated options for Oct 24 - Oct 26 (2 nights):</div>
       {[
-        { name: "The Langham Chicago", stars: "4.8", price: "$229", reviews: "1,847 reviews" },
-        { name: "Renaissance Chicago", stars: "4.6", price: "$189", reviews: "2,341 reviews" },
-        { name: "Hyatt Place Chicago", stars: "4.5", price: "$149", reviews: "3,201 reviews" },
-      ].map((h, i) => (
-        <div key={i} style={{ display: "flex", gap: 7, alignItems: "center", background: "#f8f7ff", borderRadius: 8, padding: "7px 8px" }}>
-          <img src={["/static/stock_mio-hotel-d2dcfd-0.jpg","/static/stock_mio-hotel-d2dcfd-1.jpg","/static/stock_mio-food-d3daf1-0.jpg"][i]} alt={h.name} style={{ width: 32, height: 32, borderRadius: 7, objectFit: "cover", flexShrink: 0 }} />
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ margin: 0, fontSize: 8, fontWeight: 700, color: "#0f1035", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{h.name}</p>
-            <p style={{ margin: 0, fontSize: 7, color: "#92400e" }}>★ {h.stars} · {h.reviews}</p>
+        { name:"The Langham Chicago", stars:"4.8", reviews:"341", price:"$229", tag:"View Details" },
+        { name:"Renaissance Chicago", stars:"4.6", reviews:"892", price:"$189", tag:"View Details" },
+        { name:"Hyatt Place Chicago", stars:"4.5", reviews:"3,201", price:"$149", tag:"View Details" },
+      ].map((h,i) => (
+        <div key={i} style={{ background:"#f9f7ff", borderRadius:8, padding:"6px 8px", border:"1px solid #f0eeff" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:3 }}>
+            <p style={{ margin:0, fontSize:9, fontWeight:700, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>{h.name}</p>
+            <p style={{ margin:0, fontSize:11, fontWeight:800, color:"#7c3aed", fontFamily:"Manrope,sans-serif", flexShrink:0 }}>{h.price}</p>
           </div>
-          <div>
-            <p style={{ margin: 0, fontSize: 10, fontWeight: 800, color: "#7c3aed" }}>{h.price}</p>
-            <p style={{ margin: 0, fontSize: 7, color: "#6b7280" }}>/night</p>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+            <p style={{ margin:0, fontSize:7.5, color:"#92400e" }}>★ {h.stars} · {h.reviews} reviews</p>
+            <div style={{ background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", borderRadius:6, padding:"3px 7px", fontSize:7.5, fontWeight:700 }}>View Details</div>
           </div>
-          <div style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 6, padding: "4px 6px", fontSize: 7, fontWeight: 700 }}>View</div>
         </div>
       ))}
-      <div style={{ background: "#f5f3ff", borderRadius: 8, padding: "6px 10px", fontSize: 9, color: "#6b7280" }}>Ask anything...</div>
+      <div style={{ display:"flex", alignItems:"center", gap:6, background:"#f5f3ff", borderRadius:10, padding:"6px 10px", border:"1px solid #ede9fe" }}>
+        <span style={{ fontSize:9, color:"#9ca3af", flex:1 }}>Ask a follow up...</span>
+        <div style={{ width:20, height:20, borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+          <span style={{ fontSize:9 }}>🎤</span>
+        </div>
+      </div>
     </div>
   );
 }
 
 /* ─── Phone screen: Payment ──────────────────────────────────────── */
 function ScreenPayment() {
+  const methods = [
+    { icon:"💳", label:"Credit or Debit Card", sub:"Secured with Stripe" },
+    { icon:"🍎", label:"Apple Pay", sub:null },
+    { icon:"G", label:"Google Pay", sub:null, goog:true },
+    { icon:"🔗", label:"Link (Stripe)", sub:null },
+    { icon:"P", label:"PayPal", sub:null, pp:true },
+    { icon:"+", label:"Add Later", sub:null, plus:true },
+  ];
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 12px", background: "#fff", gap: 5 }}>
-      <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: "#0f1035" }}>Add a payment method</p>
-      {[
-        { icon: "💳", label: "Credit or Debit Card", sub: "Secured with Stripe" },
-        { icon: "🍎", label: "Apple Pay" },
-        { icon: "G", label: "Google Pay", g: true },
-        { icon: "🔗", label: "Link (Stripe)" },
-        { icon: "P", label: "PayPal", p: true },
-        { icon: "+", label: "Add Later", plus: true },
-      ].map((m, i, arr) => (
-        <div key={i} style={{ display: "flex", alignItems: "center", gap: 7, paddingBottom: i < arr.length - 1 ? 5 : 0, borderBottom: i < arr.length - 1 ? "1px solid #f3f4f6" : "none" }}>
-          <div style={{ width: 26, height: 26, borderRadius: 7, background: m.g ? "#4285f4" : m.p ? "#003087" : "#f3f4f6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: m.icon.length > 1 ? 11 : 13, fontWeight: 800, color: m.g || m.p ? "#fff" : "#374151", flexShrink: 0 }}>{m.icon}</div>
-          <div>
-            <p style={{ margin: 0, fontSize: 10, fontWeight: 600, color: "#0f1035" }}>{m.label}</p>
-            {m.sub && <p style={{ margin: 0, fontSize: 8, color: "#6b7280" }}>{m.sub}</p>}
+    <div style={{ display:"flex", flexDirection:"column", height:"100%", padding:"8px 10px 10px", background:"#fff", gap:0 }}>
+      <p style={{ margin:"0 0 8px", fontSize:11, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Add a payment method</p>
+      {methods.map((m,i) => (
+        <div key={i} style={{ display:"flex", alignItems:"center", gap:7, padding:"7px 0", borderBottom: i < methods.length-1 ? "1px solid #f3f4f6":"none" }}>
+          <div style={{ width:28, height:28, borderRadius:8, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
+            background: m.goog?"#fff":m.pp?"#003087":m.plus?"#f3f4f6":"#f3f4f6",
+            border: m.goog?"1.5px solid #e5e7eb":"none",
+            fontSize: m.icon.length>1?10:14, fontWeight:800,
+            color: m.goog?"#4285f4":m.pp?"#fff":m.plus?"#7c3aed":"#374151" }}>
+            {m.icon}
           </div>
-          <div style={{ marginLeft: "auto", width: 14, height: 14, borderRadius: "50%", border: "1.5px solid #e5e7eb", flexShrink: 0 }} />
+          <div style={{ flex:1 }}>
+            <p style={{ margin:0, fontSize:10, fontWeight:600, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>{m.label}</p>
+            {m.sub && <p style={{ margin:0, fontSize:7.5, color:"#6b7280" }}>{m.sub}</p>}
+          </div>
+          <div style={{ width:14, height:14, borderRadius:"50%", border:"1.5px solid #e5e7eb", flexShrink:0 }}/>
         </div>
       ))}
-      <div style={{ marginTop: 6, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 11, padding: "9px 0", textAlign: "center", fontSize: 11, fontWeight: 700 }}>Continue</div>
-      <p style={{ textAlign: "center", fontSize: 8, color: "#9ca3af", margin: "2px 0 0" }}>Your payment information is safe and securely encrypted.</p>
+      <div style={{ marginTop:8, background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", borderRadius:10, padding:"9px 0", textAlign:"center", fontSize:10.5, fontWeight:700, fontFamily:"Manrope,sans-serif", boxShadow:"0 4px 12px rgba(124,58,237,0.3)" }}>Continue</div>
+      <p style={{ textAlign:"center", fontSize:7.5, color:"#9ca3af", margin:"5px 0 0", lineHeight:1.3 }}>Your payment information is safe and securely encrypted.</p>
     </div>
   );
 }
@@ -687,10 +697,15 @@ export default function Home() {
                     </div>
                     <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1035", margin: "2px 0 0" }}>AI Picks for You</p>
                     <div style={{ display: "flex", gap: 5 }}>
-                      {[["🎧","$349"],["👟","$119"],["🧳","$89"],["🎵","$189"]].map(([e,p]) => (
-                        <div key={p} style={{ flex: 1, background: "#f5f3ff", borderRadius: 6, padding: "5px 3px", textAlign: "center" }}>
-                          <span style={{ fontSize: 14 }}>{e}</span>
-                          <p style={{ margin: "2px 0 0", fontSize: 8, color: "#7c3aed", fontWeight: 700 }}>{p}</p>
+                      {[
+                        { img:"/static/stock_product-headphones-dca952-0.jpg", alt:"Headphones", price:"$349" },
+                        { img:"/static/stock_mio-shoes-9fc268-0.jpg", alt:"Shoes", price:"$119" },
+                        { img:"/static/stock_mio-hotel-d2dcfd-0.jpg", alt:"Hotel", price:"$229" },
+                        { img:"/static/stock_mio-food-cd2d10-0.jpg", alt:"Food", price:"$14" },
+                      ].map(({img,alt,price}) => (
+                        <div key={price} style={{ flex: 1, background: "#f5f3ff", borderRadius: 6, overflow:"hidden", textAlign: "center" }}>
+                          <img src={img} alt={alt} style={{ width:"100%", height:28, objectFit:"cover" }}/>
+                          <p style={{ margin: "2px 0 3px", fontSize: 8, color: "#7c3aed", fontWeight: 700 }}>{price}</p>
                         </div>
                       ))}
                     </div>
