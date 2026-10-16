@@ -48,69 +48,114 @@ function WaveBars({ color = "#7c3aed", size = 20 }) {
 }
 
 /* ─── Ultra-realistic iPhone-style phone frame ─────────────────────── */
-function PhoneFrame({ children, width = 168, height = 340 }) {
-  const FRAME = 8; // frame thickness
-  const RADIUS = 42;
+function PhoneFrame({ children, width = 168, height = 340, tilt = false }) {
+  // Titanium Natural finish — matches Brex reference photos exactly
+  // Flat sides, brushed metal look, Dynamic Island, physical buttons
+  const BEZEL = 10;
+  const OUTER_R = 44;
+  const INNER_R = 36;
+  // Titanium silver: multi-stop gradient simulating brushed metal
+  const titaniumFrame = [
+    "linear-gradient(175deg,",
+    "#e8e3dc 0%,",   // top-left light hit
+    "#c8c2b8 8%,",   // settle into warm silver
+    "#b8b2a8 20%,",  // mid brushed titanium
+    "#a8a49c 40%,",  // deeper mid
+    "#bab5ac 60%,",  // right side slight lighter
+    "#cac6be 80%,",  // corner highlight
+    "#d8d4cc 100%)", // bottom edge
+  ].join("");
+
   return (
     <div
       style={{
         width,
         height,
-        borderRadius: RADIUS,
-        background: "linear-gradient(160deg,#2d2d2d 0%,#1a1a1a 40%,#111 100%)",
-        padding: FRAME,
-        boxShadow: [
-          "0 40px 100px rgba(0,0,0,0.38)",
-          "0 0 0 0.5px rgba(255,255,255,0.12)",
-          "inset 0 0 0 0.5px rgba(255,255,255,0.06)",
-          "0 1px 0 rgba(255,255,255,0.08)",
-        ].join(", "),
+        borderRadius: OUTER_R,
+        background: titaniumFrame,
+        padding: BEZEL,
         position: "relative",
         flexShrink: 0,
+        transform: tilt ? "perspective(900px) rotateY(-4deg) rotateX(2deg)" : "none",
+        transformOrigin: "center center",
+        boxShadow: [
+          // Main shadow — deep and soft like a real device on a surface
+          "0 48px 96px rgba(0,0,0,0.28)",
+          "0 16px 40px rgba(0,0,0,0.18)",
+          "0 4px 12px rgba(0,0,0,0.12)",
+          // Outer frame edge highlight — titanium catches light
+          "0 0 0 0.5px rgba(255,255,255,0.6)",
+          // Inner frame dark edge
+          "inset 0 0 0 0.5px rgba(0,0,0,0.15)",
+          // Top-left light rim — light source from top-left
+          "inset 1px 1px 0 rgba(255,255,255,0.45)",
+        ].join(", "),
       }}
     >
-      {/* Side sheen highlight */}
-      <div style={{ position: "absolute", inset: 0, borderRadius: RADIUS, background: "linear-gradient(90deg,rgba(255,255,255,0.05) 0%,transparent 30%,transparent 70%,rgba(255,255,255,0.03) 100%)", pointerEvents: "none" }} />
-      {/* Mute/silent button left */}
-      <div style={{ position: "absolute", left: -2.5, top: "18%", width: 2.5, height: "5%", minHeight: 14, background: "#1a1a1a", borderRadius: "2px 0 0 2px", boxShadow: "-1px 0 3px rgba(0,0,0,0.5)" }} />
-      {/* Volume up left */}
-      <div style={{ position: "absolute", left: -2.5, top: "26%", width: 2.5, height: "9%", minHeight: 24, background: "#1a1a1a", borderRadius: "2px 0 0 2px", boxShadow: "-1px 0 3px rgba(0,0,0,0.5)" }} />
-      {/* Volume down left */}
-      <div style={{ position: "absolute", left: -2.5, top: "37%", width: 2.5, height: "9%", minHeight: 24, background: "#1a1a1a", borderRadius: "2px 0 0 2px", boxShadow: "-1px 0 3px rgba(0,0,0,0.5)" }} />
-      {/* Power button right */}
-      <div style={{ position: "absolute", right: -2.5, top: "28%", width: 2.5, height: "14%", minHeight: 40, background: "#1a1a1a", borderRadius: "0 2px 2px 0", boxShadow: "1px 0 3px rgba(0,0,0,0.5)" }} />
-      {/* Screen */}
+      {/* Brushed-metal surface texture overlay */}
+      <div style={{
+        position: "absolute", inset: 0, borderRadius: OUTER_R, pointerEvents: "none",
+        background: [
+          "linear-gradient(92deg,",
+          "rgba(255,255,255,0) 0%,",
+          "rgba(255,255,255,0.18) 30%,",
+          "rgba(255,255,255,0.05) 50%,",
+          "rgba(255,255,255,0.22) 70%,",
+          "rgba(255,255,255,0) 100%)",
+        ].join(""),
+      }} />
+
+      {/* ── Physical buttons ── */}
+      {/* Silent/mute switch — short nub, left side top */}
+      <div style={{ position:"absolute", left:-3, top:"14%", width:3, height:18, background:"linear-gradient(90deg,#9e9990,#b8b2a8)", borderRadius:"3px 0 0 3px", boxShadow:"-1px 0 2px rgba(0,0,0,0.3)" }} />
+      {/* Volume Up — left side */}
+      <div style={{ position:"absolute", left:-3, top:"23%", width:3, height:32, background:"linear-gradient(90deg,#9e9990,#b8b2a8)", borderRadius:"3px 0 0 3px", boxShadow:"-1px 0 2px rgba(0,0,0,0.3)" }} />
+      {/* Volume Down — left side */}
+      <div style={{ position:"absolute", left:-3, top:"34%", width:3, height:32, background:"linear-gradient(90deg,#9e9990,#b8b2a8)", borderRadius:"3px 0 0 3px", boxShadow:"-1px 0 2px rgba(0,0,0,0.3)" }} />
+      {/* Power/Sleep button — right side, taller than volumes */}
+      <div style={{ position:"absolute", right:-3, top:"26%", width:3, height:52, background:"linear-gradient(270deg,#9e9990,#b8b2a8)", borderRadius:"0 3px 3px 0", boxShadow:"1px 0 2px rgba(0,0,0,0.3)" }} />
+      {/* Speaker grille bottom — row of tiny dots */}
+      <div style={{ position:"absolute", bottom:4, left:"50%", transform:"translateX(-50%)", display:"flex", gap:2.5, zIndex:5 }}>
+        {[...Array(8)].map((_,k) => <div key={k} style={{ width:2, height:2, borderRadius:"50%", background:"rgba(0,0,0,0.35)" }} />)}
+      </div>
+      {/* Lightning/USB-C port bottom centre */}
+      <div style={{ position:"absolute", bottom:3, left:"50%", transform:"translateX(-50%)", width:18, height:4, background:"rgba(0,0,0,0.2)", borderRadius:2 }} />
+
+      {/* ── Screen glass ── */}
       <div
         style={{
-          background: "#fff",
-          borderRadius: RADIUS - FRAME,
+          background: "#f7f7f8",
+          borderRadius: INNER_R,
           overflow: "hidden",
           height: "100%",
           position: "relative",
+          // Subtle glass glare on screen — top-left corner brightness
+          boxShadow: "inset 1px 1px 0 rgba(255,255,255,0.5), inset 0 0 0 0.5px rgba(0,0,0,0.08)",
         }}
       >
-        {/* Dynamic Island — pill shape */}
-        <div
-          style={{
-            position: "absolute",
-            top: 8,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 72,
-            height: 22,
-            background: "#111",
-            borderRadius: 11,
-            zIndex: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 6,
-          }}
-        >
-          <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#222" }} />
-          <div style={{ width: 32, height: 3, background: "#222", borderRadius: 2 }} />
+        {/* Dynamic Island — true pill, no camera dot clutter */}
+        <div style={{
+          position:"absolute", top:10, left:"50%", transform:"translateX(-50%)",
+          width:80, height:24, background:"#0a0a0a", borderRadius:12,
+          zIndex:10,
+          boxShadow:"0 2px 8px rgba(0,0,0,0.4), inset 0 0 0 0.5px rgba(255,255,255,0.08)",
+        }} />
+
+        {/* Status bar row */}
+        <div style={{
+          position:"absolute", top:0, left:0, right:0, height:38,
+          display:"flex", alignItems:"flex-end", justifyContent:"space-between",
+          padding:"0 18px 4px", zIndex:9,
+        }}>
+          <span style={{ fontSize:9, fontWeight:700, color:"#111", letterSpacing:"-0.02em" }}>9:41</span>
+          <div style={{ display:"flex", gap:3, alignItems:"center" }}>
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><rect x="0" y="3" width="2" height="5" rx="0.5" fill="#111"/><rect x="3" y="2" width="2" height="6" rx="0.5" fill="#111"/><rect x="6" y="1" width="2" height="7" rx="0.5" fill="#111"/><rect x="9" y="0" width="2" height="8" rx="0.5" fill="#111"/></svg>
+            <svg width="12" height="8" viewBox="0 0 12 8"><text y="8" fontSize="9" fill="#111">▲</text></svg>
+            <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="18" height="8" rx="2" stroke="#111" strokeWidth="0.8" fill="none"/><rect x="1" y="2" width="13" height="6" rx="1" fill="#111"/><rect x="19.5" y="3" width="2" height="4" rx="1" fill="#111"/></svg>
+          </div>
         </div>
-        <div style={{ paddingTop: 34, height: "100%" }}>{children}</div>
+
+        <div style={{ paddingTop:40, height:"100%", overflow:"hidden" }}>{children}</div>
       </div>
     </div>
   );
@@ -625,7 +670,7 @@ export default function Home() {
             {/* Right — phone + chat demo */}
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <PhoneFrame width={210} height={400}>
+                <PhoneFrame width={210} height={400} tilt={true}>
                   <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 14px", background: "#fff", gap: 10 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <div style={{ width: 28, height: 28, borderRadius: 9, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -683,13 +728,23 @@ export default function Home() {
               { Screen: ScreenShopping, tall: true },
               { Screen: ScreenTravel, tall: true },
               { Screen: ScreenPayment, tall: false },
-            ].map(({ Screen, tall }, i) => (
-              <div key={i} className="phone-animate" style={{ animationDelay: `${i * 0.12}s` }}>
-                <PhoneFrame width={168} height={tall ? 360 : 330}>
-                  <Screen />
-                </PhoneFrame>
-              </div>
-            ))}
+            ].map(({ Screen, tall }, i) => {
+              // Alternating tilt angles like the Brex reference — creates a dynamic 3D gallery feel
+              const tilts = [3, -2, 0, 2, -3];
+              const tiltY = tilts[i] || 0;
+              return (
+                <div key={i} className="phone-animate" style={{
+                  animationDelay: `${i * 0.12}s`,
+                  transform: `perspective(800px) rotateY(${tiltY}deg) rotateX(1deg)`,
+                  transformStyle: "preserve-3d",
+                  marginTop: i === 2 ? -16 : i === 0 || i === 4 ? 16 : 0,
+                }}>
+                  <PhoneFrame width={168} height={tall ? 360 : 330}>
+                    <Screen />
+                  </PhoneFrame>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
