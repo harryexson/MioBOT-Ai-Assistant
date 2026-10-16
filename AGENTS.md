@@ -122,3 +122,9 @@ works from any of them — so two rules keep links and assets from breaking:
 Remote: https://github.com/harryexson/MioBOT-Ai-Assistant.git
 Branch: dev
 Note: Push requires GitHub credentials — provide a personal access token or SSH key to push.
+
+## Auth
+- Users sign up / sign in via AuthModal component (src/components/AuthModal.jsx)
+- Modal opens from Nav "Get Started" and "Sign In" buttons
+- Auth context in src/lib/useAuth.jsx — useAuth() gives { user, login, signup, logout, isLoggedIn }
+- PocketBase users collection (auth type) — fields: name, email, password, plan, role
