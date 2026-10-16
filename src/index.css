@@ -128,6 +128,11 @@ html, body {
 .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
 
 /* Wave bars */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(124,58,237,0.15), 0 0 0 18px rgba(124,58,237,0.07); }
+  50%       { box-shadow: 0 0 0 16px rgba(124,58,237,0.2), 0 0 0 32px rgba(124,58,237,0.05); }
+}
+
 .wave-bar { animation: wave-bar 1s ease-in-out infinite; }
 .wave-bar:nth-child(2) { animation-delay: 0.1s; }
 .wave-bar:nth-child(3) { animation-delay: 0.2s; }

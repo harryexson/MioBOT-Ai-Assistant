@@ -3,7 +3,7 @@ import ArrowRightIcon from "icon:arrow-right";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 text-center" style={{ background: "#f8f7ff" }}>
+    <main className="min-h-screen flex items-center justify-center px-4 text-center" style={{ background: "#fff" }}>
       <div>
         <p className="font-display font-800 text-8xl gradient-text mb-4">404</p>
         <h1 className="font-display font-700 text-3xl mb-3" style={{ color: "#0f1035" }}>Page not found</h1>
