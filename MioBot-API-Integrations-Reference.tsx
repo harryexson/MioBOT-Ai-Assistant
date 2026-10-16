@@ -1,1281 +1,931 @@
 /**
- * ============================================================
- *  MioBot AI Assistant — Complete API & Affiliate Integration Reference
- *  Version: 1.0  |  Date: October 2026
- * ============================================================
+ * MioBot AI Assistant
+ * API Aggregators, Providers & Merchant Services — Complete Reference
  *
- *  This file is a self-contained reference for every partner API
- *  and affiliate programme available to integrate with MioBot.
+ * Drop <IntegrationReferenceTable /> anywhere in your app to render
+ * a searchable, filterable table of all integrations.
  *
- *  Contents:
- *    1. TypeScript types / interfaces
- *    2. All 30+ integration definitions (INTEGRATIONS constant)
- *    3. Commission & category summary tables
- *    4. Integration helper utilities
- *    5. React component — <IntegrationReferenceTable />
- *
- *  Usage:
- *    import { INTEGRATIONS, getByCategory, getTotalCommissionRange } from "./MioBot-API-Integrations-Reference";
- *
- * ============================================================
+ * Generated: 2026-10-16
  */
 
 import React, { useState } from "react";
 
-// ─────────────────────────────────────────────────────────────
-//  1. Types & Interfaces
-// ─────────────────────────────────────────────────────────────
+// ─── Types ────────────────────────────────────────────────────────────────────
 
-export type IntegrationCategory =
+export type Category =
   | "shopping"
   | "food"
   | "travel"
   | "events"
   | "services"
+  | "rides"
   | "health"
+  | "realestate"
   | "finance"
-  | "transport"
-  | "payments";
+  | "shipping"
+  | "payments"
+  | "ai";
 
-export type DifficultyLevel = "easy" | "medium" | "hard";
+export type Difficulty = "easy" | "medium" | "hard";
 
-export type CommissionType =
-  | "per sale"
-  | "per order"
-  | "per booking"
-  | "per stay"
-  | "per ticket"
-  | "per lead"
-  | "per referral"
-  | "per subscription"
-  | "per conversion"
-  | "per transaction"
-  | "per retailer"
-  | "per appointment"
-  | "per new rider"
-  | "per policy"
-  | "per prescription";
-
-export interface ApiIntegration {
-  /** Unique identifier used as a slug / API key reference */
+export interface Integration {
   id: string;
-
-  /** Display name of the partner / platform */
   name: string;
-
-  /** Primary category this integration belongs to */
-  category: IntegrationCategory;
-
-  /** Human-readable category label */
+  category: Category;
   categoryLabel: string;
-
-  /** Emoji icon for quick visual identification */
-  emoji: string;
-
-  /**
-   * Commission rate string — may be a range ("1–10%"), flat amount ("$5–15"),
-   * or descriptor ("Varies") depending on partner programme structure.
-   */
-  commission: string;
-
-  /** The basis on which the commission is paid */
-  commissionType: CommissionType;
-
-  /** Approximate active user base of the platform */
-  platformUsers: string;
-
-  /**
-   * One-paragraph description of what MioBot users can do via this integration
-   * and why it matters for the business.
-   */
   description: string;
-
-  /**
-   * Key API capabilities / features exposed to MioBot.
-   * Keep to 4–5 bullet points per integration.
-   */
-  features: string[];
-
-  /** Official partner / affiliate / developer programme signup URL */
-  signupUrl: string;
-
-  /**
-   * Integration complexity from a developer standpoint.
-   * easy   — RESTful, well-documented, free sandbox
-   * medium — OAuth or more complex auth, moderate docs
-   * hard   — Enterprise contracts, complex auth, staging env required
-   */
-  difficulty: DifficultyLevel;
-
-  /** Optional callout badge (e.g. "Most Popular", "Highest Commission") */
-  badge?: string;
-
-  /**
-   * Revenue stream tags — one integration may contribute to multiple streams.
-   * "commission"   — transaction-based referral fee paid by the partner
-   * "lead-fee"     — flat fee per qualified lead sent to the partner
-   * "subscription" — recurring platform subscription revenue from Mio users
-   */
-  revenueStreams: Array<"commission" | "lead-fee" | "subscription">;
-
-  /**
-   * Whether MioBot can complete an end-to-end purchase in-app
-   * (true) or only searches / recommends and hands off (false).
-   */
+  commission: string;
+  commissionType: string;
+  difficulty: Difficulty;
   supportsInAppCheckout: boolean;
-
-  /**
-   * Geographic availability.
-   * "global" | specific regions, e.g. "US, CA, AU"
-   */
   geography: string;
-
-  /** Notes on API access tier, rate limits, or special requirements */
-  notes?: string;
+  signupUrl: string;
+  docsUrl: string;
+  badge?: string; // e.g. "Featured" | "High Value"
 }
 
-// ─────────────────────────────────────────────────────────────
-//  2. Integration Definitions
-// ─────────────────────────────────────────────────────────────
+// ─── Data ─────────────────────────────────────────────────────────────────────
 
-export const INTEGRATIONS: ApiIntegration[] = [
-
-  // ── SHOPPING & RETAIL ──────────────────────────────────────
-
+export const INTEGRATIONS: Integration[] = [
+  // ── Shopping & Retail ───────────────────────────────────────────────────────
   {
     id: "amazon",
     name: "Amazon Product Advertising API",
     category: "shopping",
     categoryLabel: "Shopping & Retail",
-    emoji: "🛒",
+    description: "350M+ products, Prime delivery, reviews, and wish lists.",
     commission: "1–10%",
-    commissionType: "per sale",
-    platformUsers: "200M+ Prime members",
-    description:
-      "Access Amazon's catalogue of 350 million+ products. MioBot users search, compare prices, read reviews, and purchase — you earn a percentage of every completed sale. Commission rate varies by product category (electronics ~3%, fashion up to 10%).",
-    features: [
-      "Product search & lookup by keyword, ASIN, or category",
-      "Real-time price & availability data",
-      "Customer reviews and ratings API",
-      "Prime eligibility and delivery estimates",
-      "Add-to-cart and checkout URL generation",
-    ],
-    signupUrl: "https://affiliate-program.amazon.com",
-    difficulty: "easy",
-    badge: "Most Popular",
-    revenueStreams: ["commission"],
+    commissionType: "Per sale (varies by category)",
+    difficulty: "medium",
     supportsInAppCheckout: false,
-    geography: "Global (localised per marketplace: .com, .co.uk, .de, .in, etc.)",
-    notes: "Free to join. Requires at least 3 qualifying sales within 180 days to maintain active status.",
+    geography: "Global",
+    signupUrl: "https://affiliate-program.amazon.com",
+    docsUrl: "https://webservices.amazon.com/paapi5/documentation/",
+    badge: "Featured",
   },
-
   {
     id: "ebay",
     name: "eBay Partner Network",
     category: "shopping",
     categoryLabel: "Shopping & Retail",
-    emoji: "🔨",
+    description: "Auctions, new & used goods, collectibles — 1.5B listings.",
     commission: "1–6%",
-    commissionType: "per sale",
-    platformUsers: "135M+ active buyers",
-    description:
-      "New and used goods, auctions, collectibles, and fixed-price listings. Ideal for unique items, hard-to-find products, and budget shoppers. Commission is capped per transaction but volume is enormous.",
-    features: [
-      "Browse & Search API — keyword and category search",
-      "Trading API — full listing and buyer flow",
-      "Finding API — advanced item filters",
-      "Buy API — modern cart-and-checkout flow",
-      "Campaign management for deal promotions",
-    ],
-    signupUrl: "https://partnernetwork.ebay.com",
+    commissionType: "Per sale",
     difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: false,
-    geography: "Global (25+ country sites)",
-    notes: "Commission capped at $550 per item. Electronics and fashion are lower-rate categories.",
-  },
-
-  {
-    id: "walmart",
-    name: "Walmart Affiliate Programme",
-    category: "shopping",
-    categoryLabel: "Shopping & Retail",
-    emoji: "🏪",
-    commission: "1–4%",
-    commissionType: "per sale",
-    platformUsers: "120M+ monthly visitors",
-    description:
-      "Same-day pickup, grocery delivery, electronics, home goods, and general retail at everyday low prices. Best for price-sensitive users and those near a Walmart store.",
-    features: [
-      "Product lookup and search API",
-      "Real-time inventory and store-pickup availability",
-      "Grocery delivery scheduling",
-      "Price-match and rollback deal data",
-      "Savings Catcher integration",
-    ],
-    signupUrl: "https://affiliates.walmart.com",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: false,
-    geography: "US, CA, MX, UK (via Asda)",
-    notes: "Managed through Impact Radius. Category rates: groceries 1%, general merchandise 4%.",
-  },
-
-  {
-    id: "target",
-    name: "Target Affiliates (Impact)",
-    category: "shopping",
-    categoryLabel: "Shopping & Retail",
-    emoji: "🎯",
-    commission: "1–8%",
-    commissionType: "per sale",
-    platformUsers: "200M+ annual shoppers",
-    description:
-      "Fashion, home décor, baby products, electronics, and beauty — all with Target's strong brand loyalty. High commission rates for apparel and home categories.",
-    features: [
-      "Product catalogue API via Impact",
-      "RedCard and Circle deals integration",
-      "Same-day delivery via Shipt",
-      "Drive-up and in-store pickup data",
-      "Weekly ad and promotion feed",
-    ],
-    signupUrl: "https://affiliates.target.com",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: false,
-    geography: "US only",
-    notes: "Apparel and accessories earn up to 8%. Electronics and video games are 1%.",
-  },
-
-  {
-    id: "cj",
-    name: "CJ Affiliate (Commission Junction)",
-    category: "shopping",
-    categoryLabel: "Shopping & Retail",
-    emoji: "🔗",
-    commission: "Varies by retailer",
-    commissionType: "per retailer",
-    platformUsers: "3,800+ advertiser brands",
-    description:
-      "One API connection unlocks 3,800+ retailers including Lowe's, Overstock, Zappos, GNC, and thousands more. The most efficient way to add broad retail coverage to MioBot without individual integrations.",
-    features: [
-      "Single API access to 3,800+ brands",
-      "Real-time product and commission data",
-      "Deep-link generation for any product page",
-      "Cross-device and cross-session attribution",
-      "Automated commission reporting dashboard",
-    ],
-    signupUrl: "https://www.cj.com/publisher",
-    difficulty: "medium",
-    badge: "Best Coverage",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: false,
     geography: "Global",
-    notes: "Minimum payout threshold $50. Payment via cheque, direct deposit, or Payoneer.",
+    signupUrl: "https://partnernetwork.ebay.com",
+    docsUrl: "https://developer.ebay.com/api-docs/buy/browse/overview.html",
   },
-
+  {
+    id: "walmart",
+    name: "Walmart Connect API",
+    category: "shopping",
+    categoryLabel: "Shopping & Retail",
+    description: "Groceries, electronics, same-day pickup from 4,700 stores.",
+    commission: "1–4%",
+    commissionType: "Per sale",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "USA",
+    signupUrl: "https://affiliates.walmart.com",
+    docsUrl: "https://developer.walmart.com",
+  },
+  {
+    id: "target",
+    name: "Target Affiliate (Impact)",
+    category: "shopping",
+    categoryLabel: "Shopping & Retail",
+    description: "Fashion, home, beauty, electronics — same-day delivery.",
+    commission: "1–8%",
+    commissionType: "Per sale",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "USA",
+    signupUrl: "https://partners.target.com",
+    docsUrl: "https://developer.target.com",
+  },
+  {
+    id: "bestbuy",
+    name: "Best Buy Affiliate",
+    category: "shopping",
+    categoryLabel: "Shopping & Retail",
+    description: "Consumer electronics, appliances, Geek Squad services.",
+    commission: "0.5–2%",
+    commissionType: "Per sale",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "USA / Canada",
+    signupUrl: "https://www.bestbuy.com/site/misc/affiliate-program/pcmcat158800050013.c",
+    docsUrl: "https://bestbuyapis.github.io/api-documentation/",
+  },
+  {
+    id: "etsy",
+    name: "Etsy Affiliate API",
+    category: "shopping",
+    categoryLabel: "Shopping & Retail",
+    description: "Handmade, vintage, and custom gifts from independent creators.",
+    commission: "4%",
+    commissionType: "Per sale",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://www.etsy.com/affiliates",
+    docsUrl: "https://developers.etsy.com",
+  },
+  {
+    id: "shopify",
+    name: "Shopify Storefront API",
+    category: "shopping",
+    categoryLabel: "Shopping & Retail",
+    description: "Buy from 1M+ independent merchants with headless checkout.",
+    commission: "Negotiated",
+    commissionType: "Per merchant deal",
+    difficulty: "hard",
+    supportsInAppCheckout: true,
+    geography: "Global",
+    signupUrl: "https://www.shopify.com/partners",
+    docsUrl: "https://shopify.dev/docs/api/storefront",
+    badge: "In-App Checkout",
+  },
+  {
+    id: "cj",
+    name: "CJ Affiliate",
+    category: "shopping",
+    categoryLabel: "Shopping & Retail",
+    description: "3,000+ retailers in one connection — fashion, home, tech.",
+    commission: "Varies",
+    commissionType: "Per sale (per retailer)",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://www.cj.com/publisher-signup",
+    docsUrl: "https://developers.cj.com",
+  },
   {
     id: "rakuten",
     name: "Rakuten Advertising",
     category: "shopping",
     categoryLabel: "Shopping & Retail",
-    emoji: "🌸",
-    commission: "Varies by brand",
-    commissionType: "per retailer",
-    platformUsers: "1,000+ premium brands",
-    description:
-      "Premium brand partnerships — Macy's, Sephora, Levi's, Samsung, and Walmart. Better brand fit for lifestyle and luxury segments than CJ.",
-    features: [
-      "Brand partner API with 1,000+ advertisers",
-      "Real-time commission tracking",
-      "Coupon and promotional deal feed",
-      "Multi-currency support",
-      "Influencer and content tools",
-    ],
-    signupUrl: "https://rakutenadvertising.com/publishers",
+    description: "Gap, Macy's, Sephora and 1,000+ brands.",
+    commission: "Varies",
+    commissionType: "Per sale (per retailer)",
     difficulty: "medium",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: false,
     geography: "Global",
-    notes: "Strong in US, UK, AU, JP. Some premium brands require individual approval.",
+    signupUrl: "https://rakutenadvertising.com/publisher-signup",
+    docsUrl: "https://rakutenadvertising.com/technology/api",
   },
-
   {
-    id: "shareasale",
-    name: "ShareASale",
+    id: "impact",
+    name: "Impact.com",
     category: "shopping",
     categoryLabel: "Shopping & Retail",
-    emoji: "📦",
-    commission: "Varies by merchant",
-    commissionType: "per sale",
-    platformUsers: "25,000+ merchants",
-    description:
-      "Especially strong in niche and independent retailer categories. Access boutique brands, artisan goods, and specialist retailers not available on Amazon or CJ.",
-    features: [
-      "Merchant search and programme discovery",
-      "Product datafeed API",
-      "Deep link builder",
-      "Real-time reporting",
-      "Coupon and deal API",
-    ],
-    signupUrl: "https://www.shareasale.com/info/publisher.cfm",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
+    description: "Nike, Adidas, Levi's, Lenovo, HP and thousands more.",
+    commission: "Varies",
+    commissionType: "Per sale (per brand)",
+    difficulty: "medium",
     supportsInAppCheckout: false,
-    geography: "Primarily US and UK",
+    geography: "Global",
+    signupUrl: "https://impact.com/publisher-signup",
+    docsUrl: "https://developer.impact.com",
+    badge: "High Value",
   },
 
-  // ── FOOD & GROCERY ─────────────────────────────────────────
-
+  // ── Food & Grocery ──────────────────────────────────────────────────────────
   {
     id: "doordash",
     name: "DoorDash Drive API",
     category: "food",
     categoryLabel: "Food & Grocery",
-    emoji: "🚪",
+    description: "500,000+ restaurants, real-time order tracking.",
     commission: "3–5%",
-    commissionType: "per order",
-    platformUsers: "37M+ monthly active users",
-    description:
-      "Food delivery from 600,000+ restaurants across the US and Canada. MioBot users order through conversational UI — 'get me a burrito from Chipotle' — and DoorDash handles fulfilment.",
-    features: [
-      "Restaurant search by cuisine, distance, and rating",
-      "Full menu data and customisation options",
-      "Order placement and real-time tracking",
-      "Customer ratings and estimated delivery time",
-      "DashPass loyalty integration",
-    ],
-    signupUrl: "https://developer.doordash.com",
-    difficulty: "medium",
-    badge: "Top Pick",
-    revenueStreams: ["commission"],
+    commissionType: "Per order",
+    difficulty: "hard",
     supportsInAppCheckout: true,
-    geography: "US, CA, AU",
-    notes: "Requires business account and DoorDash Partner agreement. Sandbox environment available.",
+    geography: "USA / Canada / Australia",
+    signupUrl: "https://developer.doordash.com",
+    docsUrl: "https://developer.doordash.com/en-US/docs/drive/reference/",
+    badge: "In-App Checkout",
   },
-
   {
     id: "ubereats",
-    name: "Uber Eats Affiliate API",
+    name: "Uber Eats API",
     category: "food",
     categoryLabel: "Food & Grocery",
-    emoji: "🚗",
+    description: "Global restaurant network, 45+ countries, live tracking.",
     commission: "3–6%",
-    commissionType: "per order",
-    platformUsers: "88M+ monthly active users",
-    description:
-      "Global food delivery across 6,000+ cities. Widest international restaurant selection. Ideal for MioBot users travelling or in markets where DoorDash has limited coverage.",
-    features: [
-      "Restaurant and menu discovery API",
-      "Grocery and convenience delivery",
-      "Group ordering for multiple users",
-      "Scheduled future delivery",
-      "Uber One loyalty programme data",
-    ],
-    signupUrl: "https://developer.uber.com/docs/eats/introduction",
-    difficulty: "medium",
-    revenueStreams: ["commission"],
+    commissionType: "Per order",
+    difficulty: "hard",
     supportsInAppCheckout: true,
-    geography: "Global — 6,000+ cities in 45+ countries",
-    notes: "OAuth 2.0 authentication required. Separate API credentials for each region.",
+    geography: "Global",
+    signupUrl: "https://developer.uber.com/docs/eats",
+    docsUrl: "https://developer.uber.com/docs/eats/introduction",
+    badge: "Featured",
   },
-
-  {
-    id: "instacart",
-    name: "Instacart Affiliate API",
-    category: "food",
-    categoryLabel: "Food & Grocery",
-    emoji: "🛒",
-    commission: "3–5%",
-    commissionType: "per order",
-    platformUsers: "10M+ users",
-    description:
-      "Same-day grocery delivery in as little as 1 hour from 1,400+ retailers including Costco, Kroger, Aldi, Whole Foods, and CVS. The best option for full grocery shops.",
-    features: [
-      "Multi-retailer grocery search",
-      "1-hour and scheduled delivery slots",
-      "Prescription pickup from pharmacy partners",
-      "Shopper loyalty card sync",
-      "Real-time item substitution suggestions",
-    ],
-    signupUrl: "https://www.instacart.com/business/affiliates",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: true,
-    geography: "US, CA",
-  },
-
   {
     id: "grubhub",
-    name: "Grubhub Corporate API",
+    name: "Grubhub Partner API",
     category: "food",
     categoryLabel: "Food & Grocery",
-    emoji: "🍕",
+    description: "300,000+ restaurants across the US.",
     commission: "4%",
-    commissionType: "per order",
-    platformUsers: "22M+ active diners",
-    description:
-      "Strong US east coast and major city coverage. Campus dining, office ordering, and corporate meal programmes are Grubhub's differentiation from DoorDash and Uber Eats.",
-    features: [
-      "Restaurant search and menu API",
-      "Delivery time and cost estimation",
-      "Grubhub+ loyalty programme",
-      "Corporate and team ordering",
-      "Diner rewards and promo codes",
-    ],
-    signupUrl: "https://corporate.grubhub.com/partner",
+    commissionType: "Per order",
     difficulty: "medium",
-    revenueStreams: ["commission"],
+    supportsInAppCheckout: false,
+    geography: "USA",
+    signupUrl: "https://corporate.grubhub.com",
+    docsUrl: "https://developer.grubhub.com",
+  },
+  {
+    id: "instacart",
+    name: "Instacart Partner API",
+    category: "food",
+    categoryLabel: "Food & Grocery",
+    description: "Kroger, Costco, Whole Foods, Aldi — 2-hour grocery delivery.",
+    commission: "3–5%",
+    commissionType: "Per order",
+    difficulty: "medium",
     supportsInAppCheckout: true,
-    geography: "US (strongest in New York, Chicago, Boston)",
+    geography: "USA / Canada",
+    signupUrl: "https://www.instacart.com/business",
+    docsUrl: "https://docs.instacart.com/connect",
+    badge: "In-App Checkout",
+  },
+  {
+    id: "deliveroo",
+    name: "Deliveroo API",
+    category: "food",
+    categoryLabel: "Food & Grocery",
+    description: "Restaurant delivery across UK, EU and Middle East.",
+    commission: "3–5%",
+    commissionType: "Per order",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "UK / EU / Middle East",
+    signupUrl: "https://restaurant-hub.deliveroo.com",
+    docsUrl: "https://api-docs.deliveroo.com",
+  },
+  {
+    id: "gopuff",
+    name: "Gopuff API",
+    category: "food",
+    categoryLabel: "Food & Grocery",
+    description: "Convenience, snacks, household essentials in 15 minutes.",
+    commission: "4%",
+    commissionType: "Per order",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "USA / UK",
+    signupUrl: "https://partner.gopuff.com",
+    docsUrl: "https://developer.gopuff.com",
   },
 
-  // ── TRAVEL & HOTELS ────────────────────────────────────────
-
+  // ── Travel ──────────────────────────────────────────────────────────────────
   {
     id: "amadeus",
-    name: "Amadeus Travel APIs",
+    name: "Amadeus Travel API",
     category: "travel",
-    categoryLabel: "Travel & Hotels",
-    emoji: "✈️",
+    categoryLabel: "Travel",
+    description: "Global flight search, seat selection, hotel and car booking.",
     commission: "1–3%",
-    commissionType: "per booking",
-    platformUsers: "Industry standard GDS",
-    description:
-      "The world's largest Global Distribution System. Real-time pricing and availability across every scheduled airline. The enterprise-grade option for full flight booking in MioBot.",
-    features: [
-      "Flight Offers Search and Price API",
-      "Flight Offer Orders (booking API)",
-      "Seat map and ancillary services",
-      "Hotel search and booking",
-      "AI-powered trip intelligence and recommendations",
-    ],
-    signupUrl: "https://developers.amadeus.com",
+    commissionType: "Per ticket/booking",
     difficulty: "hard",
-    badge: "Enterprise",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: true,
-    geography: "Global — all IATA airlines",
-    notes: "Requires formal partner agreement for production access. Generous free sandbox with test data.",
+    geography: "Global",
+    signupUrl: "https://developers.amadeus.com/register",
+    docsUrl: "https://developers.amadeus.com/self-service",
+    badge: "Featured",
   },
-
   {
     id: "booking",
     name: "Booking.com Affiliate API",
     category: "travel",
-    categoryLabel: "Travel & Hotels",
-    emoji: "🏨",
+    categoryLabel: "Travel",
+    description: "2.1M properties worldwide — hotels, apartments, villas.",
     commission: "4–6%",
-    commissionType: "per stay",
-    platformUsers: "150M+ room nights/year",
-    description:
-      "2.4 million properties in 220+ countries. Instant confirmation, free cancellation on most rooms, and no prepayment needed. The highest-volume hotel API available.",
-    features: [
-      "Property search with 200+ filters",
-      "Real-time availability and pricing",
-      "Instant booking and confirmation",
-      "Guest review data (100M+ reviews)",
-      "Multi-currency and multi-language",
-    ],
-    signupUrl: "https://www.booking.com/affiliate-program/v2/index.html",
+    commissionType: "Per stay",
     difficulty: "easy",
-    badge: "Highest Volume",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: true,
-    geography: "Global — 220+ countries",
-    notes: "Commission paid after guest stays. Standard 25% of Booking.com's margin (≈4–6% of room rate).",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://www.booking.com/affiliate-program",
+    docsUrl: "https://developers.booking.com",
+    badge: "High Value",
   },
-
   {
     id: "expedia",
     name: "Expedia Affiliate Network (EAN)",
     category: "travel",
-    categoryLabel: "Travel & Hotels",
-    emoji: "🌍",
+    categoryLabel: "Travel",
+    description: "Flights + hotels bundled, 3M+ properties.",
     commission: "3–6%",
-    commissionType: "per booking",
-    platformUsers: "600M+ annual visitors",
-    description:
-      "Flights + hotels + car hire in one search. Best for holiday bundle bookings. EAN also powers many white-label travel sites, so integration opens a huge inventory.",
-    features: [
-      "Bundle deal search (flight + hotel)",
-      "Car hire and airport transfer",
-      "Price-drop alerts and deal feed",
-      "Expedia TAAP partner programme for agents",
-      "One Key loyalty points API",
-    ],
-    signupUrl: "https://expediaaffiliate.com",
+    commissionType: "Per booking",
     difficulty: "medium",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: true,
+    supportsInAppCheckout: false,
     geography: "Global",
+    signupUrl: "https://expediapartnersolutions.com",
+    docsUrl: "https://developers.expediagroup.com",
   },
-
   {
     id: "airbnb",
-    name: "Airbnb Affiliate Programme",
+    name: "Airbnb Affiliate Program",
     category: "travel",
-    categoryLabel: "Travel & Hotels",
-    emoji: "🏠",
-    commission: "$40–75 USD",
-    commissionType: "per booking",
-    platformUsers: "150M+ guests globally",
-    description:
-      "Unique stays, entire apartments, villas, treehouses, and local experiences. Preferred for longer stays (4+ nights) and travellers seeking a 'home away from home'.",
-    features: [
-      "Listing search with map and filter API",
-      "Airbnb Experiences API",
-      "Calendar availability API",
-      "Host profile and review data",
-      "Instant Book listings filter",
-    ],
-    signupUrl: "https://www.airbnb.com/associates",
-    difficulty: "medium",
-    revenueStreams: ["commission"],
+    categoryLabel: "Travel",
+    description: "Unique stays, rooms and experiences worldwide.",
+    commission: "$40–75",
+    commissionType: "Per booking",
+    difficulty: "easy",
     supportsInAppCheckout: false,
-    geography: "Global — 100,000+ cities",
-    notes: "Flat commission per booking, not percentage. Best for premium or longer stays.",
-  },
-
-  {
-    id: "viator",
-    name: "Viator / TripAdvisor Experiences",
-    category: "travel",
-    categoryLabel: "Travel & Hotels",
-    emoji: "🎡",
-    commission: "8%",
-    commissionType: "per booking",
-    platformUsers: "300,000+ experiences listed",
-    description:
-      "Tours, day trips, cooking classes, snorkelling, city walks, skip-the-line museum entries — 300,000+ bookable experiences in 200+ countries. Perfect as an add-on to any hotel or flight booking.",
-    features: [
-      "Experience search by destination and category",
-      "Availability and booking API",
-      "Multilingual content (30+ languages)",
-      "Review and rating data from TripAdvisor",
-      "Private tour and custom itinerary options",
-    ],
-    signupUrl: "https://www.viator.com/info/affiliate-program",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: true,
     geography: "Global",
+    signupUrl: "https://www.airbnb.com/associates",
+    docsUrl: "https://www.airbnb.com/partner",
   },
-
-  {
-    id: "getyourguide",
-    name: "GetYourGuide Partner API",
-    category: "travel",
-    categoryLabel: "Travel & Hotels",
-    emoji: "🗺️",
-    commission: "8%",
-    commissionType: "per booking",
-    platformUsers: "60M+ customers",
-    description:
-      "Competitor to Viator with a strong European portfolio and a reputation for premium curated tours. Often has exclusive experiences not listed on Viator.",
-    features: [
-      "Activity search and booking API",
-      "Exclusive 'Originals' tours",
-      "Free cancellation up to 24h on most activities",
-      "White-label widget option",
-      "Multi-language and multi-currency",
-    ],
-    signupUrl: "https://partner.getyourguide.com",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: true,
-    geography: "Global — strongest in Europe",
-  },
-
   {
     id: "skyscanner",
-    name: "Skyscanner Travel API",
+    name: "Skyscanner API",
     category: "travel",
-    categoryLabel: "Travel & Hotels",
-    emoji: "🌐",
+    categoryLabel: "Travel",
+    description: "Compare all flights, car hire and hotels across every airline.",
     commission: "CPC + 2–4%",
-    commissionType: "per booking",
-    platformUsers: "100M+ monthly users",
-    description:
-      "Compare flights, hotels, and car hire across hundreds of providers in one search. Best for 'cheapest time to fly' and 'flexible date' queries — ideal for budget-conscious MioBot users.",
-    features: [
-      "Flexible date and cheapest month search",
-      "Live pricing across 1,200+ airlines",
-      "Car hire comparison",
-      "Price alert subscriptions",
-      "Everywhere destination explorer",
-    ],
-    signupUrl: "https://www.partners.skyscanner.net",
+    commissionType: "Per click + booking",
     difficulty: "medium",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: false,
     geography: "Global",
+    signupUrl: "https://www.skyscanner.net/affiliates",
+    docsUrl: "https://developers.skyscanner.net",
+  },
+  {
+    id: "viator",
+    name: "Viator (TripAdvisor) API",
+    category: "travel",
+    categoryLabel: "Travel",
+    description: "300,000+ tours, activities and experiences worldwide.",
+    commission: "8%",
+    commissionType: "Per booking",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://www.viator.com/partner",
+    docsUrl: "https://docs.viator.com",
+    badge: "High Value",
+  },
+  {
+    id: "getyourguide",
+    name: "GetYourGuide API",
+    category: "travel",
+    categoryLabel: "Travel",
+    description: "Day trips, city tours and adventure activities.",
+    commission: "8%",
+    commissionType: "Per booking",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://www.getyourguide.com/partner",
+    docsUrl: "https://suppliers.getyourguide.com/api",
+    badge: "High Value",
+  },
+  {
+    id: "trainline",
+    name: "Trainline API",
+    category: "travel",
+    categoryLabel: "Travel",
+    description: "UK & EU rail booking — 270+ train and coach operators.",
+    commission: "2–4%",
+    commissionType: "Per ticket",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "UK / Europe",
+    signupUrl: "https://www.thetrainline.com/affiliate-programme",
+    docsUrl: "https://developer.thetrainline.com",
   },
 
-  // ── EVENTS & ENTERTAINMENT ─────────────────────────────────
-
+  // ── Events ──────────────────────────────────────────────────────────────────
   {
     id: "ticketmaster",
     name: "Ticketmaster Discovery API",
     category: "events",
     categoryLabel: "Events & Entertainment",
-    emoji: "🎟️",
+    description: "Concerts, sports, theatre — 500M tickets sold per year.",
     commission: "2–5%",
-    commissionType: "per ticket",
-    platformUsers: "500M+ tickets sold per year",
-    description:
-      "The world's largest primary ticketing marketplace. Concerts, sports, theatre, comedy — MioBot can surface and sell tickets for any event, anywhere.",
-    features: [
-      "Event discovery by location, category, and date",
-      "Real-time ticket inventory and pricing",
-      "Seat map and section selection",
-      "Order placement and e-ticket delivery",
-      "Resale market data via StubHub integration",
-    ],
-    signupUrl: "https://developer.ticketmaster.com/products-and-docs/apis/getting-started",
+    commissionType: "Per ticket",
     difficulty: "medium",
-    badge: "Market Leader",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: false,
-    geography: "US, CA, UK, AU, MX, IE + more",
-    notes: "Discovery API is free. Booking / transactional API requires partner agreement with Ticketmaster.",
+    geography: "Global",
+    signupUrl: "https://developer.ticketmaster.com/products-and-docs/partners",
+    docsUrl: "https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/",
+    badge: "Featured",
   },
-
   {
     id: "eventbrite",
-    name: "Eventbrite Organizer API",
+    name: "Eventbrite API",
     category: "events",
     categoryLabel: "Events & Entertainment",
-    emoji: "🎪",
+    description: "4M+ local events, classes, conferences and festivals.",
     commission: "4%",
-    commissionType: "per ticket",
-    platformUsers: "3M+ events per year",
-    description:
-      "Local events, professional conferences, music festivals, fitness classes, and workshops. Particularly strong for community and niche events that Ticketmaster doesn't carry.",
-    features: [
-      "Event search and discovery API",
-      "Ticket purchasing API",
-      "Organiser and venue data",
-      "Category and subcategory browse",
-      "Attendee check-in and management",
-    ],
-    signupUrl: "https://www.eventbrite.com/platform/api",
+    commissionType: "Per ticket",
     difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: true,
+    supportsInAppCheckout: false,
     geography: "Global",
+    signupUrl: "https://www.eventbrite.com/affiliate-program",
+    docsUrl: "https://www.eventbrite.com/platform/api",
   },
-
   {
     id: "stubhub",
-    name: "StubHub / Viagogo Partner API",
+    name: "StubHub API",
     category: "events",
     categoryLabel: "Events & Entertainment",
-    emoji: "🎫",
+    description: "Resale tickets for sold-out concerts and sports.",
     commission: "5–10%",
-    commissionType: "per ticket",
-    platformUsers: "10M+ buyers",
-    description:
-      "The premier resale ticket marketplace. Best for sold-out events, premium seats, and last-minute purchases. Higher commission than primary ticketing due to the secondary market.",
-    features: [
-      "Secondary market ticket search",
-      "FanProtect money-back guarantee",
-      "Price trend and value analysis",
-      "Instant download and mobile delivery",
-      "Fan sections and premium suite listings",
-    ],
-    signupUrl: "https://www.viagogo.com/affiliates",
+    commissionType: "Per ticket",
     difficulty: "medium",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: false,
     geography: "Global",
+    signupUrl: "https://www.stubhub.com/partners",
+    docsUrl: "https://developer.stubhub.com",
+    badge: "High Value",
   },
-
   {
     id: "seatgeek",
-    name: "SeatGeek Partner API",
+    name: "SeatGeek API",
     category: "events",
     categoryLabel: "Events & Entertainment",
-    emoji: "🏟️",
+    description: "Smart ticket pricing and best seat recommendations.",
     commission: "5–10%",
-    commissionType: "per ticket",
-    platformUsers: "20M+ users",
-    description:
-      "Smart ticket buying powered by Deal Score — an algorithm that flags which tickets are the best value in real time. Excellent for recommending tickets within a user's budget.",
-    features: [
-      "Deal Score API for value ranking",
-      "Price prediction and trend data",
-      "All-in pricing (no hidden fees display)",
-      "Interactive venue maps",
-      "Performer and team follow / alerts",
-    ],
-    signupUrl: "https://seatgeek.com/info/affiliates",
+    commissionType: "Per ticket",
     difficulty: "medium",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: false,
-    geography: "US, CA, UK",
+    geography: "USA",
+    signupUrl: "https://seatgeek.com/affiliate-program",
+    docsUrl: "https://platform.seatgeek.com",
+    badge: "High Value",
+  },
+  {
+    id: "fandango",
+    name: "Fandango / Atom Tickets API",
+    category: "events",
+    categoryLabel: "Events & Entertainment",
+    description: "Movie tickets and showtimes at 40,000+ screens.",
+    commission: "3–5%",
+    commissionType: "Per ticket",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "USA",
+    signupUrl: "https://www.fandango.com/affiliates",
+    docsUrl: "https://developer.fandango.com",
   },
 
-  // ── HOME & LOCAL SERVICES ──────────────────────────────────
-
+  // ── Home & Local Services ───────────────────────────────────────────────────
   {
     id: "thumbtack",
     name: "Thumbtack API",
     category: "services",
     categoryLabel: "Home & Local Services",
-    emoji: "📌",
+    description: "1,000+ service types — plumbers, cleaners, movers, electricians.",
     commission: "10–20%",
-    commissionType: "per lead",
-    platformUsers: "10M+ jobs completed",
-    description:
-      "Book plumbers, electricians, cleaners, movers, photographers, personal trainers — 1,000+ service categories. MioBot earns a lead fee for every qualified job request sent to a pro.",
-    features: [
-      "Pro search and AI matching by job type",
-      "Quote request and response API",
-      "Background check and licence verification",
-      "Instant booking for top-rated pros",
-      "Job completion and payment tracking",
-    ],
-    signupUrl: "https://pro.thumbtack.com/api",
+    commissionType: "Per lead",
     difficulty: "medium",
-    badge: "Highest Commission",
-    revenueStreams: ["lead-fee"],
     supportsInAppCheckout: false,
-    geography: "US",
+    geography: "USA",
+    signupUrl: "https://www.thumbtack.com/partners",
+    docsUrl: "https://www.thumbtack.com/developer",
+    badge: "High Value",
   },
-
   {
     id: "taskrabbit",
     name: "TaskRabbit API",
     category: "services",
     categoryLabel: "Home & Local Services",
-    emoji: "🐰",
+    description: "Handyman, furniture assembly, moving and mounting.",
     commission: "15%",
-    commissionType: "per booking",
-    platformUsers: "140+ cities",
-    description:
-      "On-demand handymen, furniture assembly, cleaning, TV mounting, and moving help — bookable in minutes. Strategic IKEA partnership drives enormous furniture assembly volume.",
-    features: [
-      "Tasker search by skill and location",
-      "Real-time availability calendar",
-      "Instant booking and confirmation",
-      "Secure in-app payment",
-      "IKEA co-branded assembly service",
-    ],
-    signupUrl: "https://www.taskrabbit.com/affiliates",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
+    commissionType: "Per booking",
+    difficulty: "medium",
     supportsInAppCheckout: true,
-    geography: "US, UK, CA, DE, FR, ES, IT, PT",
+    geography: "USA / UK / EU",
+    signupUrl: "https://www.taskrabbit.com/partners",
+    docsUrl: "https://developer.taskrabbit.com",
+    badge: "In-App Checkout",
   },
-
   {
     id: "angi",
     name: "Angi (Angie's List) API",
     category: "services",
     categoryLabel: "Home & Local Services",
-    emoji: "🔧",
+    description: "Home improvement professionals, verified reviews.",
     commission: "10–15%",
-    commissionType: "per lead",
-    platformUsers: "150M+ verified reviews",
-    description:
-      "The most trusted home improvement professional network. Verified reviews, licence checks, and guaranteed work on larger projects. Best for high-value jobs (roofing, HVAC, remodelling).",
-    features: [
-      "Pro matching by project type and zip code",
-      "Fixed-price project booking",
-      "Instant booking for routine services",
-      "Angi Key membership perks",
-      "Satisfaction guarantee API",
-    ],
-    signupUrl: "https://pro.angi.com/affiliates",
+    commissionType: "Per lead",
     difficulty: "medium",
-    revenueStreams: ["lead-fee"],
     supportsInAppCheckout: false,
-    geography: "US",
+    geography: "USA",
+    signupUrl: "https://www.angi.com/pro",
+    docsUrl: "https://developer.angi.com",
   },
-
-  // ── HEALTH & WELLNESS ──────────────────────────────────────
-
   {
-    id: "zocdoc",
-    name: "Zocdoc API",
-    category: "health",
-    categoryLabel: "Health & Wellness",
-    emoji: "🏥",
-    commission: "Per appointment (negotiated)",
-    commissionType: "per appointment",
-    platformUsers: "6M+ patients per month",
-    description:
-      "Book doctors, dentists, dermatologists, therapists, and specialists with real-time appointment availability and insurance verification. MioBot can answer 'find me a doctor who takes my insurance and is free tomorrow'.",
-    features: [
-      "Specialty and symptom-based search",
-      "Real-time calendar availability",
-      "Insurance plan verification",
-      "Telehealth appointment booking",
-      "Patient intake form pre-fill",
-    ],
-    signupUrl: "https://www.zocdoc.com/about/partnerships",
-    difficulty: "hard",
-    revenueStreams: ["lead-fee"],
-    supportsInAppCheckout: false,
-    geography: "US",
-    notes: "Requires formal partnership agreement. Revenue share negotiated case by case.",
+    id: "handy",
+    name: "Handy API",
+    category: "services",
+    categoryLabel: "Home & Local Services",
+    description: "Cleaning and handyman services, same-day booking.",
+    commission: "15%",
+    commissionType: "Per booking",
+    difficulty: "easy",
+    supportsInAppCheckout: true,
+    geography: "USA / UK / Canada",
+    signupUrl: "https://www.handy.com/partners",
+    docsUrl: "https://developer.handy.com",
+    badge: "In-App Checkout",
   },
 
+  // ── Rides & Transport ───────────────────────────────────────────────────────
+  {
+    id: "uber",
+    name: "Uber Rides API",
+    category: "rides",
+    categoryLabel: "Rides & Transport",
+    description: "Ride-hailing in 70+ countries, UberX to Black.",
+    commission: "$5–15",
+    commissionType: "Per new rider referred",
+    difficulty: "medium",
+    supportsInAppCheckout: true,
+    geography: "Global",
+    signupUrl: "https://developer.uber.com/docs/riders/introduction",
+    docsUrl: "https://developer.uber.com/docs/riders",
+    badge: "Featured",
+  },
+  {
+    id: "lyft",
+    name: "Lyft API",
+    category: "rides",
+    categoryLabel: "Rides & Transport",
+    description: "Ride-hailing across the US and Canada.",
+    commission: "$5–10",
+    commissionType: "Per new rider referred",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "USA / Canada",
+    signupUrl: "https://www.lyft.com/developers",
+    docsUrl: "https://developer.lyft.com",
+  },
+  {
+    id: "bolt",
+    name: "Bolt API",
+    category: "rides",
+    categoryLabel: "Rides & Transport",
+    description: "Rides, scooters, e-bikes and food delivery in 45 countries.",
+    commission: "Per booking",
+    commissionType: "Revenue share",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "EU / Africa / Asia",
+    signupUrl: "https://bolt.eu/en/business",
+    docsUrl: "https://developer.bolt.eu",
+  },
+  {
+    id: "grab",
+    name: "Grab API",
+    category: "rides",
+    categoryLabel: "Rides & Transport",
+    description: "Rides, food, deliveries and payments across Southeast Asia.",
+    commission: "Per booking",
+    commissionType: "Revenue share",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "Southeast Asia",
+    signupUrl: "https://developer.grab.com",
+    docsUrl: "https://developer.grab.com/docs",
+  },
+
+  // ── Health & Wellness ───────────────────────────────────────────────────────
   {
     id: "goodrx",
     name: "GoodRx API",
     category: "health",
     categoryLabel: "Health & Wellness",
-    emoji: "💊",
-    commission: "Per prescription referral",
-    commissionType: "per prescription",
-    platformUsers: "25M+ monthly users",
-    description:
-      "Compare drug prices across pharmacies and generate discount coupons. MioBot can save users up to 80% on prescriptions by finding the cheapest nearby pharmacy for any medication.",
-    features: [
-      "Drug price comparison by zip code",
-      "Coupon code generation",
-      "Pharmacy finder and directions",
-      "Manufacturer savings programme lookup",
-      "Drug interaction and alternative search",
-    ],
-    signupUrl: "https://www.goodrx.com/affiliate",
-    difficulty: "easy",
-    revenueStreams: ["lead-fee"],
+    description: "Drug price comparison, pharmacy discount coupons.",
+    commission: "Per prescription",
+    commissionType: "Per referral",
+    difficulty: "medium",
     supportsInAppCheckout: false,
-    geography: "US",
+    geography: "USA",
+    signupUrl: "https://www.goodrx.com/industry/partnerships",
+    docsUrl: "https://developers.goodrx.com",
   },
-
   {
-    id: "calm",
-    name: "Calm / Headspace Affiliate",
+    id: "zocdoc",
+    name: "Zocdoc API",
     category: "health",
     categoryLabel: "Health & Wellness",
-    emoji: "🧘",
-    commission: "20–30%",
-    commissionType: "per subscription",
-    platformUsers: "150M+ combined downloads",
-    description:
-      "Meditation, sleep stories, breathing exercises, and mindfulness programmes. Recurring commission on every subscription renewal — one of the best long-term revenue per user ratios.",
-    features: [
-      "App subscription deep-link",
-      "Content preview and trial API",
-      "Corporate wellness package referrals",
-      "Sleep score and progress tracking",
-      "Mindfulness streak data",
-    ],
-    signupUrl: "https://www.calm.com/business/affiliate",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: false,
-    geography: "Global",
-    notes: "Calm: managed via Impact. Headspace: managed via CJ Affiliate.",
-  },
-
-  // ── FINANCIAL SERVICES ─────────────────────────────────────
-
-  {
-    id: "nerdwallet",
-    name: "NerdWallet / Bankrate Partner API",
-    category: "finance",
-    categoryLabel: "Financial Services",
-    emoji: "💳",
-    commission: "$50–300 USD",
-    commissionType: "per conversion",
-    platformUsers: "20M+ monthly unique visitors",
-    description:
-      "Credit cards, personal loans, mortgages, savings accounts, and insurance — compared and applied for through MioBot. Highest flat-fee commission per successful application in the partner ecosystem.",
-    features: [
-      "Financial product comparison API",
-      "Personalised rate search (soft credit check)",
-      "Application tracking and status",
-      "Credit score tools and improvement tips",
-      "Savings and CD rate comparisons",
-    ],
-    signupUrl: "https://www.nerdwallet.com/advertising",
-    difficulty: "medium",
-    badge: "Highest Payout",
-    revenueStreams: ["lead-fee"],
-    supportsInAppCheckout: false,
-    geography: "US, UK, CA, AU",
-    notes: "Commission paid on funded accounts or approved applications. CPA model.",
-  },
-
-  {
-    id: "lemonade",
-    name: "Lemonade Insurance API",
-    category: "finance",
-    categoryLabel: "Financial Services",
-    emoji: "🍋",
-    commission: "$20–150 USD",
-    commissionType: "per policy",
-    platformUsers: "1.5M+ customers",
-    description:
-      "AI-powered insurance for renters, homeowners, pets, and cars — instant quotes in 90 seconds, claims paid in 3 minutes. MioBot can sell insurance as naturally as it sells anything else.",
-    features: [
-      "Instant quote API (renters, home, pet, car)",
-      "AI-powered claims submission",
-      "Policy management API",
-      "Giveback programme data",
-      "ISO-standard policy document generation",
-    ],
-    signupUrl: "https://www.lemonade.com/affiliates",
-    difficulty: "easy",
-    revenueStreams: ["lead-fee"],
-    supportsInAppCheckout: false,
-    geography: "US, UK, DE, NL, FR",
-  },
-
-  {
-    id: "creditkarma",
-    name: "Credit Karma / Experian Partner",
-    category: "finance",
-    categoryLabel: "Financial Services",
-    emoji: "📊",
-    commission: "$30–100 USD",
-    commissionType: "per referral",
-    platformUsers: "130M+ members",
-    description:
-      "Free credit score monitoring, loan recommendations, and credit card matching. MioBot earns when a user applies for a product matched to their credit profile.",
-    features: [
-      "Credit score API (soft pull, no impact)",
-      "Personalised loan and card recommendations",
-      "Mortgage and refinance comparison",
-      "Identity monitoring alerts",
-      "Tax filing integration (TurboTax)",
-    ],
-    signupUrl: "https://www.creditkarma.com/affiliates",
-    difficulty: "medium",
-    revenueStreams: ["lead-fee"],
-    supportsInAppCheckout: false,
-    geography: "US, CA, UK",
-  },
-
-  // ── RIDES & TRANSPORT ──────────────────────────────────────
-
-  {
-    id: "uber",
-    name: "Uber Referral / Affiliate API",
-    category: "transport",
-    categoryLabel: "Rides & Transport",
-    emoji: "🚕",
-    commission: "$5–15 USD",
-    commissionType: "per new rider",
-    platformUsers: "131M+ monthly active users",
-    description:
-      "Ride-hailing in 10,000+ cities worldwide. MioBot users say 'get me a ride home' and Uber handles the rest. Commission earned per new user referred who takes their first trip.",
-    features: [
-      "Ride request and price estimate API",
-      "Surge pricing indicator",
-      "Scheduled ride booking",
-      "UberX, Comfort, Black, XL options",
-      "Real-time driver tracking",
-    ],
-    signupUrl: "https://developer.uber.com",
-    difficulty: "medium",
-    revenueStreams: ["lead-fee"],
-    supportsInAppCheckout: false,
-    geography: "Global — 70+ countries",
-    notes: "Referral commission per new user who completes first ride. Requires Uber developer account.",
-  },
-
-  {
-    id: "rome2rio",
-    name: "Rome2rio Multi-Modal API",
-    category: "transport",
-    categoryLabel: "Rides & Transport",
-    emoji: "🗺️",
-    commission: "CPC + 2–4%",
-    commissionType: "per booking",
-    platformUsers: "12M+ monthly users",
-    description:
-      "Compare every transport mode — plane, train, bus, ferry, car hire — for any journey between any two points on earth. Best for MioBot's travel planning and route recommendation features.",
-    features: [
-      "Multi-modal route comparison",
-      "Door-to-door journey planner",
-      "Price and duration comparison",
-      "CO₂ emissions data per route",
-      "Deep links to booking partners",
-    ],
-    signupUrl: "https://www.rome2rio.com/about/partners",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
-    supportsInAppCheckout: false,
-    geography: "Global",
-  },
-
-  {
-    id: "trainline",
-    name: "Trainline Partner API",
-    category: "transport",
-    categoryLabel: "Rides & Transport",
-    emoji: "🚄",
-    commission: "2–4%",
-    commissionType: "per booking",
-    platformUsers: "100M+ journeys/year",
-    description:
-      "Europe's leading rail and coach booking platform. Real-time prices across 270+ rail and coach carriers in 45 countries. Essential for European MioBot users.",
-    features: [
-      "Rail and coach search across 270+ operators",
-      "Split ticketing to find cheaper fares",
-      "Seat reservation and rail pass data",
-      "Delay and disruption alerts",
-      "Eurostar and high-speed rail",
-    ],
-    signupUrl: "https://www.thetrainline.com/about/partners",
-    difficulty: "medium",
-    revenueStreams: ["commission"],
+    description: "Book doctors, dentists and specialists instantly.",
+    commission: "Per appointment",
+    commissionType: "Per booking",
+    difficulty: "hard",
     supportsInAppCheckout: true,
-    geography: "UK, EU (45 countries)",
+    geography: "USA",
+    signupUrl: "https://www.zocdoc.com/partners",
+    docsUrl: "https://api.zocdoc.com",
+    badge: "In-App Checkout",
+  },
+  {
+    id: "teladoc",
+    name: "Teladoc API",
+    category: "health",
+    categoryLabel: "Health & Wellness",
+    description: "24/7 virtual doctor visits, mental health and nutrition.",
+    commission: "Per consultation",
+    commissionType: "Per referral",
+    difficulty: "hard",
+    supportsInAppCheckout: false,
+    geography: "USA / Global",
+    signupUrl: "https://www.teladochealth.com/partners",
+    docsUrl: "https://developer.teladochealth.com",
   },
 
-  // ── PAYMENTS ───────────────────────────────────────────────
-
+  // ── Finance ─────────────────────────────────────────────────────────────────
+  {
+    id: "plaid",
+    name: "Plaid API",
+    category: "finance",
+    categoryLabel: "Financial Services",
+    description: "Connect bank accounts for instant, seamless payments.",
+    commission: "Per active user",
+    commissionType: "Monthly active users",
+    difficulty: "medium",
+    supportsInAppCheckout: true,
+    geography: "USA / UK / EU / Canada",
+    signupUrl: "https://plaid.com/partnerships",
+    docsUrl: "https://plaid.com/docs",
+    badge: "Featured",
+  },
   {
     id: "stripe",
     name: "Stripe Connect",
     category: "payments",
     categoryLabel: "Payments",
-    emoji: "💳",
+    description: "Accept payments, run subscriptions, split with merchants.",
     commission: "Processing margin",
-    commissionType: "per transaction",
-    platformUsers: "Global",
-    description:
-      "Accept payments from MioBot users and automatically split revenue with partner merchants. The financial backbone of the platform — handles cards, Apple Pay, Google Pay, and BNPL in one integration.",
-    features: [
-      "Card and digital wallet acceptance (Apple/Google Pay)",
-      "Automatic revenue split with merchants (Connect)",
-      "Klarna, Afterpay, Affirm BNPL via Payment Element",
-      "Fraud detection and 3D Secure",
-      "Instant payouts to merchants",
-    ],
-    signupUrl: "https://stripe.com/connect",
+    commissionType: "Per transaction",
     difficulty: "medium",
-    badge: "Recommended",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: true,
-    geography: "Global — 135+ currencies",
-    notes: "Standard pricing: 1.4% + 20p (EU cards) or 2.9% + 30¢ (US cards). No monthly fees.",
+    geography: "Global",
+    signupUrl: "https://stripe.com/connect",
+    docsUrl: "https://stripe.com/docs/connect",
+    badge: "Featured",
   },
-
   {
     id: "klarna",
-    name: "Klarna Merchant API",
+    name: "Klarna API",
     category: "payments",
     categoryLabel: "Payments",
-    emoji: "🛍️",
+    description: "Buy Now Pay Later — split into 4 interest-free payments.",
     commission: "1–3%",
-    commissionType: "per transaction",
-    platformUsers: "150M+ Klarna users",
-    description:
-      "Buy Now Pay Later at the MioBot checkout. Split any purchase into 4 interest-free payments or defer for 30 days. Increases conversion by 20–30% for high-value purchases.",
-    features: [
-      "Pay in 4 (interest-free instalments)",
-      "Pay in 30 days (try before you pay)",
-      "Longer-term financing for large purchases",
-      "Klarna merchant boost (featured placement)",
-      "Klarna app shopper base reach",
-    ],
-    signupUrl: "https://www.klarna.com/business",
-    difficulty: "easy",
-    revenueStreams: ["commission"],
+    commissionType: "Per transaction",
+    difficulty: "medium",
     supportsInAppCheckout: true,
-    geography: "US, UK, EU, AU, CA + 20 more",
-    notes: "Can be added as a payment method within Stripe Payment Element — no separate integration needed.",
+    geography: "Global",
+    signupUrl: "https://www.klarna.com/business/become-a-klarna-partner",
+    docsUrl: "https://developers.klarna.com",
+    badge: "In-App Checkout",
+  },
+  {
+    id: "nerdwallet",
+    name: "NerdWallet Partner API",
+    category: "finance",
+    categoryLabel: "Financial Services",
+    description: "Credit cards, mortgages, loans and investing comparison.",
+    commission: "$50–300",
+    commissionType: "Per approved application",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "USA / UK",
+    signupUrl: "https://www.nerdwallet.com/partners",
+    docsUrl: "https://developer.nerdwallet.com",
+    badge: "High Value",
+  },
+  {
+    id: "wise",
+    name: "Wise API",
+    category: "finance",
+    categoryLabel: "Financial Services",
+    description: "International money transfers at real exchange rates.",
+    commission: "Per transfer",
+    commissionType: "Revenue share",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://wise.com/partners",
+    docsUrl: "https://api-docs.wise.com",
   },
 
+  // ── Shipping & Logistics ─────────────────────────────────────────────────────
   {
-    id: "paypal",
-    name: "PayPal Commerce Platform",
-    category: "payments",
-    categoryLabel: "Payments",
-    emoji: "🏦",
-    commission: "Processing margin",
-    commissionType: "per transaction",
-    platformUsers: "400M+ active accounts",
-    description:
-      "Broad acceptance and buyer trust, especially for users wary of entering card details. PayPal's buyer protection increases conversion for first-time purchasers.",
-    features: [
-      "PayPal and Venmo checkout buttons",
-      "Pay Later (BNPL) option",
-      "Buyer protection and dispute resolution",
-      "Cryptocurrency checkout option",
-      "Recurring billing and subscriptions",
-    ],
-    signupUrl: "https://developer.paypal.com/home",
+    id: "easypost",
+    name: "EasyPost API",
+    category: "shipping",
+    categoryLabel: "Shipping & Logistics",
+    description: "UPS, FedEx, USPS, DHL — compare rates & print labels.",
+    commission: "Per shipment",
+    commissionType: "Volume-based",
     difficulty: "easy",
-    revenueStreams: ["commission"],
     supportsInAppCheckout: true,
-    geography: "Global — 200+ markets",
+    geography: "Global",
+    signupUrl: "https://www.easypost.com/signup",
+    docsUrl: "https://www.easypost.com/docs/api",
+  },
+  {
+    id: "aftership",
+    name: "AfterShip API",
+    category: "shipping",
+    categoryLabel: "Shipping & Logistics",
+    description: "Real-time parcel tracking across 700+ carriers.",
+    commission: "Per tracked shipment",
+    commissionType: "SaaS revenue share",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://www.aftership.com/partners",
+    docsUrl: "https://www.aftership.com/docs/api/4",
+  },
+
+  // ── AI Layer ─────────────────────────────────────────────────────────────────
+  {
+    id: "openai",
+    name: "OpenAI API (GPT-4o)",
+    category: "ai",
+    categoryLabel: "AI & Intelligence",
+    description: "Natural language understanding powering MioBot's conversation engine.",
+    commission: "Per token (cost)",
+    commissionType: "API cost",
+    difficulty: "medium",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://platform.openai.com/signup",
+    docsUrl: "https://platform.openai.com/docs",
+    badge: "Core",
+  },
+  {
+    id: "googleplaces",
+    name: "Google Places API",
+    category: "ai",
+    categoryLabel: "AI & Intelligence",
+    description: "Local business data, ratings, opening hours and maps.",
+    commission: "Per request (cost)",
+    commissionType: "API cost",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "Global",
+    signupUrl: "https://console.cloud.google.com",
+    docsUrl: "https://developers.google.com/maps/documentation/places/web-service",
+  },
+  {
+    id: "yelp",
+    name: "Yelp Fusion API",
+    category: "ai",
+    categoryLabel: "AI & Intelligence",
+    description: "Restaurant and local business search with verified reviews.",
+    commission: "Per request (cost)",
+    commissionType: "API cost",
+    difficulty: "easy",
+    supportsInAppCheckout: false,
+    geography: "USA / Canada / EU",
+    signupUrl: "https://www.yelp.com/developers/v3/manage_app",
+    docsUrl: "https://docs.developer.yelp.com",
   },
 ];
 
-// ─────────────────────────────────────────────────────────────
-//  3. Summary & Commission Tables
-// ─────────────────────────────────────────────────────────────
+// ─── Revenue Model ────────────────────────────────────────────────────────────
 
-export const CATEGORY_SUMMARY: Record<IntegrationCategory, { label: string; emoji: string; count: number; topCommission: string }> = {
-  shopping:  { label: "Shopping & Retail",    emoji: "🛍️", count: 6, topCommission: "Up to 10% per sale"         },
-  food:      { label: "Food & Grocery",       emoji: "🍔", count: 4, topCommission: "3–6% per order"             },
-  travel:    { label: "Travel & Hotels",      emoji: "✈️", count: 7, topCommission: "4–8% per booking"           },
-  events:    { label: "Events & Entertainment",emoji: "🎟️", count: 4, topCommission: "5–10% per ticket"          },
-  services:  { label: "Home & Local Services",emoji: "🔧", count: 3, topCommission: "10–20% per lead"            },
-  health:    { label: "Health & Wellness",    emoji: "💊", count: 3, topCommission: "20–30% per subscription"    },
-  finance:   { label: "Financial Services",   emoji: "💰", count: 3, topCommission: "$50–300 per conversion"     },
-  transport: { label: "Rides & Transport",    emoji: "🚗", count: 3, topCommission: "2–4% + lead fees"           },
-  payments:  { label: "Payments",             emoji: "💳", count: 3, topCommission: "Processing margin + BNPL"   },
-};
+export interface RevenueStream {
+  stream: string;
+  range: string;
+  description: string;
+}
 
-export const REVENUE_MODEL_SUMMARY = [
-  {
-    stream: "Referral commissions" as const,
-    description: "Partner pays Mio a % of every completed transaction a Mio user makes through the app",
-    range: "1–30% per transaction",
-    examples: ["Amazon", "Booking.com", "DoorDash", "TaskRabbit"],
-  },
-  {
-    stream: "Lead fees" as const,
-    description: "Partner pays Mio a flat fee for every qualified lead sent (no purchase required)",
-    range: "$5–$300 per lead",
-    examples: ["Thumbtack", "Zocdoc", "NerdWallet", "GoodRx"],
-  },
-  {
-    stream: "Subscriptions" as const,
-    description: "Recurring monthly fee from Mio users for premium access to the platform",
-    range: "$9.99–$99.99 per month",
-    examples: ["Personal Plan", "Business Plan", "Enterprise", "Merchant API"],
-  },
+export const REVENUE_MODEL: RevenueStream[] = [
+  { stream: "User subscriptions", range: "$9.99–$29.99 / month", description: "Personal plan with monthly search & order limits." },
+  { stream: "Business subscriptions", range: "$29.99–$99.99 / month", description: "Merchant/business accounts with analytics and API access." },
+  { stream: "Referral commissions", range: "1–20% per purchase", description: "Earned on every completed transaction through a partner API." },
+  { stream: "Lead referral fees", range: "$5–$300 per lead", description: "Fixed fee paid by service partners for qualified user referrals." },
+  { stream: "Premium merchant placement", range: "Flat monthly fee", description: "Merchants pay to appear first in MioBot search results." },
+  { stream: "White-label licensing", range: "Enterprise custom pricing", description: "Other platforms license the MioBot AI engine." },
 ];
 
-// ─────────────────────────────────────────────────────────────
-//  4. Helper Utilities
-// ─────────────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
-/** Filter integrations by category */
-export function getByCategory(category: IntegrationCategory): ApiIntegration[] {
+export const CATEGORIES: { value: Category | "all"; label: string }[] = [
+  { value: "all", label: "All Categories" },
+  { value: "shopping", label: "Shopping & Retail" },
+  { value: "food", label: "Food & Grocery" },
+  { value: "travel", label: "Travel" },
+  { value: "events", label: "Events & Entertainment" },
+  { value: "services", label: "Home & Local Services" },
+  { value: "rides", label: "Rides & Transport" },
+  { value: "health", label: "Health & Wellness" },
+  { value: "finance", label: "Financial Services" },
+  { value: "payments", label: "Payments" },
+  { value: "shipping", label: "Shipping & Logistics" },
+  { value: "ai", label: "AI & Intelligence" },
+];
+
+export function getByCategory(category: Category): Integration[] {
   return INTEGRATIONS.filter((i) => i.category === category);
 }
 
-/** Filter integrations by difficulty */
-export function getByDifficulty(difficulty: DifficultyLevel): ApiIntegration[] {
-  return INTEGRATIONS.filter((i) => i.difficulty === difficulty);
+export function getFeatured(): Integration[] {
+  return INTEGRATIONS.filter((i) => i.badge === "Featured");
 }
 
-/** Get all integrations that support in-app checkout */
-export function getInAppCheckoutReady(): ApiIntegration[] {
+export function getHighValue(): Integration[] {
+  return INTEGRATIONS.filter((i) => i.badge === "High Value");
+}
+
+export function getInAppCheckoutReady(): Integration[] {
   return INTEGRATIONS.filter((i) => i.supportsInAppCheckout);
 }
 
-/** Get integrations with a badge (featured / highlighted) */
-export function getFeatured(): ApiIntegration[] {
-  return INTEGRATIONS.filter((i) => i.badge !== undefined);
+export function getByDifficulty(difficulty: Difficulty): Integration[] {
+  return INTEGRATIONS.filter((i) => i.difficulty === difficulty);
 }
 
-/** Get integrations available in a specific geography (simple substring match) */
-export function getByGeography(region: string): ApiIntegration[] {
+export function searchIntegrations(query: string): Integration[] {
+  const q = query.toLowerCase();
   return INTEGRATIONS.filter(
     (i) =>
-      i.geography.toLowerCase().includes("global") ||
-      i.geography.toLowerCase().includes(region.toLowerCase())
+      i.name.toLowerCase().includes(q) ||
+      i.description.toLowerCase().includes(q) ||
+      i.categoryLabel.toLowerCase().includes(q)
   );
 }
 
-/** Return the total number of integrations */
-export function getTotalCount(): number {
-  return INTEGRATIONS.length;
-}
+// ─── React Component ──────────────────────────────────────────────────────────
 
-/** Summarise count per revenue stream */
-export function getRevenueStreamCounts(): Record<string, number> {
-  const counts: Record<string, number> = { commission: 0, "lead-fee": 0, subscription: 0 };
-  for (const i of INTEGRATIONS) {
-    for (const stream of i.revenueStreams) {
-      counts[stream] = (counts[stream] ?? 0) + 1;
-    }
-  }
-  return counts;
-}
-
-// ─────────────────────────────────────────────────────────────
-//  5. React Reference Table Component
-// ─────────────────────────────────────────────────────────────
-
-const DIFF_STYLES: Record<DifficultyLevel, { label: string; color: string; bg: string }> = {
-  easy:   { label: "Easy",     color: "#15803d", bg: "#dcfce7" },
-  medium: { label: "Medium",   color: "#b45309", bg: "#fef3c7" },
-  hard:   { label: "Advanced", color: "#6d28d9", bg: "#ede9fe" },
+const BADGE_STYLES: Record<string, { bg: string; color: string }> = {
+  Featured: { bg: "#7c3aed", color: "#fff" },
+  "High Value": { bg: "#059669", color: "#fff" },
+  "In-App Checkout": { bg: "#0ea5e9", color: "#fff" },
+  Core: { bg: "#f59e0b", color: "#fff" },
 };
 
-const ALL_CATEGORIES = ["all", ...Object.keys(CATEGORY_SUMMARY)] as const;
+const DIFF_STYLES: Record<Difficulty, { bg: string; color: string; label: string }> = {
+  easy: { bg: "#d1fae5", color: "#065f46", label: "Easy" },
+  medium: { bg: "#fef3c7", color: "#92400e", label: "Medium" },
+  hard: { bg: "#fee2e2", color: "#991b1b", label: "Advanced" },
+};
 
-export default function IntegrationReferenceTable() {
-  const [filter, setFilter] = useState<string>("all");
+export function IntegrationReferenceTable() {
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState<Category | "all">("all");
+  const [checkoutOnly, setCheckoutOnly] = useState(false);
 
   const visible = INTEGRATIONS.filter((i) => {
-    const matchCat = filter === "all" || i.category === filter;
-    const q = search.toLowerCase();
+    const matchCat = category === "all" || i.category === category;
     const matchSearch =
-      !q ||
-      i.name.toLowerCase().includes(q) ||
-      i.description.toLowerCase().includes(q) ||
-      i.categoryLabel.toLowerCase().includes(q);
-    return matchCat && matchSearch;
+      !search ||
+      i.name.toLowerCase().includes(search.toLowerCase()) ||
+      i.description.toLowerCase().includes(search.toLowerCase());
+    const matchCheckout = !checkoutOnly || i.supportsInAppCheckout;
+    return matchCat && matchSearch && matchCheckout;
   });
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", maxWidth: 1200, margin: "0 auto", padding: 24 }}>
-      <h1 style={{ fontSize: 28, fontWeight: 900, marginBottom: 4 }}>
-        MioBot API & Affiliate Integration Reference
-      </h1>
-      <p style={{ color: "#6b7280", marginBottom: 32 }}>
-        {getTotalCount()} integrations across {Object.keys(CATEGORY_SUMMARY).length} categories
+    <div style={{ fontFamily: "Manrope, system-ui, sans-serif", color: "#0f1035", maxWidth: 1200, margin: "0 auto", padding: "32px 16px" }}>
+      <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 4 }}>MioBot Integration Reference</h1>
+      <p style={{ color: "#7c3aed", fontWeight: 600, marginBottom: 24 }}>
+        {INTEGRATIONS.length} integrations · {INTEGRATIONS.filter((i) => i.supportsInAppCheckout).length} support in-app checkout
       </p>
 
       {/* Filters */}
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
-        {ALL_CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setFilter(cat)}
-            style={{
-              padding: "6px 14px",
-              borderRadius: 20,
-              border: filter === cat ? "none" : "1px solid #d1d5db",
-              background: filter === cat ? "#7c3aed" : "#fff",
-              color: filter === cat ? "#fff" : "#374151",
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
-          >
-            {cat === "all" ? "All" : CATEGORY_SUMMARY[cat as IntegrationCategory]?.emoji + " " + CATEGORY_SUMMARY[cat as IntegrationCategory]?.label}
-          </button>
-        ))}
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 24 }}>
+        <input
+          type="text"
+          placeholder="Search integrations…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{ flex: "1 1 200px", padding: "10px 14px", borderRadius: 8, border: "1.5px solid #e5e7eb", fontSize: 14, outline: "none" }}
+        />
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value as Category | "all")}
+          style={{ padding: "10px 14px", borderRadius: 8, border: "1.5px solid #e5e7eb", fontSize: 14, background: "#fff" }}
+        >
+          {CATEGORIES.map((c) => (
+            <option key={c.value} value={c.value}>{c.label}</option>
+          ))}
+        </select>
+        <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, cursor: "pointer" }}>
+          <input type="checkbox" checked={checkoutOnly} onChange={(e) => setCheckoutOnly(e.target.checked)} />
+          In-app checkout only
+        </label>
       </div>
 
-      <input
-        type="search"
-        placeholder="Search integrations…"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{ width: "100%", maxWidth: 400, padding: "8px 14px", borderRadius: 8, border: "1px solid #d1d5db", fontSize: 14, marginBottom: 24, boxSizing: "border-box" }}
-      />
+      <p style={{ fontSize: 13, color: "#6b7280", marginBottom: 12 }}>{visible.length} results</p>
 
       {/* Table */}
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+      <div style={{ overflowX: "auto", borderRadius: 12, border: "1px solid #e5e7eb" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
           <thead>
-            <tr style={{ borderBottom: "2px solid #e5e7eb", textAlign: "left" }}>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>Partner</th>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>Category</th>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>Commission</th>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>Basis</th>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>Difficulty</th>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>In-App Checkout</th>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>Geography</th>
-              <th style={{ padding: "10px 12px", color: "#374151" }}>Apply</th>
+            <tr style={{ background: "#f9fafb" }}>
+              {["Provider", "Category", "Commission", "Type", "Difficulty", "Checkout", "Geography", "Apply"].map((h) => (
+                <th key={h} style={{ padding: "10px 12px", color: "#374151", fontWeight: 700, textAlign: "left", borderBottom: "2px solid #e5e7eb" }}>{h}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -1284,9 +934,9 @@ export default function IntegrationReferenceTable() {
               return (
                 <tr key={i.id} style={{ borderBottom: "1px solid #f3f4f6", background: idx % 2 === 0 ? "#fff" : "#fafafa" }}>
                   <td style={{ padding: "10px 12px", fontWeight: 700, color: "#0f1035" }}>
-                    {i.emoji} {i.name}
+                    {i.name}
                     {i.badge && (
-                      <span style={{ marginLeft: 6, padding: "2px 7px", borderRadius: 12, background: "#7c3aed", color: "#fff", fontSize: 10, fontWeight: 700 }}>
+                      <span style={{ marginLeft: 6, padding: "2px 7px", borderRadius: 12, background: BADGE_STYLES[i.badge]?.bg ?? "#7c3aed", color: BADGE_STYLES[i.badge]?.color ?? "#fff", fontSize: 10, fontWeight: 700 }}>
                         {i.badge}
                       </span>
                     )}
@@ -1295,18 +945,12 @@ export default function IntegrationReferenceTable() {
                   <td style={{ padding: "10px 12px", fontWeight: 700, color: "#7c3aed" }}>{i.commission}</td>
                   <td style={{ padding: "10px 12px", color: "#6b7280", whiteSpace: "nowrap" }}>{i.commissionType}</td>
                   <td style={{ padding: "10px 12px" }}>
-                    <span style={{ padding: "3px 9px", borderRadius: 12, background: d.bg, color: d.color, fontSize: 12, fontWeight: 600 }}>
-                      {d.label}
-                    </span>
+                    <span style={{ padding: "3px 9px", borderRadius: 12, background: d.bg, color: d.color, fontSize: 12, fontWeight: 600 }}>{d.label}</span>
                   </td>
-                  <td style={{ padding: "10px 12px", textAlign: "center" }}>
-                    {i.supportsInAppCheckout ? "✅" : "🔗"}
-                  </td>
+                  <td style={{ padding: "10px 12px", textAlign: "center" }}>{i.supportsInAppCheckout ? "✓" : "—"}</td>
                   <td style={{ padding: "10px 12px", color: "#6b7280", fontSize: 12 }}>{i.geography}</td>
                   <td style={{ padding: "10px 12px" }}>
-                    <a href={i.signupUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#7c3aed", fontWeight: 600, textDecoration: "none", fontSize: 12 }}>
-                      Sign up →
-                    </a>
+                    <a href={i.signupUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#7c3aed", fontWeight: 600, textDecoration: "none", fontSize: 12 }}>Sign up →</a>
                   </td>
                 </tr>
               );
@@ -1315,10 +959,33 @@ export default function IntegrationReferenceTable() {
         </table>
       </div>
 
-      <p style={{ marginTop: 24, fontSize: 12, color: "#9ca3af" }}>
-        ✅ = full purchase completed inside MioBot · 🔗 = MioBot recommends, user books on partner site<br />
+      <p style={{ marginTop: 16, fontSize: 12, color: "#9ca3af" }}>
+        ✓ = full purchase completed inside MioBot &nbsp;·&nbsp; — = MioBot recommends, user completes on partner site<br />
         Commission rates are typical affiliate programme rates and may vary. Always confirm current rates in the partner portal.
       </p>
+
+      {/* Revenue Model */}
+      <h2 style={{ fontSize: 22, fontWeight: 800, marginTop: 40, marginBottom: 16 }}>Revenue Model Summary</h2>
+      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, borderRadius: 12, overflow: "hidden", border: "1px solid #e5e7eb" }}>
+        <thead>
+          <tr style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)" }}>
+            {["Revenue Stream", "Range", "Description"].map((h) => (
+              <th key={h} style={{ padding: "10px 16px", color: "#fff", fontWeight: 700, textAlign: "left" }}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {REVENUE_MODEL.map((r, idx) => (
+            <tr key={r.stream} style={{ background: idx % 2 === 0 ? "#fff" : "#fafafa", borderBottom: "1px solid #f3f4f6" }}>
+              <td style={{ padding: "10px 16px", fontWeight: 700, color: "#0f1035" }}>{r.stream}</td>
+              <td style={{ padding: "10px 16px", fontWeight: 700, color: "#7c3aed" }}>{r.range}</td>
+              <td style={{ padding: "10px 16px", color: "#6b7280" }}>{r.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
+
+export default IntegrationReferenceTable;
