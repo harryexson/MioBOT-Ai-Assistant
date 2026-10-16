@@ -63,7 +63,7 @@ export default function Pricing() {
     <main style={{ minHeight: "100vh", paddingTop: 100, paddingBottom: 80, background: "#ffffff" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "clamp(32px,5vw,54px)", color: "#0f1035", margin: "0 0 12px", lineHeight: 1.1 }}>
+          <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 800, fontSize: "clamp(32px,5vw,54px)", color: "#0f1035", margin: "0 0 12px", lineHeight: 1.1 }}>
             Simple, <span className="gradient-text">honest pricing.</span>
           </h1>
           <p style={{ color: "#6b7280", fontSize: 17, maxWidth: 480, margin: "0 auto" }}>
@@ -93,9 +93,9 @@ export default function Pricing() {
               )}
 
               <div style={{ marginBottom: 24 }}>
-                <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 17, marginBottom: 4, color: plan.featured ? "#ffffff" : "#0f1035" }}>{plan.name}</p>
+                <p style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 17, marginBottom: 4, color: plan.featured ? "#ffffff" : "#0f1035" }}>{plan.name}</p>
                 <div style={{ display: "flex", alignItems: "flex-end", gap: 4, marginBottom: 8 }}>
-                  <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 52, color: plan.featured ? "#ffffff" : "#0f1035", lineHeight: 1 }}>{plan.price}</span>
+                  <span style={{ fontFamily: "Manrope, sans-serif", fontWeight: 800, fontSize: 52, color: plan.featured ? "#ffffff" : "#0f1035", lineHeight: 1 }}>{plan.price}</span>
                   <span style={{ fontSize: 13, paddingBottom: 10, color: plan.featured ? "rgba(255,255,255,0.75)" : "#9ca3af" }}>/{plan.period}</span>
                 </div>
                 <p style={{ fontSize: 13, color: plan.featured ? "rgba(255,255,255,0.8)" : "#6b7280", margin: 0 }}>{plan.desc}</p>

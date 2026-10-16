@@ -125,9 +125,9 @@ function ScreenWelcome() {
       </div>
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6 }}>
         <div style={{ width: 52, height: 52, borderRadius: 16, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 20px rgba(124,58,237,0.35)" }}>
-          <span style={{ color: "#fff", fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 24 }}>M</span>
+          <span style={{ color: "#fff", fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 24 }}>M</span>
         </div>
-        <p style={{ margin: 0, fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 17, color: "#0f1035" }}>Mio</p>
+        <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 17, color: "#0f1035" }}>Mio</p>
         <p style={{ margin: 0, fontSize: 10, color: "#6b7280", textAlign: "center", lineHeight: 1.4 }}>Your AI Assistant<br />for Everyday Life</p>
         <p style={{ margin: "4px 0 0", fontSize: 9, color: "#6b6b80", fontWeight: 500 }}>Customise or more. You can<br />do much more with Mio.</p>
       </div>
@@ -348,7 +348,7 @@ function RightChatDemo() {
       {/* Search bar */}
       <div style={{ background: "#f5f3ff", borderRadius: 12, padding: "10px 14px", display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
         <div style={{ width: 20, height: 20, borderRadius: 6, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-          <span style={{ color: "#fff", fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 9 }}>M</span>
+          <span style={{ color: "#fff", fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 9 }}>M</span>
         </div>
         <p style={{ margin: 0, fontSize: 12, color: "#7c3aed", fontWeight: 600 }}>Find me running shoes under $150</p>
       </div>
@@ -359,7 +359,7 @@ function RightChatDemo() {
             {m.role === "mio" ? (
               <>
                 <div style={{ width: 22, height: 22, borderRadius: 7, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <span style={{ color: "#fff", fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 9 }}>M</span>
+                  <span style={{ color: "#fff", fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 9 }}>M</span>
                 </div>
                 <div style={{ background: "#f5f3ff", borderRadius: 10, padding: "6px 12px", fontSize: 11, fontWeight: 600, color: "#0f1035", flex: 1 }}>{m.text}</div>
               </>
@@ -461,19 +461,21 @@ export default function Home() {
                 <span style={{ fontSize: 11, fontWeight: 700, color: "#7c3aed", letterSpacing: 0.5, textTransform: "uppercase" }}>AI Powered Assistant</span>
               </div>
 
-              {/* Headline — matching reference Design 1 "Your AI Assistant for Everyday Life" style */}
-              <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(38px,5vw,68px)", lineHeight: 1.05, color: "#0f1035", margin: "0 0 8px", letterSpacing: -2 }}>
-                Your AI Assistant
+              {/* Headline — matching reference bold ultra-heavy style */}
+              <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(44px,5.5vw,78px)", lineHeight: 1.0, color: "#0f1035", margin: "0 0 4px", letterSpacing: "-0.04em" }}>
+                Talk. Find. Book.
               </h1>
-              <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(38px,5vw,68px)", lineHeight: 1.05, margin: "0 0 22px", letterSpacing: -2 }}>
-                for{" "}
+              <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(44px,5.5vw,78px)", lineHeight: 1.0, margin: "0 0 24px", letterSpacing: "-0.04em" }}>
                 <span style={{ background: "linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Everyday Life
+                  Order. Pay.
                 </span>
               </h1>
 
-              <p style={{ fontSize: "clamp(15px,1.3vw,18px)", color: "#4b5563", lineHeight: 1.65, margin: "0 0 30px", maxWidth: 440, fontWeight: 400 }}>
-                Shop. Order. Book. Pay. All through simple conversation. Mio helps you find what you need and gets it done — anywhere, anytime.
+              <p style={{ fontFamily: "Manrope,sans-serif", fontSize: "clamp(18px,1.5vw,22px)", color: "#0f1035", fontWeight: 700, margin: "0 0 8px", letterSpacing: "-0.02em" }}>
+                One assistant. Endless possibilities.
+              </p>
+              <p style={{ fontFamily: "Space Grotesk,sans-serif", fontSize: "clamp(14px,1.1vw,16px)", color: "#4b5563", lineHeight: 1.65, margin: "0 0 30px", maxWidth: 420, fontWeight: 400 }}>
+                Mio helps you shop, dine, travel, book services and handle payments — all through natural conversation.
               </p>
 
               {/* CTA row */}
@@ -513,7 +515,7 @@ export default function Home() {
               <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
                 {STATS.map((s) => (
                   <div key={s.label}>
-                    <p style={{ margin: 0, fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 18, color: s.value === "All in One" ? "#7c3aed" : "#0f1035" }}>{s.value}</p>
+                    <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 18, color: s.value === "All in One" ? "#7c3aed" : "#0f1035" }}>{s.value}</p>
                     <p style={{ margin: 0, fontSize: 11, color: "#6b7280", fontWeight: 500 }}>{s.label}</p>
                   </div>
                 ))}
@@ -568,7 +570,7 @@ export default function Home() {
       {showVoice && (
         <section style={{ background: "#f8f7ff", padding: "40px 24px" }}>
           <div style={{ maxWidth: 600, margin: "0 auto" }}>
-            <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 24, color: "#0f1035", textAlign: "center", margin: "0 0 24px" }}>
+            <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 24, color: "#0f1035", textAlign: "center", margin: "0 0 24px" }}>
               Try MioBot — Speak Your Request
             </h2>
             <MioVoiceBot onResult={setVoiceResult} />
@@ -593,7 +595,7 @@ export default function Home() {
 
             {/* Left — "Everything You Need. Just Ask Mio." */}
             <div>
-              <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(28px,3vw,42px)", color: "#0f1035", margin: "0 0 40px", lineHeight: 1.1 }}>
+              <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(30px,3.5vw,48px)", color: "#0f1035", margin: "0 0 40px", lineHeight: 1.08, letterSpacing: "-0.03em" }}>
                 Everything You Need.{" "}
                 <span style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                   Just Ask Mio.
@@ -612,7 +614,7 @@ export default function Home() {
                       {cat.emoji}
                     </div>
                     <div>
-                      <p style={{ margin: 0, fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 13, color: "#0f1035" }}>{cat.label}</p>
+                      <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 700, fontSize: 13, color: "#0f1035" }}>{cat.label}</p>
                       <p style={{ margin: "3px 0 0", fontSize: 11, color: "#6b7280" }}>{cat.desc}</p>
                     </div>
                   </Link>
@@ -627,10 +629,10 @@ export default function Home() {
                   <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 14px", background: "#fff", gap: 10 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <div style={{ width: 28, height: 28, borderRadius: 9, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <span style={{ color: "#fff", fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 12 }}>M</span>
+                        <span style={{ color: "#fff", fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 12 }}>M</span>
                       </div>
                       <div>
-                        <p style={{ margin: 0, fontSize: 11, fontWeight: 800, fontFamily: "Syne,sans-serif", color: "#0f1035" }}>Mio</p>
+                        <p style={{ margin: 0, fontSize: 11, fontWeight: 800, fontFamily: "Manrope,sans-serif", color: "#0f1035" }}>Mio</p>
                         <p style={{ margin: 0, fontSize: 8, color: "#6b7280" }}>Your AI Assistant for Everyday Life</p>
                       </div>
                     </div>
@@ -669,7 +671,7 @@ export default function Home() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#7c3aed", letterSpacing: 1, textTransform: "uppercase", margin: "0 0 10px" }}>Mobile App Screens (Onboarding &amp; Key Flows)</p>
-            <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(26px,3vw,38px)", color: "#0f1035", margin: 0 }}>
+            <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(26px,3vw,38px)", color: "#0f1035", margin: 0 }}>
               Built for how people actually live
             </h2>
           </div>
@@ -698,7 +700,7 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#7c3aed", letterSpacing: 1, textTransform: "uppercase", margin: "0 0 10px" }}>Business Dashboard (Web)</p>
-              <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(26px,3vw,38px)", color: "#0f1035", margin: "0 0 16px", lineHeight: 1.1 }}>
+              <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(26px,3vw,38px)", color: "#0f1035", margin: "0 0 16px", lineHeight: 1.1 }}>
                 Full visibility over your business
               </h2>
               <p style={{ fontSize: 15, color: "#6b7280", lineHeight: 1.7, margin: "0 0 24px" }}>
@@ -721,7 +723,7 @@ export default function Home() {
             <div style={{ background: "#fff", borderRadius: 20, border: "1.5px solid #e5e7eb", boxShadow: "0 16px 48px rgba(0,0,0,0.08)", overflow: "hidden" }}>
               {/* Top bar */}
               <div style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb", padding: "10px 16px", display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 14, color: "#0f1035" }}>Mio</div>
+                <div style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 14, color: "#0f1035" }}>Mio</div>
                 <div style={{ flex: 1, background: "#fff", border: "1px solid #e5e7eb", borderRadius: 8, padding: "5px 10px", fontSize: 11, color: "#9ca3af" }}>Search orders, products...</div>
                 <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <span style={{ fontSize: 11, color: "#fff", fontWeight: 700 }}>KM</span>
@@ -795,7 +797,7 @@ export default function Home() {
                 <div style={{ width: 130, height: 130, borderRadius: 28, background: "linear-gradient(135deg,#f5f3ff,#ede9fe)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 16px 40px rgba(124,58,237,0.15)" }}>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
                     <div style={{ width: 50, height: 50, borderRadius: 14, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, color: "#fff", fontSize: 22 }}>M</span>
+                      <span style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, color: "#fff", fontSize: 22 }}>M</span>
                     </div>
                     <p style={{ margin: 0, fontSize: 10, fontWeight: 700, color: "#7c3aed" }}>Mio</p>
                   </div>
@@ -823,7 +825,7 @@ export default function Home() {
 
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#7c3aed", letterSpacing: 1, textTransform: "uppercase", margin: "0 0 10px" }}>Mio + NFC / In-Store Experience</p>
-              <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(26px,3vw,38px)", color: "#0f1035", margin: "0 0 16px", lineHeight: 1.1 }}>
+              <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(26px,3vw,38px)", color: "#0f1035", margin: "0 0 16px", lineHeight: 1.1 }}>
                 Tap your phone.<br />Order. Pay. Done.
               </h2>
               <p style={{ fontSize: 15, color: "#6b7280", lineHeight: 1.7, margin: "0 0 24px" }}>
@@ -844,7 +846,7 @@ export default function Home() {
             <WaveBars size={12} color="#a78bfa" />
             <span style={{ fontSize: 11, fontWeight: 700, color: "#a78bfa", letterSpacing: 0.5, textTransform: "uppercase" }}>Voice Powered</span>
           </div>
-          <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(28px,4vw,48px)", color: "#fff", margin: "0 0 16px", lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(28px,4vw,48px)", color: "#fff", margin: "0 0 16px", lineHeight: 1.1 }}>
             Just say what you need.<br />
             <span style={{ background: "linear-gradient(135deg,#a78bfa,#818cf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Mio handles everything.</span>
           </h2>
@@ -869,7 +871,7 @@ export default function Home() {
       {/* ══ WAITLIST ════════════════════════════════════════════ */}
       <section style={{ padding: "80px 24px", background: "linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%)" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(26px,3vw,38px)", color: "#fff", margin: "0 0 12px" }}>
+          <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(26px,3vw,38px)", color: "#fff", margin: "0 0 12px" }}>
             Get early access to Mio
           </h2>
           <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", margin: "0 0 28px" }}>
@@ -885,7 +887,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8" style={{ marginBottom: 40 }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: 22, color: "#fff" }}>Mio</span>
+                <span style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 22, color: "#fff" }}>Mio</span>
               </div>
               <p style={{ fontSize: 13, lineHeight: 1.6, color: "#a3aab5", margin: "0 0 16px" }}>Your AI assistant for everyday life — shop, dine, travel, and pay through natural conversation.</p>
               <div style={{ display: "flex", gap: 8 }}>

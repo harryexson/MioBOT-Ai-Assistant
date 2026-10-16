@@ -185,7 +185,7 @@ export default function VoiceSearch() {
       {cartOpen && (
         <div style={{ position: "fixed", right: 0, top: 0, bottom: 0, width: "min(380px,100vw)", background: "#0f1035", borderLeft: "1px solid rgba(124,58,237,0.3)", zIndex: 900, display: "flex", flexDirection: "column", padding: 24 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-            <h2 style={{ fontFamily: "var(--font-display, Syne)", color: "#fff", fontSize: "1.2rem", fontWeight: 800, margin: 0 }}>Your Cart ({cartItems.length})</h2>
+            <h2 style={{ fontFamily: "Manrope, sans-serif", color: "#fff", fontSize: "1.2rem", fontWeight: 800, margin: 0 }}>Your Cart ({cartItems.length})</h2>
             <button onClick={() => setCartOpen(false)} style={{ background: "none", border: "none", color: "#6b7280", fontSize: "1.4rem", cursor: "pointer" }}>✕</button>
           </div>
           <div style={{ flex: 1, overflowY: "auto" }}>
@@ -223,7 +223,7 @@ export default function VoiceSearch() {
           <span style={{ fontSize: "1rem" }}>🎙️</span>
           <span style={{ fontSize: 12, fontWeight: 700, color: "#a78bfa", letterSpacing: 1, textTransform: "uppercase" }}>AI Voice Search</span>
         </div>
-        <h1 style={{ fontFamily: "var(--font-display, Syne)", fontSize: "clamp(2rem,5vw,3.2rem)", fontWeight: 800, color: "#fff", margin: "0 0 12px", lineHeight: 1.1 }}>
+        <h1 style={{ fontFamily: "Manrope, sans-serif", fontSize: "clamp(2rem,5vw,3.2rem)", fontWeight: 800, color: "#fff", margin: "0 0 12px", lineHeight: 1.1 }}>
           Just say what you need
         </h1>
         <p style={{ color: "#9ca3af", fontSize: "1rem", maxWidth: 520, margin: "0 auto 36px", lineHeight: 1.7 }}>
@@ -330,7 +330,7 @@ export default function VoiceSearch() {
             <div key={provider.name} style={{ marginBottom: 40 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
                 <span style={{ fontSize: "1.6rem" }}>{provider.logo}</span>
-                <h2 style={{ fontFamily: "var(--font-display, Syne)", color: "#fff", fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>{provider.name}</h2>
+                <h2 style={{ fontFamily: "Manrope, sans-serif", color: "#fff", fontSize: "1.1rem", fontWeight: 700, margin: 0 }}>{provider.name}</h2>
                 <div style={{ height: 1, flex: 1, background: "rgba(255,255,255,0.08)" }} />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>

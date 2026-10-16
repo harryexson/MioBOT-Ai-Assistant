@@ -26,7 +26,7 @@ function StatCard({ label, value, sub, color }) {
   return (
     <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "22px 24px" }}>
       <div style={{ fontSize: "0.75rem", color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.8, marginBottom: 8 }}>{label}</div>
-      <div style={{ fontSize: "1.9rem", fontWeight: 800, color: color || "#fff", fontFamily: "var(--font-display, Syne)", marginBottom: 4 }}>{value}</div>
+      <div style={{ fontSize: "1.9rem", fontWeight: 800, color: color || "#fff", fontFamily: "Manrope, sans-serif", marginBottom: 4 }}>{value}</div>
       {sub && <div style={{ fontSize: "0.78rem", color: "#9ca3af" }}>{sub}</div>}
     </div>
   );
@@ -94,7 +94,7 @@ export default function CommissionDashboard() {
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.3)", borderRadius: 20, padding: "4px 14px", marginBottom: 14 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: "#a78bfa", letterSpacing: 1, textTransform: "uppercase" }}>Live Commission Dashboard</span>
           </div>
-          <h1 style={{ fontFamily: "var(--font-display, Syne)", fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 800, color: "#fff", margin: 0 }}>Your Earnings</h1>
+          <h1 style={{ fontFamily: "Manrope, sans-serif", fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 800, color: "#fff", margin: 0 }}>Your Earnings</h1>
           <p style={{ color: "#6b7280", marginTop: 6 }}>Real-time referral commissions across all connected partners</p>
         </div>
 
@@ -109,7 +109,7 @@ export default function CommissionDashboard() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 36 }}>
           {/* By category */}
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 18, padding: "24px 22px" }}>
-            <h2 style={{ fontFamily: "var(--font-display, Syne)", color: "#fff", fontSize: "1rem", fontWeight: 700, marginBottom: 20 }}>Earnings by Category</h2>
+            <h2 style={{ fontFamily: "Manrope, sans-serif", color: "#fff", fontSize: "1rem", fontWeight: 700, marginBottom: 20 }}>Earnings by Category</h2>
             {Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([cat, val]) => (
               <MiniBar key={cat} label={cat} value={val} max={maxCat} color={CAT_COLORS[cat] || "#7c3aed"} />
             ))}
@@ -117,7 +117,7 @@ export default function CommissionDashboard() {
 
           {/* Top partners */}
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 18, padding: "24px 22px" }}>
-            <h2 style={{ fontFamily: "var(--font-display, Syne)", color: "#fff", fontSize: "1rem", fontWeight: 700, marginBottom: 20 }}>Top Partners</h2>
+            <h2 style={{ fontFamily: "Manrope, sans-serif", color: "#fff", fontSize: "1rem", fontWeight: 700, marginBottom: 20 }}>Top Partners</h2>
             {topPartners.map(([name, val], i) => (
               <div key={name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, paddingBottom: 14, borderBottom: i < topPartners.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -133,7 +133,7 @@ export default function CommissionDashboard() {
         {/* Transaction table */}
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 18, padding: "24px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20, alignItems: "center", justifyContent: "space-between" }}>
-            <h2 style={{ fontFamily: "var(--font-display, Syne)", color: "#fff", fontSize: "1rem", fontWeight: 700, margin: 0 }}>Transaction Log</h2>
+            <h2 style={{ fontFamily: "Manrope, sans-serif", color: "#fff", fontSize: "1rem", fontWeight: 700, margin: 0 }}>Transaction Log</h2>
             <div style={{ display: "flex", gap: 8 }}>
               {["all", "pending", "confirmed", "paid"].map(s => (
                 <button key={s} onClick={() => setFilter(s)}

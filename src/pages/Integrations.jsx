@@ -115,7 +115,7 @@ function SignupModal({ integration, onClose }) {
             <div style={{ width: 64, height: 64, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
               <CheckIcon size={28} style={{ color: "#fff" }} />
             </div>
-            <h2 style={{ fontFamily: "Syne,sans-serif", fontSize: 22, fontWeight: 800, color: "#0f1035", marginBottom: 12 }}>Application Saved!</h2>
+            <h2 style={{ fontFamily: "Manrope,sans-serif", fontSize: 22, fontWeight: 800, color: "#0f1035", marginBottom: 12 }}>Application Saved!</h2>
             <p style={{ color: "#4b5563", fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>
               Your interest in connecting <strong>{integration.name}</strong> has been saved. We'll be in touch to walk you through the API setup and get your affiliate account live.
             </p>
@@ -138,7 +138,7 @@ function SignupModal({ integration, onClose }) {
                 {integration.emoji}
               </div>
               <div>
-                <h2 style={{ fontFamily: "Syne,sans-serif", fontSize: 20, fontWeight: 800, color: "#0f1035", margin: 0 }}>Connect {integration.name}</h2>
+                <h2 style={{ fontFamily: "Manrope,sans-serif", fontSize: 20, fontWeight: 800, color: "#0f1035", margin: 0 }}>Connect {integration.name}</h2>
                 <p style={{ margin: 0, fontSize: 13, color: "#7c3aed", fontWeight: 600 }}>{integration.commission} {integration.commissionType}</p>
               </div>
             </div>
@@ -187,7 +187,7 @@ function SignupModal({ integration, onClose }) {
               )}
 
               <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
-                <button type="submit" disabled={status === "submitting"} style={{ flex: 1, padding: "13px 24px", borderRadius: 12, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", fontWeight: 700, fontSize: 15, border: "none", cursor: status === "submitting" ? "not-allowed" : "pointer", opacity: status === "submitting" ? 0.7 : 1, fontFamily: "Syne,sans-serif" }}>
+                <button type="submit" disabled={status === "submitting"} style={{ flex: 1, padding: "13px 24px", borderRadius: 12, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", fontWeight: 700, fontSize: 15, border: "none", cursor: status === "submitting" ? "not-allowed" : "pointer", opacity: status === "submitting" ? 0.7 : 1, fontFamily: "Manrope,sans-serif" }}>
                   {status === "submitting" ? "Saving…" : "Submit Application"}
                 </button>
                 <a href={integration.signupUrl} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 6, padding: "13px 18px", borderRadius: 12, border: "1.5px solid #ede9fe", color: "#7c3aed", fontWeight: 600, fontSize: 14, textDecoration: "none", whiteSpace: "nowrap" }}>
@@ -221,7 +221,7 @@ function IntegrationCard({ integration, onConnect }) {
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-            <h3 style={{ fontFamily: "Syne,sans-serif", fontSize: 16, fontWeight: 800, color: "#0f1035", margin: 0 }}>{integration.name}</h3>
+            <h3 style={{ fontFamily: "Manrope,sans-serif", fontSize: 16, fontWeight: 800, color: "#0f1035", margin: 0 }}>{integration.name}</h3>
             <span style={{ padding: "2px 8px", borderRadius: 20, background: diff.bg, color: diff.color, fontSize: 11, fontWeight: 600 }}>{diff.label}</span>
           </div>
           <p style={{ margin: "2px 0 0", fontSize: 12, color: "#6b7280" }}>{integration.categoryLabel} · {integration.users} users</p>
@@ -231,7 +231,7 @@ function IntegrationCard({ integration, onConnect }) {
       <div style={{ background: "linear-gradient(135deg,#f5f3ff,#ede9fe)", borderRadius: 12, padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <p style={{ margin: 0, fontSize: 11, color: "#6b7280", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>You earn</p>
-          <p style={{ margin: "2px 0 0", fontSize: 18, fontWeight: 800, color: "#7c3aed", fontFamily: "Syne,sans-serif" }}>{integration.commission}</p>
+          <p style={{ margin: "2px 0 0", fontSize: 18, fontWeight: 800, color: "#7c3aed", fontFamily: "Manrope,sans-serif" }}>{integration.commission}</p>
         </div>
         <div style={{ textAlign: "right" }}>
           <p style={{ margin: 0, fontSize: 11, color: "#6b7280" }}>{integration.commissionType}</p>
@@ -252,7 +252,7 @@ function IntegrationCard({ integration, onConnect }) {
       <div style={{ display: "flex", gap: 8, marginTop: "auto" }}>
         <button
           onClick={() => onConnect(integration)}
-          style={{ flex: 1, padding: "11px 16px", borderRadius: 12, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", fontFamily: "Syne,sans-serif" }}
+          style={{ flex: 1, padding: "11px 16px", borderRadius: 12, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", fontWeight: 700, fontSize: 13, border: "none", cursor: "pointer", fontFamily: "Manrope,sans-serif" }}
         >
           Connect &amp; Apply
         </button>
@@ -295,7 +295,7 @@ export default function Integrations() {
             <ZapIcon size={14} style={{ color: "#a78bfa" }} />
             <span style={{ fontSize: 13, fontWeight: 600, color: "#a78bfa" }}>30+ Revenue-Generating Integrations</span>
           </div>
-          <h1 style={{ fontFamily: "Syne,sans-serif", fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, color: "#ffffff", lineHeight: 1.1, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: "Manrope,sans-serif", fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, color: "#ffffff", lineHeight: 1.1, marginBottom: 20 }}>
             Every API that makes<br />
             <span style={{ background: "linear-gradient(135deg,#a78bfa,#818cf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Mio earn for you</span>
           </h1>
@@ -312,7 +312,7 @@ export default function Integrations() {
               { label: "Revenue streams", value: "3 types" },
             ].map(s => (
               <div key={s.label} style={{ textAlign: "center" }}>
-                <p style={{ margin: 0, fontFamily: "Syne,sans-serif", fontSize: 28, fontWeight: 900, color: "#fff" }}>{s.value}</p>
+                <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontSize: 28, fontWeight: 900, color: "#fff" }}>{s.value}</p>
                 <p style={{ margin: 0, fontSize: 12, color: "#a78bfa", marginTop: 2 }}>{s.label}</p>
               </div>
             ))}
@@ -323,7 +323,7 @@ export default function Integrations() {
       {/* How earnings work */}
       <section style={{ background: "#f8f7ff", padding: "56px 24px", borderBottom: "1px solid #ede9fe" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Syne,sans-serif", fontSize: 26, fontWeight: 800, color: "#0f1035", textAlign: "center", marginBottom: 8 }}>Three ways Mio earns</h2>
+          <h2 style={{ fontFamily: "Manrope,sans-serif", fontSize: 26, fontWeight: 800, color: "#0f1035", textAlign: "center", marginBottom: 8 }}>Three ways Mio earns</h2>
           <p style={{ textAlign: "center", color: "#6b7280", fontSize: 15, marginBottom: 40 }}>Every integration contributes to at least one of these revenue streams</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 20 }}>
             {[
@@ -335,7 +335,7 @@ export default function Integrations() {
                 <div style={{ width: 48, height: 48, borderRadius: 14, background: "#f5f3ff", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
                   {item.icon}
                 </div>
-                <h3 style={{ fontFamily: "Syne,sans-serif", fontSize: 17, fontWeight: 800, color: "#0f1035", marginBottom: 10 }}>{item.title}</h3>
+                <h3 style={{ fontFamily: "Manrope,sans-serif", fontSize: 17, fontWeight: 800, color: "#0f1035", marginBottom: 10 }}>{item.title}</h3>
                 <p style={{ fontSize: 14, color: "#4b5563", lineHeight: 1.7, marginBottom: 14 }}>{item.desc}</p>
                 <div style={{ padding: "8px 14px", borderRadius: 10, background: "#f5f3ff", display: "inline-block" }}>
                   <span style={{ fontSize: 13, fontWeight: 700, color: "#7c3aed" }}>{item.range}</span>
@@ -398,14 +398,14 @@ export default function Integrations() {
       {/* Bottom CTA */}
       <section style={{ background: "linear-gradient(160deg,#0f1035,#2d1b69)", padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Syne,sans-serif", fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
+          <h2 style={{ fontFamily: "Manrope,sans-serif", fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
             Ready to start earning?
           </h2>
           <p style={{ color: "#c4b5fd", fontSize: 16, lineHeight: 1.7, marginBottom: 36 }}>
             Connect your first integration and start generating referral commissions from day one. We handle the API setup — you focus on growing your user base.
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link to="/signin" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", borderRadius: 14, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", fontWeight: 700, fontSize: 15, textDecoration: "none", fontFamily: "Syne,sans-serif" }}>
+            <Link to="/signin" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", borderRadius: 14, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", fontWeight: 700, fontSize: 15, textDecoration: "none", fontFamily: "Manrope,sans-serif" }}>
               Get started free <ChevronRightIcon size={16} />
             </Link>
             <Link to="/pricing" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", borderRadius: 14, border: "1.5px solid rgba(196,181,253,0.4)", color: "#c4b5fd", fontWeight: 600, fontSize: 15, textDecoration: "none" }}>

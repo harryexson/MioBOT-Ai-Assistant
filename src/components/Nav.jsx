@@ -44,9 +44,7 @@ export default function Nav() {
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
         {/* Logo — matching reference: bold black "Mio" text */}
         <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 0 }}>
-          <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: 26, color: "#0f1035", letterSpacing: -0.5 }}>
-            Mio
-          </span>
+          <span className="logo-text">Mio</span>
         </Link>
 
         {/* Desktop links */}
@@ -56,7 +54,7 @@ export default function Nav() {
             <Link
               key={l.href}
               to={l.href}
-              style={{ fontSize: 14, fontWeight: 500, textDecoration: "none", color: location.pathname === l.href ? "#7c3aed" : "#374151", transition: "color 0.2s" }}
+              style={{ fontSize: 14, fontWeight: 500, textDecoration: "none", color: location.pathname === l.href ? "#7c3aed" : "#4b5563", transition: "color 0.2s", fontFamily: "Space Grotesk, sans-serif", letterSpacing: "-0.01em" }}
             >
               {l.label}
             </Link>
@@ -95,8 +93,8 @@ export default function Nav() {
             </div>
           ) : (
             <>
-              <Link to="/signin" style={{ fontSize: 14, fontWeight: 500, textDecoration: "none", color: "#374151", padding: "9px 16px" }}>Sign In</Link>
-              <Link to="/signin" style={{ fontSize: 14, fontWeight: 700, textDecoration: "none", color: "#fff", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", borderRadius: 10, padding: "9px 22px", boxShadow: "0 4px 14px rgba(124,58,237,0.3)" }}>Get Started</Link>
+              <Link to="/signin" style={{ fontSize: 14, fontWeight: 500, textDecoration: "none", color: "#0f1035", padding: "9px 16px", fontFamily: "Space Grotesk,sans-serif" }}>Sign In</Link>
+              <Link to="/signin" style={{ fontSize: 14, fontWeight: 700, textDecoration: "none", color: "#fff", background: "#7c3aed", borderRadius: 50, padding: "10px 24px", boxShadow: "0 4px 20px rgba(124,58,237,0.35)", fontFamily: "Space Grotesk,sans-serif", letterSpacing: "-0.01em" }}>Get Started</Link>
             </>
           )}
         </div>

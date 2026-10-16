@@ -225,7 +225,7 @@ export default function MioVoiceBot({ onResult, compact = false }) {
         >
           <span
             style={{
-              fontFamily: "Syne,sans-serif",
+              fontFamily: "Manrope,sans-serif",
               fontWeight: 800,
               fontSize: 20,
               color: "#fff",
@@ -238,7 +238,7 @@ export default function MioVoiceBot({ onResult, compact = false }) {
           <p
             style={{
               margin: 0,
-              fontFamily: "Syne,sans-serif",
+              fontFamily: "Manrope,sans-serif",
               fontWeight: 800,
               fontSize: 16,
               color: "#fff",
@@ -382,7 +382,7 @@ export default function MioVoiceBot({ onResult, compact = false }) {
                   justifyContent: "center",
                 }}
               >
-                <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 10, color: "#fff" }}>M</span>
+                <span style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 10, color: "#fff" }}>M</span>
               </div>
               <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: "#15803d" }}>
                 Mio found results

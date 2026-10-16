@@ -43,9 +43,9 @@ export default function SignIn() {
         {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div style={{ width: 56, height: 56, borderRadius: 18, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 12, boxShadow: "0 8px 24px rgba(124,58,237,0.3)" }}>
-            <span style={{ color: "#fff", fontWeight: 800, fontSize: 26, fontFamily: "Syne,sans-serif" }}>M</span>
+            <span style={{ color: "#fff", fontWeight: 800, fontSize: 26, fontFamily: "Manrope,sans-serif" }}>M</span>
           </div>
-          <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 26, color: "#0f1035", margin: "0 0 6px" }}>
+          <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 26, color: "#0f1035", margin: "0 0 6px" }}>
             {mode === "login" ? "Welcome back" : "Create your account"}
           </h1>
           <p style={{ fontSize: 14, color: "#6b7280", margin: 0 }}>

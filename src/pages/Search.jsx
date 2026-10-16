@@ -217,7 +217,7 @@ export default function SearchPage() {
                         <span style={{ background: "#fef3c7", color: "#78350f", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 50 }}>{item.badge}</span>
                       )}
                     </div>
-                    <h2 style={{ fontFamily: "Syne,sans-serif", fontWeight: 700, fontSize: 15, color: "#0f1035", margin: "0 0 4px", lineHeight: 1.3 }}>{item.name}</h2>
+                    <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 700, fontSize: 15, color: "#0f1035", margin: "0 0 4px", lineHeight: 1.3 }}>{item.name}</h2>
                     {item.restaurant && <p style={{ margin: "0 0 4px", fontSize: 13, color: "#6b7280" }}>{item.restaurant}</p>}
                     {item.venue && <p style={{ margin: "0 0 4px", fontSize: 13, color: "#6b7280" }}>📍 {item.venue}</p>}
                     {item.city && <p style={{ margin: "0 0 4px", fontSize: 13, color: "#6b7280" }}><MapPinIcon size={12} style={{ verticalAlign: "middle" }} /> {item.city}</p>}
@@ -235,7 +235,7 @@ export default function SearchPage() {
                     )}
                     <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <div>
-                        <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 20, color: "#7c3aed" }}>
+                        <span style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 20, color: "#7c3aed" }}>
                           ${item.price}
                         </span>
                         {item.originalPrice && <span style={{ fontSize: 12, color: "#6d727a", marginLeft: 5, textDecoration: "line-through" }}>${item.originalPrice}</span>}

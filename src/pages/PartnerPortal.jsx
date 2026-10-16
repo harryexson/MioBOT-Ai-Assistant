@@ -100,7 +100,7 @@ export default function PartnerPortal() {
         <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(124,58,237,0.18)", border: "1px solid rgba(124,58,237,0.35)", borderRadius: 20, padding: "5px 14px", marginBottom: 20 }}>
           <span style={{ fontSize: 12, fontWeight: 700, color: "#a78bfa", letterSpacing: 1, textTransform: "uppercase" }}>Partner Portal</span>
         </div>
-        <h1 style={{ fontFamily: "var(--font-display, Syne, sans-serif)", fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: "#fff", margin: "0 0 16px", lineHeight: 1.1 }}>
+        <h1 style={{ fontFamily: "Manrope, sans-serif", fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 800, color: "#fff", margin: "0 0 16px", lineHeight: 1.1 }}>
           Connect. Earn. Grow.
         </h1>
         <p style={{ color: "#c4c9d4", fontSize: "clamp(1rem,2vw,1.2rem)", maxWidth: 600, margin: "0 auto 40px", lineHeight: 1.7 }}>
@@ -115,7 +115,7 @@ export default function PartnerPortal() {
             { v: "$300", l: "Max Per Lead" },
           ].map(s => (
             <div key={s.l} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "16px 28px", minWidth: 130 }}>
-              <div style={{ fontSize: "1.6rem", fontWeight: 800, color: "#a78bfa", fontFamily: "var(--font-display, Syne)" }}>{s.v}</div>
+              <div style={{ fontSize: "1.6rem", fontWeight: 800, color: "#a78bfa", fontFamily: "Manrope, sans-serif" }}>{s.v}</div>
               <div style={{ fontSize: "0.78rem", color: "#9ca3af", marginTop: 4 }}>{s.l}</div>
             </div>
           ))}
@@ -124,7 +124,7 @@ export default function PartnerPortal() {
 
       {/* How it works */}
       <section style={{ padding: "56px 24px", maxWidth: 1100, margin: "0 auto" }}>
-        <h2 style={{ fontFamily: "var(--font-display, Syne)", fontSize: "1.6rem", fontWeight: 800, color: "#fff", marginBottom: 32, textAlign: "center" }}>How You Earn</h2>
+        <h2 style={{ fontFamily: "Manrope, sans-serif", fontSize: "1.6rem", fontWeight: 800, color: "#fff", marginBottom: 32, textAlign: "center" }}>How You Earn</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 20 }}>
           {[
             { n: "01", t: "Apply", d: "Click any partner card and fill in one short form. Your application is saved instantly." },
@@ -133,7 +133,7 @@ export default function PartnerPortal() {
             { n: "04", t: "You Earn", d: "Every completed purchase or lead generates a commission — tracked and shown in your dashboard." },
           ].map(s => (
             <div key={s.n} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(124,58,237,0.2)", borderRadius: 16, padding: "24px 20px" }}>
-              <div style={{ fontSize: "2rem", fontWeight: 900, color: "#7c3aed", fontFamily: "var(--font-display, Syne)", marginBottom: 10 }}>{s.n}</div>
+              <div style={{ fontSize: "2rem", fontWeight: 900, color: "#7c3aed", fontFamily: "Manrope, sans-serif", marginBottom: 10 }}>{s.n}</div>
               <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: 8 }}>{s.t}</div>
               <div style={{ fontSize: "0.88rem", color: "#9ca3af", lineHeight: 1.6 }}>{s.d}</div>
             </div>
@@ -219,7 +219,7 @@ export default function PartnerPortal() {
         >
           <div style={{ background: "#0f1035", border: "1px solid rgba(124,58,237,0.4)", borderRadius: 20, padding: "36px 32px", maxWidth: 480, width: "100%" }}>
             <div style={{ fontSize: "2.4rem", marginBottom: 8, textAlign: "center" }}>{applying.logo}</div>
-            <h2 style={{ fontFamily: "var(--font-display, Syne)", color: "#fff", fontSize: "1.4rem", fontWeight: 800, margin: "0 0 4px", textAlign: "center" }}>Apply to {applying.name}</h2>
+            <h2 style={{ fontFamily: "Manrope, sans-serif", color: "#fff", fontSize: "1.4rem", fontWeight: 800, margin: "0 0 4px", textAlign: "center" }}>Apply to {applying.name}</h2>
             <p style={{ color: "#9ca3af", fontSize: "0.85rem", textAlign: "center", marginBottom: 24 }}>Earn <strong style={{ color: "#a78bfa" }}>{applying.commission}</strong> per transaction</p>
 
             <form onSubmit={handleApply}>

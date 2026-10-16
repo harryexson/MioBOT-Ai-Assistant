@@ -2,8 +2,8 @@
 @config "../tailwind.config.cjs";
 
 @theme {
-  --font-display: "Syne", Georgia, sans-serif;
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
   --color-navy: #0f1035;
   --color-navy-800: #1a1b4b;
   --color-navy-700: #23245a;
@@ -23,10 +23,75 @@
 html, body {
   background: #ffffff;
   color: #0f1035;
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-family: "Space Grotesk", system-ui, sans-serif;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+}
+
+/* ── Global heading styles matching reference ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #0f1035;
+}
+
+/* Reference-matched type scale */
+.text-hero {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+}
+
+.text-section-title {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.text-card-title {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.text-label {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.text-body {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.text-body-lg {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Logo text style — matches reference bold black Mio wordmark */
+.logo-text {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #0f1035;
 }
 
 /* ── Gradient utilities ── */

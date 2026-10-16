@@ -64,9 +64,9 @@ export default function Onboarding() {
           {step === 0 && (
             <div style={{ textAlign: "center" }}>
               <div style={{ width: 64, height: 64, borderRadius: 18, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 8px 24px rgba(124,58,237,0.3)" }}>
-                <span style={{ color: "#fff", fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 28 }}>M</span>
+                <span style={{ color: "#fff", fontFamily: "Manrope, sans-serif", fontWeight: 800, fontSize: 28 }}>M</span>
               </div>
-              <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>Welcome to Mio</h1>
+              <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>Welcome to Mio</h1>
               <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6, fontSize: 15 }}>
                 Your voice-first AI assistant for shopping, dining, travel, bookings, and payments. All in one place.
               </p>
@@ -83,7 +83,7 @@ export default function Onboarding() {
           {/* Step 1: Interests */}
           {step === 1 && (
             <div>
-              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>What would you like to use Mio for?</h2>
+              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>What would you like to use Mio for?</h2>
               <p style={{ color: "#71767f", fontSize: 13, marginBottom: 20 }}>Choose one or add more later</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
                 {INTERESTS.map(({ icon, label }) => (
@@ -126,7 +126,7 @@ export default function Onboarding() {
               <div style={{ width: 80, height: 80, borderRadius: "50%", margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "center", background: voiceEnabled ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "#f3f4f6", transition: "all 0.3s", boxShadow: voiceEnabled ? "0 8px 24px rgba(124,58,237,0.3)" : "none" }}>
                 <MicIcon size={34} style={{ color: voiceEnabled ? "#ffffff" : "#9ca3af" }} aria-hidden="true" />
               </div>
-              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 10 }}>Enable Voice</h2>
+              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 10 }}>Enable Voice</h2>
               <p style={{ color: "#6b7280", marginBottom: 24, lineHeight: 1.6, fontSize: 14 }}>
                 Speak naturally to Mio — ask questions, place orders, and get updates hands-free.
               </p>
@@ -157,7 +157,7 @@ export default function Onboarding() {
           {/* Step 3: Payment */}
           {step === 3 && (
             <div>
-              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>Add a payment method</h2>
+              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>Add a payment method</h2>
               <p style={{ color: "#71767f", fontSize: 13, marginBottom: 18 }}>Your payment information is safe and securely encrypted.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 18 }}>
                 {PAYMENTS.map(({ icon, label, sub }) => (
@@ -197,7 +197,7 @@ export default function Onboarding() {
               <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 8px 32px rgba(124,58,237,0.35)" }}>
                 <CheckIcon size={40} style={{ color: "#ffffff" }} aria-hidden="true" />
               </div>
-              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>You're all set!</h2>
+              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>You're all set!</h2>
               <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6, fontSize: 15 }}>
                 Mio is ready to help. Just speak or type — your personal AI assistant is always here.
               </p>
