@@ -3,7 +3,7 @@
 
 @theme {
   --font-display: "Syne", Georgia, sans-serif;
-  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --color-navy: #0f1035;
   --color-navy-800: #1a1b4b;
   --color-navy-700: #23245a;
@@ -23,7 +23,7 @@
 html, body {
   background: #ffffff;
   color: #0f1035;
-  font-family: "DM Sans", system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;

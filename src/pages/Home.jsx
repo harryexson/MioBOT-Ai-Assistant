@@ -47,59 +47,70 @@ function WaveBars({ color = "#7c3aed", size = 20 }) {
   );
 }
 
-/* ─── Pixel-perfect phone frame (matching reference) ──────────────── */
+/* ─── Ultra-realistic iPhone-style phone frame ─────────────────────── */
 function PhoneFrame({ children, width = 168, height = 340 }) {
+  const FRAME = 8; // frame thickness
+  const RADIUS = 42;
   return (
     <div
       style={{
         width,
         height,
-        background: "#1a1a2e",
-        borderRadius: 40,
-        padding: "10px 7px",
-        boxShadow:
-          "0 30px 80px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.07), inset 0 0 0 1px rgba(255,255,255,0.04)",
+        borderRadius: RADIUS,
+        background: "linear-gradient(160deg,#2d2d2d 0%,#1a1a1a 40%,#111 100%)",
+        padding: FRAME,
+        boxShadow: [
+          "0 40px 100px rgba(0,0,0,0.38)",
+          "0 0 0 0.5px rgba(255,255,255,0.12)",
+          "inset 0 0 0 0.5px rgba(255,255,255,0.06)",
+          "0 1px 0 rgba(255,255,255,0.08)",
+        ].join(", "),
         position: "relative",
         flexShrink: 0,
       }}
     >
-      {/* Volume buttons left */}
-      <div style={{ position: "absolute", left: -3.5, top: 76, width: 3.5, height: 28, background: "#0d0d1a", borderRadius: "3px 0 0 3px" }} />
-      <div style={{ position: "absolute", left: -3.5, top: 116, width: 3.5, height: 28, background: "#0d0d1a", borderRadius: "3px 0 0 3px" }} />
+      {/* Side sheen highlight */}
+      <div style={{ position: "absolute", inset: 0, borderRadius: RADIUS, background: "linear-gradient(90deg,rgba(255,255,255,0.05) 0%,transparent 30%,transparent 70%,rgba(255,255,255,0.03) 100%)", pointerEvents: "none" }} />
+      {/* Mute/silent button left */}
+      <div style={{ position: "absolute", left: -2.5, top: "18%", width: 2.5, height: "5%", minHeight: 14, background: "#1a1a1a", borderRadius: "2px 0 0 2px", boxShadow: "-1px 0 3px rgba(0,0,0,0.5)" }} />
+      {/* Volume up left */}
+      <div style={{ position: "absolute", left: -2.5, top: "26%", width: 2.5, height: "9%", minHeight: 24, background: "#1a1a1a", borderRadius: "2px 0 0 2px", boxShadow: "-1px 0 3px rgba(0,0,0,0.5)" }} />
+      {/* Volume down left */}
+      <div style={{ position: "absolute", left: -2.5, top: "37%", width: 2.5, height: "9%", minHeight: 24, background: "#1a1a1a", borderRadius: "2px 0 0 2px", boxShadow: "-1px 0 3px rgba(0,0,0,0.5)" }} />
       {/* Power button right */}
-      <div style={{ position: "absolute", right: -3.5, top: 96, width: 3.5, height: 46, background: "#0d0d1a", borderRadius: "0 3px 3px 0" }} />
+      <div style={{ position: "absolute", right: -2.5, top: "28%", width: 2.5, height: "14%", minHeight: 40, background: "#1a1a1a", borderRadius: "0 2px 2px 0", boxShadow: "1px 0 3px rgba(0,0,0,0.5)" }} />
       {/* Screen */}
       <div
         style={{
           background: "#fff",
-          borderRadius: 34,
+          borderRadius: RADIUS - FRAME,
           overflow: "hidden",
           height: "100%",
           position: "relative",
         }}
       >
-        {/* Dynamic island / notch */}
+        {/* Dynamic Island — pill shape */}
         <div
           style={{
             position: "absolute",
-            top: 0,
+            top: 8,
             left: "50%",
             transform: "translateX(-50%)",
-            width: 86,
-            height: 26,
-            background: "#1a1a2e",
-            borderRadius: "0 0 18px 18px",
+            width: 72,
+            height: 22,
+            background: "#111",
+            borderRadius: 11,
             zIndex: 10,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: 5,
+            gap: 6,
           }}
         >
-          <div style={{ width: 9, height: 9, borderRadius: "50%", background: "#0d0d1a" }} />
-          <div style={{ width: 52, height: 4, background: "#0d0d1a", borderRadius: 2 }} />
+          <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#222" }} />
+          <div style={{ width: 32, height: 3, background: "#222", borderRadius: 2 }} />
         </div>
-        <div style={{ paddingTop: 26, height: "100%" }}>{children}</div>
+        <div style={{ paddingTop: 34, height: "100%" }}>{children}</div>
       </div>
     </div>
   );
@@ -173,9 +184,9 @@ function ScreenShopping() {
       </div>
       <div style={{ display: "flex", gap: 5 }}>
         {[
-          { img: "/static/stock_product-shoes-e23c7b-0.jpg", label: "Shoes", price: "$119", alt: "Running shoes" },
-          { img: "/static/stock_product-shopping-23075a-0.jpg", label: "Bags", price: "$89", alt: "Shopping bags" },
-          { img: "/static/stock_product-food-06237b-0.jpg", label: "Food", price: "$14", alt: "Food delivery" },
+          { img: "/static/stock_mio-shoes-9fc268-0.jpg", label: "Shoes", price: "$119", alt: "Running shoes" },
+          { img: "/static/stock_mio-shoes-9fc268-1.jpg", label: "Bags", price: "$89", alt: "Shopping bags" },
+          { img: "/static/stock_mio-food-cd2d10-0.jpg", label: "Food", price: "$14", alt: "Food delivery" },
         ].map(p => (
           <div key={p.label} style={{ flex: 1, background: "#f8f7ff", borderRadius: 8, overflow: "hidden", textAlign: "center" }}>
             <img src={p.img} alt={p.alt} style={{ width: "100%", height: 36, objectFit: "cover" }} />
@@ -206,7 +217,7 @@ function ScreenTravel() {
         { name: "Hyatt Place Chicago", stars: "4.5", price: "$149", reviews: "3,201 reviews" },
       ].map((h, i) => (
         <div key={i} style={{ display: "flex", gap: 7, alignItems: "center", background: "#f8f7ff", borderRadius: 8, padding: "7px 8px" }}>
-          <div style={{ width: 32, height: 32, borderRadius: 7, background: "linear-gradient(135deg,#ede9fe,#c4b5fd)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>🏨</div>
+          <img src={["/static/stock_mio-hotel-d2dcfd-0.jpg","/static/stock_mio-hotel-d2dcfd-1.jpg","/static/stock_mio-food-d3daf1-0.jpg"][i]} alt={h.name} style={{ width: 32, height: 32, borderRadius: 7, objectFit: "cover", flexShrink: 0 }} />
           <div style={{ flex: 1, minWidth: 0 }}>
             <p style={{ margin: 0, fontSize: 8, fontWeight: 700, color: "#0f1035", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{h.name}</p>
             <p style={{ margin: 0, fontSize: 7, color: "#92400e" }}>★ {h.stars} · {h.reviews}</p>
@@ -450,19 +461,19 @@ export default function Home() {
                 <span style={{ fontSize: 11, fontWeight: 700, color: "#7c3aed", letterSpacing: 0.5, textTransform: "uppercase" }}>AI Powered Assistant</span>
               </div>
 
-              {/* Headline — matching reference exactly */}
-              <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(40px,5.5vw,64px)", lineHeight: 1.06, color: "#0f1035", margin: "0 0 4px", letterSpacing: -1 }}>
-                Talk. Find. Book.
+              {/* Headline — matching reference Design 1 "Your AI Assistant for Everyday Life" style */}
+              <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(38px,5vw,68px)", lineHeight: 1.05, color: "#0f1035", margin: "0 0 8px", letterSpacing: -2 }}>
+                Your AI Assistant
               </h1>
-              <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(40px,5.5vw,64px)", lineHeight: 1.06, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", margin: "0 0 20px", letterSpacing: -1 }}>
-                Order. Pay.
+              <h1 style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: "clamp(38px,5vw,68px)", lineHeight: 1.05, margin: "0 0 22px", letterSpacing: -2 }}>
+                for{" "}
+                <span style={{ background: "linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  Everyday Life
+                </span>
               </h1>
 
-              <p style={{ fontSize: "clamp(15px,1.4vw,18px)", fontWeight: 700, color: "#0f1035", margin: "0 0 6px" }}>
-                One assistant. Endless possibilities.
-              </p>
-              <p style={{ fontSize: 15, color: "#6b7280", lineHeight: 1.6, margin: "0 0 28px", maxWidth: 420 }}>
-                Mio helps you shop, dine, travel, book services and handle payments — all through natural conversation.
+              <p style={{ fontSize: "clamp(15px,1.3vw,18px)", color: "#4b5563", lineHeight: 1.65, margin: "0 0 30px", maxWidth: 440, fontWeight: 400 }}>
+                Shop. Order. Book. Pay. All through simple conversation. Mio helps you find what you need and gets it done — anywhere, anytime.
               </p>
 
               {/* CTA row */}
@@ -514,9 +525,9 @@ export default function Home() {
               {/* Purple glow circle */}
               <div style={{ position: "absolute", width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.12) 0%,rgba(124,58,237,0) 70%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
               {/* Hero woman photo */}
-              <div style={{ width: 340, height: 460, borderRadius: "50% 50% 50% 50% / 40% 40% 60% 60%", background: "linear-gradient(180deg,#f0ebff 0%,#c4b0ff 100%)", overflow: "hidden", flexShrink: 0, position: "relative" }}>
+              <div style={{ width: 340, height: 460, borderRadius: "50% 50% 50% 50% / 40% 40% 60% 60%", background: "linear-gradient(180deg,#ede9fe 0%,#c4b5fd 100%)", overflow: "hidden", flexShrink: 0, position: "relative" }}>
                 <img
-                  src="/static/stock_mio-hero-woman-004b9f-0.jpg"
+                  src="/static/stock_mio-hero-woman-140ab8-0.jpg"
                   alt="Person using the Mio AI assistant on their phone"
                   style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
                 />
