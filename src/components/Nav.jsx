@@ -40,6 +40,16 @@ export default function Nav() {
     setUserMenuOpen(false);
   }, [location]);
 
+  // Listen for global auth modal open events (from Pricing page, etc.)
+  useEffect(() => {
+    const handler = (e) => {
+      const mode = e.detail?.mode || "signup";
+      setAuthModal(mode);
+    };
+    window.addEventListener("mio:open-auth", handler);
+    return () => window.removeEventListener("mio:open-auth", handler);
+  }, []);
+
   // Escape key closes drawer and user menu
   useEffect(() => {
     const onKeyDown = (e) => {

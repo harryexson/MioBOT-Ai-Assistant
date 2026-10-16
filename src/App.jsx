@@ -22,6 +22,7 @@ import VoiceSearch from "./pages/VoiceSearch.jsx";
 import UserDashboard from "./pages/UserDashboard.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Terms from "./pages/Terms.jsx";
+import About from "./pages/About.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -49,6 +50,7 @@ export default function App() {
         <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>

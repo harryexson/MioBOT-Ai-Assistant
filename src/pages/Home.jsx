@@ -497,6 +497,15 @@ function WaitlistForm() {
 export default function Home() {
   const [showVoice, setShowVoice] = useState(false);
   const [voiceResult, setVoiceResult] = useState(null);
+  const [memberCount, setMemberCount] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    pb.collection("users").getList(1, 1, { signal: controller.signal })
+      .then(r => setMemberCount(r.totalItems))
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
 
   return (
     <main>
@@ -561,14 +570,28 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Stats row — matching reference */}
+              {/* Stats row — live member count + service categories */}
               <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
-                {STATS.map((s) => (
-                  <div key={s.label}>
-                    <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 18, color: s.value === "All in One" ? "#7c3aed" : "#0f1035" }}>{s.value}</p>
-                    <p style={{ margin: 0, fontSize: 11, color: "#6b7280", fontWeight: 500 }}>{s.label}</p>
-                  </div>
-                ))}
+                <div>
+                  <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 18, color: "#0f1035" }}>
+                    {memberCount === null ? "—" : memberCount === 0 ? "Be First" : `${memberCount.toLocaleString()}+`}
+                  </p>
+                  <p style={{ margin: 0, fontSize: 11, color: "#6b7280", fontWeight: 500 }}>
+                    {memberCount === 0 ? "Early Access Open" : "Members & Growing"}
+                  </p>
+                </div>
+                <div>
+                  <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 18, color: "#0f1035" }}>Free</p>
+                  <p style={{ margin: 0, fontSize: 11, color: "#6b7280", fontWeight: 500 }}>To Get Started</p>
+                </div>
+                <div>
+                  <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 18, color: "#0f1035" }}>10+</p>
+                  <p style={{ margin: 0, fontSize: 11, color: "#6b7280", fontWeight: 500 }}>Service Categories</p>
+                </div>
+                <div>
+                  <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 18, color: "#7c3aed" }}>All in One</p>
+                  <p style={{ margin: 0, fontSize: 11, color: "#6b7280", fontWeight: 500 }}>Shop. Book. Pay.</p>
+                </div>
               </div>
             </div>
 
@@ -1162,7 +1185,7 @@ export default function Home() {
             {[
               { title: "Product", links: [["Features","/features"],["Pricing","/pricing"],["Onboarding","/onboarding"],["Widget Demo","/widget"]] },
               { title: "Business", links: [["Merchant Dashboard","/merchant"],["Admin Console","/admin"],["Developer Portal","/developers"],["Integrations","/integrations"]] },
-              { title: "Legal", links: [["Privacy Policy","/privacy"],["Terms of Service","/terms"],["Cookie Policy","/privacy"],["Contact","mailto:hello@mio.ai"]] },
+              { title: "Company", links: [["About Mio","/about"],["Privacy Policy","/privacy"],["Terms of Service","/terms"],["Contact Us","/about#contact"]] },
             ].map(col => (
               <div key={col.title}>
                 <p style={{ fontWeight: 700, color: "#e5e7eb", fontSize: 13, margin: "0 0 14px" }}>{col.title}</p>
