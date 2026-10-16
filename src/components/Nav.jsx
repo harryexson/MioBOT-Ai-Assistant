@@ -10,6 +10,8 @@ const NAV_LINKS = [
   { label: "Features", href: "/features" },
   { label: "Solutions", href: "/providers" },
   { label: "Integrations", href: "/integrations" },
+  { label: "Partners", href: "/partners" },
+  { label: "Earnings", href: "/commissions" },
   { label: "Pricing", href: "/pricing" },
   { label: "Developers", href: "/developers" },
 ];

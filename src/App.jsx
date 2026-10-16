@@ -15,6 +15,9 @@ import EasyTapGo from "./pages/EasyTapGo.jsx";
 import Providers from "./pages/Providers.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Integrations from "./pages/Integrations.jsx";
+import PartnerPortal from "./pages/PartnerPortal.jsx";
+import CommissionDashboard from "./pages/CommissionDashboard.jsx";
+import VoiceSearch from "./pages/VoiceSearch.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -36,6 +39,9 @@ export default function App() {
         <Route path="/providers" element={<Providers />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/integrations" element={<Integrations />} />
+        <Route path="/partners" element={<PartnerPortal />} />
+        <Route path="/commissions" element={<CommissionDashboard />} />
+        <Route path="/voice" element={<VoiceSearch />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
