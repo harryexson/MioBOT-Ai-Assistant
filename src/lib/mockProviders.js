@@ -66,14 +66,14 @@ export async function searchProducts(query, category = "shopping") {
       { id: "t4", name: "Chicago Riverwalk Airbnb", price: 119, rating: 4.9, reviews: 287, emoji: "Rental", provider: "Airbnb", commissionRate: 0.03, badge: "Superhost", city: "Chicago, IL" },
     ],
     events: [
-      { id: "e1", name: "Taylor Swift — The Eras Tour", price: 189, rating: 5.0, reviews: 9821, emoji: "🎤", provider: "Ticketmaster", commissionRate: 0.05, badge: "Hot 🔥", venue: "United Center" },
-      { id: "e2", name: "NBA Bulls vs Lakers", price: 79, rating: 4.8, reviews: 4321, emoji: "🏀", provider: "StubHub", commissionRate: 0.10, badge: "Best seats", venue: "United Center" },
-      { id: "e3", name: "Chicago Jazz Festival", price: 35, rating: 4.7, reviews: 1823, emoji: "🎷", provider: "Eventbrite", commissionRate: 0.04, badge: "Outdoor", venue: "Millennium Park" },
+      { id: "e1", name: "Taylor Swift — The Eras Tour", price: 189, rating: 5.0, reviews: 9821, emoji: "Concert", provider: "Ticketmaster", commissionRate: 0.05, badge: "Hot", venue: "United Center" },
+      { id: "e2", name: "NBA Bulls vs Lakers", price: 79, rating: 4.8, reviews: 4321, emoji: "Sports", provider: "StubHub", commissionRate: 0.10, badge: "Best seats", venue: "United Center" },
+      { id: "e3", name: "Chicago Jazz Festival", price: 35, rating: 4.7, reviews: 1823, emoji: "Music", provider: "Eventbrite", commissionRate: 0.04, badge: "Outdoor", venue: "Millennium Park" },
     ],
     services: [
-      { id: "s1", name: "House Cleaning — 3 bedroom", price: 149, rating: 4.9, reviews: 2341, emoji: "🧹", provider: "Thumbtack", commissionRate: 0.15, badge: "Today available", availability: "Today, 2pm" },
-      { id: "s2", name: "Plumber — Pipe Repair", price: 89, rating: 4.8, reviews: 987, emoji: "🔧", provider: "Angi", commissionRate: 0.12, badge: "Background checked", availability: "Tomorrow, 10am" },
-      { id: "s3", name: "Personal Trainer (1hr)", price: 65, rating: 4.9, reviews: 543, emoji: "💪", provider: "TaskRabbit", commissionRate: 0.10, badge: "Top Rated", availability: "Today, 4pm" },
+      { id: "s1", name: "House Cleaning — 3 bedroom", price: 149, rating: 4.9, reviews: 2341, emoji: "Cleaning", provider: "Thumbtack", commissionRate: 0.15, badge: "Today available", availability: "Today, 2pm" },
+      { id: "s2", name: "Plumber — Pipe Repair", price: 89, rating: 4.8, reviews: 987, emoji: "Plumbing", provider: "Angi", commissionRate: 0.12, badge: "Background checked", availability: "Tomorrow, 10am" },
+      { id: "s3", name: "Personal Trainer (1hr)", price: 65, rating: 4.9, reviews: 543, emoji: "Fitness", provider: "TaskRabbit", commissionRate: 0.10, badge: "Top Rated", availability: "Today, 4pm" },
     ],
   };
 
@@ -100,10 +100,10 @@ export async function searchProducts(query, category = "shopping") {
 export async function getRecommendations(userHistory = []) {
   await new Promise(r => setTimeout(r, 400));
   return [
-    { id: "r1", name: "Running Shoes under $150", category: "shopping", emoji: "👟", reason: "Based on your searches" },
-    { id: "r2", name: "Thai restaurants near you", category: "food", emoji: "🍜", reason: "You ordered Thai last week" },
-    { id: "r3", name: "Hotel deals in Miami", category: "travel", emoji: "🏖️", reason: "Spring break coming up" },
-    { id: "r4", name: "Concert tickets this weekend", category: "events", emoji: "🎵", reason: "Events near you" },
+    { id: "r1", name: "Running Shoes under $150", category: "shopping", emoji: "Shoes", reason: "Based on your searches" },
+    { id: "r2", name: "Thai restaurants near you", category: "food", emoji: "Thai food", reason: "You ordered Thai last week" },
+    { id: "r3", name: "Hotel deals in Miami", category: "travel", emoji: "Beach", reason: "Spring break coming up" },
+    { id: "r4", name: "Concert tickets this weekend", category: "events", emoji: "Music", reason: "Events near you" },
   ];
 }
 

@@ -1148,15 +1148,21 @@ export default function Home() {
               </div>
               <p style={{ fontSize: 13, lineHeight: 1.6, color: "#a3aab5", margin: "0 0 16px" }}>Your AI assistant for everyday life — shop, dine, travel, and pay through natural conversation.</p>
               <div style={{ display: "flex", gap: 8 }}>
-                {["🐦","📘","📸","💼"].map((icon, i) => (
-                  <div key={i} style={{ width: 32, height: 32, borderRadius: 9, background: "#1a1b4b", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, cursor: "pointer" }}>{icon}</div>
+                {[
+                  { label: "X (Twitter)", path: "https://twitter.com", svg: <><path d="M4 4l16 16M20 4L4 20" stroke="#a3aab5" strokeWidth="1.8" strokeLinecap="round"/></> },
+                  { label: "LinkedIn", path: "https://linkedin.com", svg: <><rect x="2" y="2" width="20" height="20" rx="4" stroke="#a3aab5" strokeWidth="1.8"/><path d="M7 10v7M7 7v.5M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" stroke="#a3aab5" strokeWidth="1.8" strokeLinecap="round"/></> },
+                  { label: "Instagram", path: "https://instagram.com", svg: <><rect x="3" y="3" width="18" height="18" rx="5" stroke="#a3aab5" strokeWidth="1.8"/><circle cx="12" cy="12" r="4" stroke="#a3aab5" strokeWidth="1.8"/><circle cx="17" cy="7" r="1" fill="#a3aab5"/></> },
+                ].map(({ label, path, svg }) => (
+                  <a key={label} href={path} aria-label={label} target="_blank" rel="noopener noreferrer" style={{ width: 32, height: 32, borderRadius: 9, background: "#1a1b4b", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">{svg}</svg>
+                  </a>
                 ))}
               </div>
             </div>
             {[
               { title: "Product", links: [["Features","/features"],["Pricing","/pricing"],["Onboarding","/onboarding"],["Widget Demo","/widget"]] },
               { title: "Business", links: [["Merchant Dashboard","/merchant"],["Admin Console","/admin"],["Developer Portal","/developers"],["Integrations","/integrations"]] },
-              { title: "Legal", links: [["Privacy Policy","#"],["Terms of Service","#"],["Cookie Policy","#"],["Contact","#"]] },
+              { title: "Legal", links: [["Privacy Policy","/privacy"],["Terms of Service","/terms"],["Cookie Policy","/privacy"],["Contact","mailto:hello@mio.ai"]] },
             ].map(col => (
               <div key={col.title}>
                 <p style={{ fontWeight: 700, color: "#e5e7eb", fontSize: 13, margin: "0 0 14px" }}>{col.title}</p>
