@@ -54,10 +54,10 @@ export async function searchProducts(query, category = "shopping") {
       { id: "p5", name: "Kindle Paperwhite (16 GB)", price: 139.99, originalPrice: 159.99, rating: 4.8, reviews: 28903, emoji: "E-Reader", provider: "Amazon", commissionRate: 0.04, badge: "Amazon Choice", deliveryTime: "1-day" },
     ],
     food: [
-      { id: "f1", name: "McDonald's Big Mac Meal", price: 10.99, rating: 4.5, reviews: 2847, emoji: "🍔", provider: "DoorDash", commissionRate: 0.03, badge: "25 min", deliveryTime: "25 min", restaurant: "McDonald's" },
-      { id: "f2", name: "Pepperoni Pizza (Large)", price: 18.99, rating: 4.7, reviews: 1234, emoji: "🍕", provider: "Uber Eats", commissionRate: 0.03, badge: "30 min", deliveryTime: "30 min", restaurant: "Pizza Hut" },
-      { id: "f3", name: "California Burrito + Chips", price: 14.50, rating: 4.8, reviews: 892, emoji: "🌯", provider: "Grubhub", commissionRate: 0.04, badge: "40 min", deliveryTime: "40 min", restaurant: "Chipotle" },
-      { id: "f4", name: "Pad Thai + Spring Rolls", price: 22.00, rating: 4.9, reviews: 654, emoji: "🍜", provider: "DoorDash", commissionRate: 0.03, badge: "35 min", deliveryTime: "35 min", restaurant: "Thai Garden" },
+      { id: "f1", name: "McDonald's Big Mac Meal", price: 10.99, rating: 4.5, reviews: 2847, emoji: "Burger", provider: "DoorDash", commissionRate: 0.03, badge: "25 min", deliveryTime: "25 min", restaurant: "McDonald's" },
+      { id: "f2", name: "Pepperoni Pizza (Large)", price: 18.99, rating: 4.7, reviews: 1234, emoji: "Pizza", provider: "Uber Eats", commissionRate: 0.03, badge: "30 min", deliveryTime: "30 min", restaurant: "Pizza Hut" },
+      { id: "f3", name: "California Burrito + Chips", price: 14.50, rating: 4.8, reviews: 892, emoji: "Burrito", provider: "Grubhub", commissionRate: 0.04, badge: "40 min", deliveryTime: "40 min", restaurant: "Chipotle" },
+      { id: "f4", name: "Pad Thai + Spring Rolls", price: 22.00, rating: 4.9, reviews: 654, emoji: "Noodles", provider: "DoorDash", commissionRate: 0.03, badge: "35 min", deliveryTime: "35 min", restaurant: "Thai Garden" },
     ],
     travel: [
       { id: "t1", name: "The Langham Chicago", price: 229, rating: 4.8, reviews: 1847, emoji: "🏨", provider: "Booking.com", commissionRate: 0.04, badge: "Free cancellation", city: "Chicago, IL" },
