@@ -20,6 +20,8 @@ import PartnerPortal from "./pages/PartnerPortal.jsx";
 import CommissionDashboard from "./pages/CommissionDashboard.jsx";
 import VoiceSearch from "./pages/VoiceSearch.jsx";
 import UserDashboard from "./pages/UserDashboard.jsx";
+import Privacy from "./pages/Privacy.jsx";
+import Terms from "./pages/Terms.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -45,6 +47,8 @@ export default function App() {
         <Route path="/commissions" element={<ProtectedRoute><CommissionDashboard /></ProtectedRoute>} />
         <Route path="/voice" element={<VoiceSearch />} />
         <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
