@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconMore,IconNFC } from '../components/MioIcons.jsx';
 import CodeIcon from "icon:code";
 import KeyIcon from "icon:key";
 import BookOpenIcon from "icon:book-open";
@@ -62,8 +63,8 @@ const SDKS = [
   { name: "React Native", icon: "⚛️", install: "npm install @mio-ai/react-native", badge: "Official" },
   { name: "Python", icon: "🐍", install: "pip install mio-ai", badge: "Official" },
   { name: "iOS Swift", icon: "🍎", install: "Swift Package Manager", badge: "Official" },
-  { name: "Android Kotlin", icon: "🤖", install: "implementation 'ai.mio:sdk:1.0'", badge: "Official" },
-  { name: "REST API", icon: "🌐", install: "No SDK needed — use any HTTP client", badge: "Standard" },
+  { name: "Android Kotlin", icon: "android", install: "implementation 'ai.mio:sdk:1.0'", badge: "Official" },
+  { name: "REST API", icon: "rest", install: "No SDK needed — use any HTTP client", badge: "Standard" },
 ];
 
 const GUIDES = [
@@ -271,7 +272,7 @@ export default function DeveloperPortal() {
               <div key={sdk.name} className="bg-white border border-border shadow-sm rounded-xl p-4 border border-white/8 hover:border-violet-500/20 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">{sdk.icon}</span>
+                    <span className="text-xl" aria-hidden="true">sdk.icon==="android" ? <IconMore size={18} color="#3ddc84" /> : <IconNFC size={18} color="#0891b2" /></span>
                     <p className="text-navy text-sm font-medium">{sdk.name}</p>
                   </div>
                   <span className="px-2 py-0.5 bg-violet-500/20 text-violet-300 text-xs rounded-full border border-violet-500/30">{sdk.badge}</span>

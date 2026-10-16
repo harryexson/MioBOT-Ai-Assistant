@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconFood,IconNFC,IconPayments,IconServices,IconMore } from '../components/MioIcons.jsx';
 import TrendingUpIcon from "icon:trending-up";
 import ShoppingBagIcon from "icon:shopping-bag";
 import UsersIcon from "icon:users";
@@ -237,7 +238,7 @@ function ProductsTab() {
         {PRODUCTS.map((p) => (
           <div key={p.name} className="flex items-center justify-between p-3 rounded-lg bg-white/4 border border-white/6 hover:bg-white/6 transition-colors">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-violet-600/20 flex items-center justify-center text-lg">🍽️</div>
+              <div className="w-10 h-10 rounded-lg bg-violet-600/20 flex items-center justify-center"><IconFood size={20} color="#7c3aed" /></div>
               <div>
                 <p className="text-navy text-sm font-medium">{p.name}</p>
                 <p className="text-gray-500 text-xs">{p.category} · {p.orders} orders</p>
@@ -292,11 +293,11 @@ function TeamTab() {
 
 function IntegrationsTab() {
   const integrations = [
-    { name: "Mio AI Assistant", desc: "Voice & chat ordering enabled", connected: true, icon: "🤖" },
-    { name: "EasyTap Go NFC", desc: "In-store tap-to-order integration", connected: true, icon: "📡" },
-    { name: "Stripe Payments", desc: "Secure card & wallet processing", connected: true, icon: "💳" },
+    { name: "Mio AI Assistant", desc: "Voice & chat ordering enabled", connected: true, Icon: IconMore },
+    { name: "EasyTap Go NFC", desc: "In-store tap-to-order integration", connected: true, Icon: IconNFC },
+    { name: "Stripe Payments", desc: "Secure card & wallet processing", connected: true, Icon: IconPayments },
     { name: "DoorDash Drive", desc: "Third-party delivery network", connected: false, icon: "🚗" },
-    { name: "Google Calendar", desc: "Booking sync & appointments", connected: false, icon: "📅" },
+    { name: "Google Calendar", desc: "Booking sync & appointments", connected: false, Icon: IconServices },
   ];
   return (
     <div className="bg-white border border-border shadow-sm rounded-xl p-5">

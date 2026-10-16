@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router";
 import MenuIcon from "icon:menu";
 import XIcon from "icon:x";
 import SearchIcon from "icon:search";
+import AuthModal from "./AuthModal.jsx";
 import UserIcon from "icon:user";
 import { useAuth } from "../lib/useAuth.jsx";
 
@@ -18,6 +19,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [authModal, setAuthModal] = useState(null); // "signup" | "signin" | null
   const location = useLocation();
   const { user, logout, isLoggedIn } = useAuth();
 
@@ -93,8 +95,8 @@ export default function Nav() {
             </div>
           ) : (
             <>
-              <Link to="/signin" style={{ fontSize: 14, fontWeight: 500, textDecoration: "none", color: "#0f1035", padding: "9px 16px", fontFamily: "Space Grotesk,sans-serif" }}>Sign In</Link>
-              <Link to="/signin" style={{ fontSize: 14, fontWeight: 700, textDecoration: "none", color: "#fff", background: "#7c3aed", borderRadius: 50, padding: "10px 24px", boxShadow: "0 4px 20px rgba(124,58,237,0.35)", fontFamily: "Space Grotesk,sans-serif", letterSpacing: "-0.01em" }}>Get Started</Link>
+              <button onClick={()=>setAuthModal("signin")} style={{ fontSize:14, fontWeight:500, color:"#0f1035", padding:"9px 16px", fontFamily:"Space Grotesk,sans-serif", background:"none", border:"none", cursor:"pointer" }}>Sign In</button>
+              <button onClick={()=>setAuthModal("signup")} style={{ fontSize:14, fontWeight:700, color:"#fff", background:"#7c3aed", borderRadius:50, padding:"10px 24px", boxShadow:"0 4px 20px rgba(124,58,237,0.35)", fontFamily:"Space Grotesk,sans-serif", letterSpacing:"-0.01em", border:"none", cursor:"pointer" }}>Get Started</button>
             </>
           )}
         </div>
@@ -135,8 +137,8 @@ export default function Nav() {
                 </>
               ) : (
                 <>
-                  <Link to="/signin" className="btn-secondary" style={{ textAlign: "center", justifyContent: "center" }}>Sign In</Link>
-                  <Link to="/signin" className="btn-primary" style={{ textAlign: "center", justifyContent: "center" }}>Get Started Free</Link>
+                  <button onClick={()=>{ setOpen(false); setAuthModal("signin"); }} className="btn-secondary" style={{ textAlign:"center", justifyContent:"center", cursor:"pointer" }}>Sign In</button>
+                  <button onClick={()=>{ setOpen(false); setAuthModal("signup"); }} className="btn-primary" style={{ textAlign:"center", justifyContent:"center", cursor:"pointer" }}>Get Started Free</button>
                 </>
               )}
             </div>
