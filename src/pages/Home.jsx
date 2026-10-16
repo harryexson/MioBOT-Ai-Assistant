@@ -6,6 +6,11 @@ import ArrowRightIcon from "icon:arrow-right";
 import CheckIcon from "icon:check-circle";
 import MioVoiceBot from "../components/MioVoiceBot.jsx";
 import { pb } from "../lib/pb.js";
+import {
+  IconShopping, IconFood, IconTravel, IconServices, IconPayments,
+  IconEvents, IconNFC, IconMore, IconInvoicing, IconMic, IconSearch,
+  IconHome, IconOrders, IconUser, IconApple, IconStar, IconCheck as ICheck, IconArrow,
+} from "../components/MioIcons.jsx";
 
 /* ─── Categories — matching reference exactly ─────────────────────── */
 const CATEGORIES = [
@@ -235,7 +240,7 @@ function ScreenShopping() {
       <div style={{ display:"flex", alignItems:"center", gap:6, background:"#f5f3ff", borderRadius:10, padding:"7px 10px", border:"1px solid #ede9fe" }}>
         <span style={{ fontSize:9, color:"#9ca3af", flex:1 }}>Ask anything...</span>
         <div style={{ width:22, height:22, borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-          <span style={{ fontSize:10 }}>🎤</span>
+          <IconMic size={10} color="#fff" />
         </div>
       </div>
     </div>
@@ -267,7 +272,7 @@ function ScreenTravel() {
       <div style={{ display:"flex", alignItems:"center", gap:6, background:"#f5f3ff", borderRadius:10, padding:"6px 10px", border:"1px solid #ede9fe" }}>
         <span style={{ fontSize:9, color:"#9ca3af", flex:1 }}>Ask a follow up...</span>
         <div style={{ width:20, height:20, borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-          <span style={{ fontSize:9 }}>🎤</span>
+          <IconMic size={9} color="#fff" />
         </div>
       </div>
     </div>
@@ -277,8 +282,8 @@ function ScreenTravel() {
 /* ─── Phone screen: Payment ──────────────────────────────────────── */
 function ScreenPayment() {
   const methods = [
-    { icon:"💳", label:"Credit or Debit Card", sub:"Secured with Stripe" },
-    { icon:"🍎", label:"Apple Pay", sub:null },
+    { icon:"card", label:"Credit or Debit Card", sub:"Secured with Stripe" },
+    { icon:"apple", label:"Apple Pay", sub:null },
     { icon:"G", label:"Google Pay", sub:null, goog:true },
     { icon:"🔗", label:"Link (Stripe)", sub:null },
     { icon:"P", label:"PayPal", sub:null, pp:true },
@@ -292,7 +297,7 @@ function ScreenPayment() {
           <div style={{ width:28, height:28, borderRadius:8, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
             background: m.goog?"#fff":m.pp?"#003087":m.plus?"#f3f4f6":"#f3f4f6",
             border: m.goog?"1.5px solid #e5e7eb":"none",
-            fontSize: m.icon.length>1?10:14, fontWeight:800,
+            fontSize: 10, fontWeight:800,
             color: m.goog?"#4285f4":m.pp?"#fff":m.plus?"#7c3aed":"#374151" }}>
             {m.icon}
           </div>
@@ -543,11 +548,11 @@ export default function Home() {
               {/* App store badges */}
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 32 }}>
                 {[
-                  { icon: "🍎", line1: "Download on the", line2: "App Store" },
-                  { icon: "▶", line1: "GET IT ON", line2: "Google Play" },
+                  { icon: "apple", line1: "Download on the", line2: "App Store" },
+                  { icon: "play", line1: "GET IT ON", line2: "Google Play" },
                 ].map((b) => (
                   <div key={b.line2} style={{ display: "flex", alignItems: "center", gap: 8, background: "#0f1035", borderRadius: 10, padding: "7px 14px", cursor: "pointer" }}>
-                    <span style={{ fontSize: 18, color: "#fff" }}>{b.icon}</span>
+                    {b.icon==="apple" ? <IconApple size={20} color="#fff" /> : <svg width={18} height={18} viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>}
                     <div>
                       <p style={{ margin: 0, fontSize: 8, color: "#71767f", letterSpacing: 0.3 }}>{b.line1}</p>
                       <p style={{ margin: 0, fontSize: 12, color: "#fff", fontWeight: 700 }}>{b.line2}</p>
@@ -615,16 +620,17 @@ export default function Home() {
       <section style={{ padding:"24px 24px", background:"#fff", borderTop:"1px solid #f3f4f6", borderBottom:"1px solid #f3f4f6" }}>
         <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:16 }}>
           {[
-            { emoji:"🛍️", bg:"#fff7ed", label:"Shopping", desc:"Find and buy anything" },
-            { emoji:"🍽️", bg:"#fef9c3", label:"Food & Dining", desc:"Order pickup or delivery" },
-            { emoji:"✈️", bg:"#eff6ff", label:"Travel & Hotels", desc:"Book flights, hotels and more" },
-            { emoji:"📅", bg:"#f0fdf4", label:"Bookings & Services", desc:"Appointments, events, etc." },
-            { emoji:"💳", bg:"#faf5ff", label:"Payments", desc:"Pay bills, invoices and NFC" },
-            { emoji:"🧾", bg:"#fff1f2", label:"Invoicing", desc:"Create & send invoices with AI" },
-            { emoji:"✨", bg:"#f0f9ff", label:"And More", desc:"One assistant for everything" },
+            
+            { Icon:IconShopping, bg:'#fff7ed', color:'#d97706', label:'Shopping', desc:'Find and buy anything' },
+            { Icon:IconFood, bg:'#fef9c3', color:'#b45309', label:'Food & Dining', desc:'Order pickup or delivery' },
+            { Icon:IconTravel, bg:'#eff6ff', color:'#2563eb', label:'Travel & Hotels', desc:'Book flights, hotels and more' },
+            { Icon:IconServices, bg:'#f0fdf4', color:'#059669', label:'Bookings & Services', desc:'Appointments, events, etc.' },
+            { Icon:IconPayments, bg:'#faf5ff', color:'#7c3aed', label:'Payments', desc:'Pay bills, invoices and NFC' },
+            { Icon:IconInvoicing, bg:'#fff1f2', color:'#e11d48', label:'Invoicing', desc:'Create & send invoices with AI' },
+            { Icon:IconMore, bg:'#f0f9ff', color:'#0891b2', label:'And More', desc:'One assistant for everything' },
           ].map(cat => (
             <Link key={cat.label} to="/features" style={{ textDecoration:"none", display:"flex", flexDirection:"column", alignItems:"center", textAlign:"center", gap:6, flex:"1 1 100px", minWidth:80 }}>
-              <div style={{ width:44, height:44, borderRadius:14, background:cat.bg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20 }}>{cat.emoji}</div>
+              <div style={{ width:44, height:44, borderRadius:14, background:cat.bg, display:"flex", alignItems:"center", justifyContent:"center" }}><cat.Icon size={20} color={cat.color} /></div>
               <p style={{ margin:0, fontFamily:"Manrope,sans-serif", fontWeight:700, fontSize:12, color:"#0f1035" }}>{cat.label}</p>
               <p style={{ margin:0, fontSize:10, color:"#6b7280", lineHeight:1.3 }}>{cat.desc}</p>
             </Link>
@@ -668,14 +674,14 @@ export default function Home() {
           {/* 4-column icon grid — exactly matching reference */}
           <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:32, maxWidth:900, margin:"0 auto 72px" }}>
             {[
-              { emoji:"🛍️", bg:"#fff7ed", iconBg:"#fed7aa", label:"Shopping", desc:"Find and buy anything" },
-              { emoji:"🍽️", bg:"#fff7ed", iconBg:"#fde68a", label:"Food & Dining", desc:"Order pickup or delivery" },
-              { emoji:"✈️", bg:"#eff6ff", iconBg:"#bfdbfe", label:"Travel & Hotels", desc:"Book flights and hotels" },
-              { emoji:"📅", bg:"#f0fdf4", iconBg:"#bbf7d0", label:"Services", desc:"Appointments & bookings" },
-              { emoji:"💳", bg:"#faf5ff", iconBg:"#e9d5ff", label:"Payments", desc:"Pay bills, invoices & more" },
-              { emoji:"🎟️", bg:"#fdf4ff", iconBg:"#f5d0fe", label:"Events", desc:"Find and book tickets" },
-              { emoji:"📱", bg:"#f0fdf4", iconBg:"#99f6e4", label:"NFC & In-Store", desc:"Tap, order and pay" },
-              { emoji:"✨", bg:"#eff6ff", iconBg:"#c7d2fe", label:"and More", desc:"Explore all possibilities" },
+              { Icon:IconShopping, color:"#d97706", bg:"#fff7ed", label:"Shopping", desc:"Find and buy anything" },
+              { Icon:IconFood, color:"#b45309", bg:"#fef9c3", label:"Food & Dining", desc:"Order pickup or delivery" },
+              { Icon:IconTravel, color:"#2563eb", bg:"#eff6ff", label:"Travel & Hotels", desc:"Book flights and hotels" },
+              { Icon:IconServices, color:"#059669", bg:"#f0fdf4", label:"Services", desc:"Appointments & bookings" },
+              { Icon:IconPayments, color:"#7c3aed", bg:"#faf5ff", label:"Payments", desc:"Pay bills, invoices & more" },
+              { Icon:IconEvents, color:"#db2777", bg:"#fdf4ff", label:"Events", desc:"Find and book tickets" },
+              { Icon:IconNFC, color:"#0891b2", bg:"#f0fdf4", label:"NFC & In-Store", desc:"Tap, order and pay" },
+              { Icon:IconMore, color:"#4f46e5", bg:"#eff6ff", label:"and More", desc:"Explore all possibilities" },
             ].map((cat) => (
               <Link
                 key={cat.label}
@@ -684,8 +690,8 @@ export default function Home() {
                 onMouseEnter={e => { e.currentTarget.style.background="#f5f3ff"; e.currentTarget.style.boxShadow="0 4px 20px rgba(124,58,237,0.08)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.boxShadow="none"; }}
               >
-                <div style={{ width:64, height:64, borderRadius:20, background:cat.bg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:28, boxShadow:`0 2px 12px rgba(0,0,0,0.06)` }}>
-                  {cat.emoji}
+                <div style={{ width:64, height:64, borderRadius:20, background:cat.bg, display:"flex", alignItems:"center", justifyContent:"center", boxShadow:`0 2px 12px rgba(0,0,0,0.06)` }}>
+                  <cat.Icon size={28} color={cat.color} />
                 </div>
                 <div>
                   <p style={{ margin:0, fontFamily:"Manrope,sans-serif", fontWeight:700, fontSize:14, color:"#0f1035" }}>{cat.label}</p>
@@ -950,6 +956,142 @@ export default function Home() {
                 Learn More <ArrowRightIcon size={15} />
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ MORE APP SCREENS — 4 phones matching reference ══════ */}
+      <section style={{ padding:"72px 24px", background:"#f8f7ff" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:40 }}>
+            <h2 style={{ fontFamily:"Manrope,sans-serif", fontWeight:800, fontSize:"clamp(22px,2.5vw,34px)", color:"#0f1035", margin:0, letterSpacing:"-0.03em" }}>More App Screens</h2>
+            <Link to="/features" style={{ display:"inline-flex", alignItems:"center", gap:6, color:"#7c3aed", fontWeight:700, fontSize:13, textDecoration:"none" }}>
+              See All Screens <IconArrow size={13} color="#7c3aed" />
+            </Link>
+          </div>
+          <div style={{ display:"flex", gap:20, justifyContent:"center", flexWrap:"wrap" }}>
+            {/* Phone: Invoice/Create */}
+            <PhoneFrame width={168} height={340}>
+              <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
+                <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
+                  <p style={{ margin:0, fontSize:10, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Create Invoice<br/>with MioBot</p>
+                </div>
+                <div style={{ flex:1, padding:"8px 10px", display:"flex", flexDirection:"column", gap:6 }}>
+                  <div style={{ background:"#f5f3ff", borderRadius:10, padding:"8px 10px" }}>
+                    <p style={{ margin:0, fontSize:8, color:"#7c3aed", fontWeight:600 }}>Create an invoice for ABC Company for 3 office chairs at $120 each. Here is the summary:</p>
+                  </div>
+                  <div style={{ background:"#f8f7ff", borderRadius:8, padding:"8px 10px", border:"1px solid #ede9fe" }}>
+                    <p style={{ margin:"0 0 4px", fontSize:9, fontWeight:700, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>Invoice Draft</p>
+                    <p style={{ margin:"0 0 2px", fontSize:8, color:"#374151" }}>ABC Company</p>
+                    {[["3 × Office Chair","$600.00"],["Subtotal","$600.00"],["Tax (8%)","$48.00"],["Total","$648.00"]].map(([l,v])=>(
+                      <div key={l} style={{ display:"flex", justifyContent:"space-between" }}>
+                        <span style={{ fontSize:8, color:"#6b7280" }}>{l}</span>
+                        <span style={{ fontSize:8, fontWeight:600, color:"#0f1035" }}>{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display:"flex", gap:6 }}>
+                    <div style={{ flex:1, border:"1.5px solid #e5e7eb", borderRadius:8, padding:"7px 0", textAlign:"center", fontSize:9, fontWeight:600, color:"#374151" }}>Edit</div>
+                    <div style={{ flex:1, background:"linear-gradient(135deg,#7c3aed,#4f46e5)", borderRadius:8, padding:"7px 0", textAlign:"center", fontSize:9, fontWeight:700, color:"#fff" }}>Send Invoice</div>
+                  </div>
+                </div>
+                <div style={{ display:"flex", justifyContent:"space-around", padding:"6px 0 8px", borderTop:"1px solid #f3f4f6" }}>
+                  {[["home",IconHome],["search",IconSearch],["mic",IconMic],["orders",IconOrders],["user",IconUser]].map(([k,Ic],i)=>(
+                    <div key={k} style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
+                      {i===2 ? <div style={{ width:24, height:24, borderRadius:"50%", background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center" }}><Ic size={11} color="#fff" /></div> : <Ic size={13} color="#9ca3af" />}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </PhoneFrame>
+
+            {/* Phone: Travel */}
+            <PhoneFrame width={168} height={340}>
+              <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
+                <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
+                  <p style={{ margin:0, fontSize:10.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Travel</p>
+                  <div style={{ display:"flex", gap:4, marginTop:5 }}>
+                    {["Flights","Hotels","Cars","Trains"].map((t,i)=>(
+                      <span key={t} style={{ fontSize:7.5, fontWeight:600, padding:"2px 6px", borderRadius:6, background:i===0?"#7c3aed":"#f3f4f6", color:i===0?"#fff":"#6b7280" }}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ flex:1, padding:"8px 10px", display:"flex", flexDirection:"column", gap:5 }}>
+                  <div style={{ background:"#f5f3ff", borderRadius:8, padding:"6px 8px", fontSize:8.5, color:"#7c3aed", fontWeight:600 }}>Chicago (ORD) → New York (JFK)</div>
+                  <p style={{ margin:0, fontSize:8, color:"#6b7280" }}>Mar 12 – Mar 16 · 1 Adult</p>
+                  <p style={{ margin:"2px 0", fontSize:9, fontWeight:700, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>Best Deals</p>
+                  {[["Delta","2h 10m","$214"],["United","2h 15m","$228"],["American","2h 30m","$236"]].map(([a,t,p])=>(
+                    <div key={a} style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 7px", background:"#f9f7ff", borderRadius:7, border:"1px solid #f0eeff" }}>
+                      <div style={{ width:20, height:20, borderRadius:5, background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center" }}><IconTravel size={10} color="#fff" /></div>
+                      <div style={{ flex:1 }}><p style={{ margin:0, fontSize:8.5, fontWeight:700, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>{a}</p><p style={{ margin:0, fontSize:7.5, color:"#6b7280" }}>{t}</p></div>
+                      <p style={{ margin:0, fontSize:10, fontWeight:800, color:"#7c3aed", fontFamily:"Manrope,sans-serif" }}>{p}</p>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ padding:"0 10px 10px" }}>
+                  <div style={{ background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", borderRadius:10, padding:"8px 0", textAlign:"center", fontSize:10, fontWeight:700, fontFamily:"Manrope,sans-serif" }}>Search Flights</div>
+                </div>
+              </div>
+            </PhoneFrame>
+
+            {/* Phone: Food & Dining */}
+            <PhoneFrame width={168} height={340}>
+              <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
+                <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
+                  <p style={{ margin:0, fontSize:10.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Food & Dining</p>
+                  <div style={{ display:"flex", gap:4, marginTop:5 }}>
+                    {["Nearby","Fast Food","Pizza","Sushi"].map((t,i)=>(
+                      <span key={t} style={{ fontSize:7, fontWeight:600, padding:"2px 5px", borderRadius:5, background:i===0?"#7c3aed":"#f3f4f6", color:i===0?"#fff":"#6b7280" }}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ flex:1, overflow:"hidden", padding:"6px 10px", display:"flex", flexDirection:"column", gap:5 }}>
+                  {[
+                    { img:"/static/stock_mio-food-dining-3591b8-0.jpg", name:"McDonald's", dist:"0.3 mi · Fast Food", rating:"4.2" },
+                    { img:"/static/stock_mio-restaurant-642a3f-0.jpg", name:"Starbucks", dist:"0.4 mi · Coffee", rating:"4.6" },
+                    { img:"/static/stock_mio-food-dining-3591b8-1.jpg", name:"Chipotle", dist:"0.6 mi · Mexican", rating:"4.4" },
+                    { img:"/static/stock_mio-services-ee812e-0.jpg", name:"Panda Express", dist:"0.9 mi · Chinese", rating:"4.1" },
+                  ].map(r=>(
+                    <div key={r.name} style={{ display:"flex", gap:7, alignItems:"center" }}>
+                      <img src={r.img} alt={r.name} style={{ width:32, height:32, borderRadius:8, objectFit:"cover", flexShrink:0 }}/>
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <p style={{ margin:0, fontSize:9, fontWeight:700, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>{r.name}</p>
+                        <p style={{ margin:0, fontSize:7.5, color:"#6b7280" }}>{r.dist} · <span style={{ color:"#f59e0b" }}>★</span> {r.rating}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </PhoneFrame>
+
+            {/* Phone: Services */}
+            <PhoneFrame width={168} height={340}>
+              <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
+                <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
+                  <p style={{ margin:0, fontSize:10.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Services</p>
+                  <div style={{ background:"#f5f3ff", borderRadius:7, padding:"5px 8px", marginTop:5, display:"flex", alignItems:"center", gap:5 }}>
+                    <IconSearch size={9} color="#9ca3af" />
+                    <span style={{ fontSize:8.5, color:"#9ca3af" }}>Search restaurants & more...</span>
+                  </div>
+                </div>
+                <div style={{ flex:1, overflow:"hidden", padding:"6px 10px", display:"flex", flexDirection:"column", gap:6 }}>
+                  {[
+                    { Icon:IconServices, bg:"#f0fdf4", color:"#059669", label:"Home Services", sub:"Plumbing, cleaning, repairs" },
+                    { Icon:IconNFC, bg:"#fdf4ff", color:"#db2777", label:"Beauty & Wellness", sub:"Salons, spas, gyms" },
+                    { Icon:IconTravel, bg:"#eff6ff", color:"#2563eb", label:"Auto Services", sub:"Mechanics, car wash" },
+                    { Icon:IconMore, bg:"#fff7ed", color:"#d97706", label:"Professional Services", sub:"Lawyers, accountants" },
+                  ].map(s=>(
+                    <div key={s.label} style={{ display:"flex", alignItems:"center", gap:8, padding:"6px 8px", background:"#f9f7ff", borderRadius:8 }}>
+                      <div style={{ width:28, height:28, borderRadius:8, background:s.bg, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}><s.Icon size={14} color={s.color} /></div>
+                      <div>
+                        <p style={{ margin:0, fontSize:9, fontWeight:700, color:"#0f1035", fontFamily:"Manrope,sans-serif" }}>{s.label}</p>
+                        <p style={{ margin:0, fontSize:7.5, color:"#6b7280" }}>{s.sub}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </PhoneFrame>
           </div>
         </div>
       </section>
