@@ -635,39 +635,49 @@ export default function Home() {
         </section>
       )}
 
-      {/* ══ CATEGORIES — matching reference right panel ══════════ */}
-      <section style={{ padding: "72px 24px", background: "#fff" }}>
+      {/* ══ CATEGORIES — matching reference exactly ══════════════ */}
+      <section style={{ padding: "80px 24px", background: "#fff" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "start" }}>
+          {/* Section heading — centered like reference */}
+          <h2 style={{ fontFamily:"Manrope,sans-serif", fontWeight:800, fontSize:"clamp(28px,3.5vw,46px)", color:"#0f1035", margin:"0 0 56px", lineHeight:1.08, letterSpacing:"-0.03em", textAlign:"center" }}>
+            Everything You Need.{" "}
+            <span style={{ background:"linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>
+              Just Ask Mio.
+            </span>
+          </h2>
 
-            {/* Left — "Everything You Need. Just Ask Mio." */}
-            <div>
-              <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(30px,3.5vw,48px)", color: "#0f1035", margin: "0 0 40px", lineHeight: 1.08, letterSpacing: "-0.03em" }}>
-                Everything You Need.{" "}
-                <span style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Just Ask Mio.
-                </span>
-              </h2>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
-                {CATEGORIES.map((cat) => (
-                  <Link
-                    key={cat.label}
-                    to={cat.path}
-                    style={{ textDecoration: "none", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 10, padding: "20px 16px", borderRadius: 20, border: "1px solid #f3f4f6", background: "#fff", cursor: "pointer", transition: "all 0.2s" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "#f5f3ff"; e.currentTarget.style.borderColor = "#ddd6fe"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "#f3f4f6"; }}
-                  >
-                    <div style={{ width: 52, height: 52, borderRadius: 16, background: "linear-gradient(135deg,#f5f3ff,#ede9fe)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>
-                      {cat.emoji}
-                    </div>
-                    <div>
-                      <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 700, fontSize: 13, color: "#0f1035" }}>{cat.label}</p>
-                      <p style={{ margin: "3px 0 0", fontSize: 11, color: "#6b7280" }}>{cat.desc}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
+          {/* 4-column icon grid — exactly matching reference */}
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:32, maxWidth:900, margin:"0 auto 72px" }}>
+            {[
+              { emoji:"🛍️", bg:"#fff7ed", iconBg:"#fed7aa", label:"Shopping", desc:"Find and buy anything" },
+              { emoji:"🍽️", bg:"#fff7ed", iconBg:"#fde68a", label:"Food & Dining", desc:"Order pickup or delivery" },
+              { emoji:"✈️", bg:"#eff6ff", iconBg:"#bfdbfe", label:"Travel & Hotels", desc:"Book flights and hotels" },
+              { emoji:"📅", bg:"#f0fdf4", iconBg:"#bbf7d0", label:"Services", desc:"Appointments & bookings" },
+              { emoji:"💳", bg:"#faf5ff", iconBg:"#e9d5ff", label:"Payments", desc:"Pay bills, invoices & more" },
+              { emoji:"🎟️", bg:"#fdf4ff", iconBg:"#f5d0fe", label:"Events", desc:"Find and book tickets" },
+              { emoji:"📱", bg:"#f0fdf4", iconBg:"#99f6e4", label:"NFC & In-Store", desc:"Tap, order and pay" },
+              { emoji:"✨", bg:"#eff6ff", iconBg:"#c7d2fe", label:"and More", desc:"Explore all possibilities" },
+            ].map((cat) => (
+              <Link
+                key={cat.label}
+                to="/features"
+                style={{ textDecoration:"none", display:"flex", flexDirection:"column", alignItems:"center", textAlign:"center", gap:12, padding:"24px 16px", borderRadius:20, transition:"all 0.2s", cursor:"pointer" }}
+                onMouseEnter={e => { e.currentTarget.style.background="#f5f3ff"; e.currentTarget.style.boxShadow="0 4px 20px rgba(124,58,237,0.08)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.boxShadow="none"; }}
+              >
+                <div style={{ width:64, height:64, borderRadius:20, background:cat.bg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:28, boxShadow:`0 2px 12px rgba(0,0,0,0.06)` }}>
+                  {cat.emoji}
+                </div>
+                <div>
+                  <p style={{ margin:0, fontFamily:"Manrope,sans-serif", fontWeight:700, fontSize:14, color:"#0f1035" }}>{cat.label}</p>
+                  <p style={{ margin:"4px 0 0", fontSize:12, color:"#6b7280", lineHeight:1.4 }}>{cat.desc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Phone + chat demo below the grid */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:64, alignItems:"center" }}>
 
             {/* Right — phone + chat demo */}
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
