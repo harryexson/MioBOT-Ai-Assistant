@@ -160,27 +160,31 @@ function ScreenShopping() {
     <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 12px", background: "#fff", gap: 8 }}>
       <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: "#0f1035" }}>AI Shopping Assistant</p>
       <div style={{ background: "#f5f3ff", borderRadius: 10, padding: "8px 10px" }}>
-        <p style={{ margin: "0 0 5px", fontSize: 9, color: "#7c3aed", fontWeight: 700 }}>⚡ Top pick for you</p>
+        <p style={{ margin: "0 0 5px", fontSize: 9, color: "#7c3aed", fontWeight: 700 }}>⚡ Top rated</p>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <div style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg,#ede9fe,#ddd6fe)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>🎧</div>
+          <img src="/static/stock_product-headphones-dca952-0.jpg" alt="Wireless headphones" style={{ width: 40, height: 40, borderRadius: 10, objectFit: "cover", flexShrink: 0 }} />
           <div>
-            <p style={{ margin: 0, fontSize: 9, fontWeight: 700, color: "#0f1035" }}>Sony WH-1000XM5</p>
+            <p style={{ margin: 0, fontSize: 9, fontWeight: 700, color: "#0f1035" }}>Sony WH-1000XMS</p>
             <p style={{ margin: 0, fontSize: 8, color: "#6b7280" }}>Best noise-cancelling pick</p>
             <p style={{ margin: 0, fontSize: 14, fontWeight: 800, color: "#7c3aed" }}>$399</p>
           </div>
         </div>
         <div style={{ marginTop: 6, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 8, padding: "6px 0", textAlign: "center", fontSize: 10, fontWeight: 700 }}>Add to cart</div>
       </div>
-      <div style={{ display: "flex", gap: 6 }}>
-        {[["🎵","$189"],["👟","$119"],["🧳","$89"]].map(([e, p]) => (
-          <div key={p} style={{ flex: 1, background: "#f8f7ff", borderRadius: 8, padding: "7px 5px", textAlign: "center" }}>
-            <span style={{ fontSize: 16 }}>{e}</span>
-            <p style={{ margin: "3px 0 0", fontSize: 9, fontWeight: 700, color: "#7c3aed" }}>{p}</p>
+      <div style={{ display: "flex", gap: 5 }}>
+        {[
+          { img: "/static/stock_product-shoes-e23c7b-0.jpg", label: "Shoes", price: "$119", alt: "Running shoes" },
+          { img: "/static/stock_product-shopping-23075a-0.jpg", label: "Bags", price: "$89", alt: "Shopping bags" },
+          { img: "/static/stock_product-food-06237b-0.jpg", label: "Food", price: "$14", alt: "Food delivery" },
+        ].map(p => (
+          <div key={p.label} style={{ flex: 1, background: "#f8f7ff", borderRadius: 8, overflow: "hidden", textAlign: "center" }}>
+            <img src={p.img} alt={p.alt} style={{ width: "100%", height: 36, objectFit: "cover" }} />
+            <p style={{ margin: "3px 0 0", fontSize: 8, fontWeight: 700, color: "#7c3aed", paddingBottom: 3 }}>{p.price}</p>
           </div>
         ))}
       </div>
       <div style={{ marginTop: "auto", display: "flex", alignItems: "center", gap: 6, background: "#f5f3ff", borderRadius: 10, padding: "7px 10px" }}>
-        <WaveBars size={14} color="linear-gradient(135deg,#7c3aed,#a78bfa)" />
+        <WaveBars size={14} color="#7c3aed" />
         <p style={{ margin: 0, fontSize: 10, color: "#6b7280", flex: 1 }}>Ask anything...</p>
         <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <span style={{ fontSize: 10 }}>🎤</span>
@@ -243,6 +247,37 @@ function ScreenPayment() {
       ))}
       <div style={{ marginTop: 6, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 11, padding: "9px 0", textAlign: "center", fontSize: 11, fontWeight: 700 }}>Continue</div>
       <p style={{ textAlign: "center", fontSize: 8, color: "#9ca3af", margin: "2px 0 0" }}>Your payment information is safe and securely encrypted.</p>
+    </div>
+  );
+}
+
+/* ─── Floating product card (animated) ──────────────────────────── */
+function FloatingCard({ children, delay = 0, style = {} }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), delay);
+    return () => clearTimeout(t);
+  }, [delay]);
+  return (
+    <div style={{
+      position: "absolute",
+      opacity: visible ? 1 : 0,
+      transform: visible ? "translateY(0) scale(1)" : "translateY(16px) scale(0.9)",
+      transition: "all 0.55s cubic-bezier(0.34,1.56,0.64,1)",
+      background: "#fff",
+      borderRadius: 16,
+      padding: "10px 14px",
+      boxShadow: "0 8px 32px rgba(0,0,0,0.10), 0 1px 0 rgba(124,58,237,0.05)",
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      maxWidth: 200,
+      border: "1px solid rgba(124,58,237,0.08)",
+      animation: visible ? "floatBob 4s ease-in-out infinite" : "none",
+      animationDelay: `${delay * 0.001 + 0.6}s`,
+      ...style,
+    }}>
+      {children}
     </div>
   );
 }
@@ -487,22 +522,23 @@ export default function Home() {
                 />
               </div>
 
-              {/* Floating category bubbles */}
-              <div style={{ position: "absolute", top: "12%", right: -10 }}>
-                <HeroChatBubble text="Mio, order my usual from McDonald's" category="food" delay={400} />
-              </div>
-              <div style={{ position: "absolute", top: "38%", right: -30 }}>
-                <HeroChatBubble text="Food & Dining" category="food" delay={900} />
-              </div>
-              <div style={{ position: "absolute", bottom: "30%", right: -20 }}>
-                <HeroChatBubble text="Hotels & Travel" category="travel" delay={1400} />
-              </div>
-              <div style={{ position: "absolute", bottom: "10%", right: 20 }}>
-                <HeroChatBubble text="Shopping" category="shopping" delay={1800} />
-              </div>
-              <div style={{ position: "absolute", bottom: "18%", right: 220 }}>
-                <HeroChatBubble text="Bookings & Services" category="services" delay={2200} />
-              </div>
+              {/* Floating category bubbles — with real product photos */}
+              <FloatingCard delay={400} style={{ top: "6%", right: -20 }}>
+                <img src="/static/stock_product-food-06237b-0.jpg" alt="Food & Dining" style={{ width: 36, height: 36, borderRadius: 10, objectFit: "cover", flexShrink: 0 }} />
+                <div><p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#0f1035" }}>Food & Dining</p><p style={{ margin: 0, fontSize: 10, color: "#6b7280" }}>Order pickup or delivery</p></div>
+              </FloatingCard>
+              <FloatingCard delay={800} style={{ top: "36%", right: -40 }}>
+                <img src="/static/stock_product-hotel-6d4d42-0.jpg" alt="Hotels & Travel" style={{ width: 36, height: 36, borderRadius: 10, objectFit: "cover", flexShrink: 0 }} />
+                <div><p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#0f1035" }}>Hotels & Travel</p><p style={{ margin: 0, fontSize: 10, color: "#6b7280" }}>Book flights and hotels</p></div>
+              </FloatingCard>
+              <FloatingCard delay={1200} style={{ bottom: "28%", right: -30 }}>
+                <img src="/static/stock_product-shoes-e23c7b-0.jpg" alt="Shopping" style={{ width: 36, height: 36, borderRadius: 10, objectFit: "cover", flexShrink: 0 }} />
+                <div><p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#0f1035" }}>Shopping</p><p style={{ margin: 0, fontSize: 10, color: "#6b7280" }}>Find and buy anything</p></div>
+              </FloatingCard>
+              <FloatingCard delay={1600} style={{ bottom: "8%", right: 10 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg,#f5f3ff,#ede9fe)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>📅</div>
+                <div><p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: "#0f1035" }}>Bookings & Services</p><p style={{ margin: 0, fontSize: 10, color: "#6b7280" }}>Appointments & more</p></div>
+              </FloatingCard>
 
               {/* AI badge floating */}
               <div style={{ position: "absolute", top: "28%", left: -20, background: "#fff", borderRadius: 20, padding: "10px 14px", boxShadow: "0 8px 32px rgba(124,58,237,0.15)", display: "flex", alignItems: "center", gap: 8, border: "1px solid #ede9fe" }}>
@@ -635,9 +671,11 @@ export default function Home() {
               { Screen: ScreenTravel, tall: true },
               { Screen: ScreenPayment, tall: false },
             ].map(({ Screen, tall }, i) => (
-              <PhoneFrame key={i} width={168} height={tall ? 360 : 330}>
-                <Screen />
-              </PhoneFrame>
+              <div key={i} className="phone-animate" style={{ animationDelay: `${i * 0.12}s` }}>
+                <PhoneFrame width={168} height={tall ? 360 : 330}>
+                  <Screen />
+                </PhoneFrame>
+              </div>
             ))}
           </div>
         </div>
