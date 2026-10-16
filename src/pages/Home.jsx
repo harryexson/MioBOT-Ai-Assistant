@@ -478,9 +478,13 @@ export default function Home() {
             <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center", minHeight: 560 }}>
               {/* Purple glow circle */}
               <div style={{ position: "absolute", width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.12) 0%,rgba(124,58,237,0) 70%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
-              {/* Woman image placeholder — circular crop */}
-              <div style={{ width: 340, height: 440, borderRadius: "50% 50% 50% 50% / 40% 40% 60% 60%", background: "linear-gradient(180deg,#f0ebff 0%,#e4d9ff 60%,#c4b0ff 100%)", display: "flex", alignItems: "flex-end", justifyContent: "center", overflow: "hidden", flexShrink: 0 }}>
-                <div style={{ fontSize: 120, marginBottom: -8 }}>👩</div>
+              {/* Hero woman photo */}
+              <div style={{ width: 340, height: 460, borderRadius: "50% 50% 50% 50% / 40% 40% 60% 60%", background: "linear-gradient(180deg,#f0ebff 0%,#c4b0ff 100%)", overflow: "hidden", flexShrink: 0, position: "relative" }}>
+                <img
+                  src="/static/stock_mio-hero-woman-004b9f-0.jpg"
+                  alt="Person using the Mio AI assistant on their phone"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
+                />
               </div>
 
               {/* Floating category bubbles */}
@@ -832,10 +836,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8" style={{ marginBottom: 40 }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 9, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ color: "#fff", fontWeight: 800, fontSize: 13, fontFamily: "Syne,sans-serif" }}>M</span>
-                </div>
-                <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 18, background: "linear-gradient(135deg,#7c3aed,#a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Mio</span>
+                <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: 22, color: "#fff" }}>Mio</span>
               </div>
               <p style={{ fontSize: 13, lineHeight: 1.6, color: "#a3aab5", margin: "0 0 16px" }}>Your AI assistant for everyday life — shop, dine, travel, and pay through natural conversation.</p>
               <div style={{ display: "flex", gap: 8 }}>

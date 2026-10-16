@@ -10,8 +10,6 @@ const NAV_LINKS = [
   { label: "Features", href: "/features" },
   { label: "Solutions", href: "/providers" },
   { label: "Integrations", href: "/integrations" },
-  { label: "Partners", href: "/partners" },
-  { label: "Earnings", href: "/commissions" },
   { label: "Pricing", href: "/pricing" },
   { label: "Developers", href: "/developers" },
 ];
@@ -44,12 +42,9 @@ export default function Nav() {
       }}
     >
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        {/* Logo */}
-        <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 32, height: 32, borderRadius: 10, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ color: "#fff", fontWeight: 800, fontSize: 16, fontFamily: "Syne,sans-serif" }}>M</span>
-          </div>
-          <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 800, fontSize: 22, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+        {/* Logo — matching reference: bold black "Mio" text */}
+        <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 0 }}>
+          <span style={{ fontFamily: "Syne,sans-serif", fontWeight: 900, fontSize: 26, color: "#0f1035", letterSpacing: -0.5 }}>
             Mio
           </span>
         </Link>
@@ -100,8 +95,8 @@ export default function Nav() {
             </div>
           ) : (
             <>
-              <Link to="/signin" style={{ fontSize: 14, fontWeight: 600, textDecoration: "none", color: "#374151" }}>Sign In</Link>
-              <Link to="/signin" className="btn-primary" style={{ fontSize: 13, padding: "10px 20px" }}>Get Started</Link>
+              <Link to="/signin" style={{ fontSize: 14, fontWeight: 500, textDecoration: "none", color: "#374151", padding: "9px 16px" }}>Sign In</Link>
+              <Link to="/signin" style={{ fontSize: 14, fontWeight: 700, textDecoration: "none", color: "#fff", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", borderRadius: 10, padding: "9px 22px", boxShadow: "0 4px 14px rgba(124,58,237,0.3)" }}>Get Started</Link>
             </>
           )}
         </div>
