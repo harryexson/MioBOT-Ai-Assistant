@@ -48,114 +48,94 @@ function WaveBars({ color = "#7c3aed", size = 20 }) {
 }
 
 /* ─── Ultra-realistic iPhone-style phone frame ─────────────────────── */
-function PhoneFrame({ children, width = 168, height = 340, tilt = false }) {
-  // Titanium Natural finish — matches Brex reference photos exactly
-  // Flat sides, brushed metal look, Dynamic Island, physical buttons
-  const BEZEL = 10;
-  const OUTER_R = 44;
-  const INNER_R = 36;
-  // Titanium silver: multi-stop gradient simulating brushed metal
-  const titaniumFrame = [
-    "linear-gradient(175deg,",
-    "#e8e3dc 0%,",   // top-left light hit
-    "#c8c2b8 8%,",   // settle into warm silver
-    "#b8b2a8 20%,",  // mid brushed titanium
-    "#a8a49c 40%,",  // deeper mid
-    "#bab5ac 60%,",  // right side slight lighter
-    "#cac6be 80%,",  // corner highlight
-    "#d8d4cc 100%)", // bottom edge
-  ].join("");
+function PhoneFrame({ children, width = 168, height = 340 }) {
+  // Matches reference image exactly:
+  // Pure black frame, thin ~6px bezel, large corner radius,
+  // Dynamic Island pill at top, upright portrait, no tilt
+  const BEZEL = 6;
+  const OUTER_R = 46;
+  const INNER_R = 41;
 
   return (
-    <div
-      style={{
-        width,
-        height,
-        borderRadius: OUTER_R,
-        background: titaniumFrame,
-        padding: BEZEL,
-        position: "relative",
-        flexShrink: 0,
-        transform: tilt ? "perspective(900px) rotateY(-4deg) rotateX(2deg)" : "none",
-        transformOrigin: "center center",
-        boxShadow: [
-          // Main shadow — deep and soft like a real device on a surface
-          "0 48px 96px rgba(0,0,0,0.28)",
-          "0 16px 40px rgba(0,0,0,0.18)",
-          "0 4px 12px rgba(0,0,0,0.12)",
-          // Outer frame edge highlight — titanium catches light
-          "0 0 0 0.5px rgba(255,255,255,0.6)",
-          // Inner frame dark edge
-          "inset 0 0 0 0.5px rgba(0,0,0,0.15)",
-          // Top-left light rim — light source from top-left
-          "inset 1px 1px 0 rgba(255,255,255,0.45)",
-        ].join(", "),
-      }}
-    >
-      {/* Brushed-metal surface texture overlay */}
+    <div style={{
+      width,
+      height,
+      borderRadius: OUTER_R,
+      background: "linear-gradient(160deg,#2a2a2a 0%,#111 50%,#1a1a1a 100%)",
+      padding: BEZEL,
+      position: "relative",
+      flexShrink: 0,
+      boxShadow: [
+        "0 32px 64px rgba(0,0,0,0.35)",
+        "0 8px 24px rgba(0,0,0,0.2)",
+        "0 0 0 1px rgba(255,255,255,0.08)",
+        "inset 0 0 0 0.5px rgba(255,255,255,0.05)",
+      ].join(", "),
+    }}>
+      {/* Frame edge sheen — subtle highlight on left edge */}
+      <div style={{ position:"absolute", inset:0, borderRadius:OUTER_R, pointerEvents:"none",
+        background:"linear-gradient(130deg,rgba(255,255,255,0.07) 0%,transparent 40%,transparent 80%,rgba(255,255,255,0.03) 100%)" }} />
+
+      {/* Volume up */}
+      <div style={{ position:"absolute", left:-2, top:"22%", width:2.5, height:28, background:"#333", borderRadius:"2px 0 0 2px" }} />
+      {/* Volume down */}
+      <div style={{ position:"absolute", left:-2, top:"32%", width:2.5, height:28, background:"#333", borderRadius:"2px 0 0 2px" }} />
+      {/* Power button */}
+      <div style={{ position:"absolute", right:-2, top:"27%", width:2.5, height:44, background:"#333", borderRadius:"0 2px 2px 0" }} />
+
+      {/* Screen */}
       <div style={{
-        position: "absolute", inset: 0, borderRadius: OUTER_R, pointerEvents: "none",
-        background: [
-          "linear-gradient(92deg,",
-          "rgba(255,255,255,0) 0%,",
-          "rgba(255,255,255,0.18) 30%,",
-          "rgba(255,255,255,0.05) 50%,",
-          "rgba(255,255,255,0.22) 70%,",
-          "rgba(255,255,255,0) 100%)",
-        ].join(""),
-      }} />
-
-      {/* ── Physical buttons ── */}
-      {/* Silent/mute switch — short nub, left side top */}
-      <div style={{ position:"absolute", left:-3, top:"14%", width:3, height:18, background:"linear-gradient(90deg,#9e9990,#b8b2a8)", borderRadius:"3px 0 0 3px", boxShadow:"-1px 0 2px rgba(0,0,0,0.3)" }} />
-      {/* Volume Up — left side */}
-      <div style={{ position:"absolute", left:-3, top:"23%", width:3, height:32, background:"linear-gradient(90deg,#9e9990,#b8b2a8)", borderRadius:"3px 0 0 3px", boxShadow:"-1px 0 2px rgba(0,0,0,0.3)" }} />
-      {/* Volume Down — left side */}
-      <div style={{ position:"absolute", left:-3, top:"34%", width:3, height:32, background:"linear-gradient(90deg,#9e9990,#b8b2a8)", borderRadius:"3px 0 0 3px", boxShadow:"-1px 0 2px rgba(0,0,0,0.3)" }} />
-      {/* Power/Sleep button — right side, taller than volumes */}
-      <div style={{ position:"absolute", right:-3, top:"26%", width:3, height:52, background:"linear-gradient(270deg,#9e9990,#b8b2a8)", borderRadius:"0 3px 3px 0", boxShadow:"1px 0 2px rgba(0,0,0,0.3)" }} />
-      {/* Speaker grille bottom — row of tiny dots */}
-      <div style={{ position:"absolute", bottom:4, left:"50%", transform:"translateX(-50%)", display:"flex", gap:2.5, zIndex:5 }}>
-        {[...Array(8)].map((_,k) => <div key={k} style={{ width:2, height:2, borderRadius:"50%", background:"rgba(0,0,0,0.35)" }} />)}
-      </div>
-      {/* Lightning/USB-C port bottom centre */}
-      <div style={{ position:"absolute", bottom:3, left:"50%", transform:"translateX(-50%)", width:18, height:4, background:"rgba(0,0,0,0.2)", borderRadius:2 }} />
-
-      {/* ── Screen glass ── */}
-      <div
-        style={{
-          background: "#f7f7f8",
-          borderRadius: INNER_R,
-          overflow: "hidden",
-          height: "100%",
-          position: "relative",
-          // Subtle glass glare on screen — top-left corner brightness
-          boxShadow: "inset 1px 1px 0 rgba(255,255,255,0.5), inset 0 0 0 0.5px rgba(0,0,0,0.08)",
-        }}
-      >
-        {/* Dynamic Island — true pill, no camera dot clutter */}
+        background:"#fff",
+        borderRadius: INNER_R,
+        overflow:"hidden",
+        height:"100%",
+        position:"relative",
+      }}>
+        {/* Dynamic Island — exact pill matching reference */}
         <div style={{
-          position:"absolute", top:10, left:"50%", transform:"translateX(-50%)",
-          width:80, height:24, background:"#0a0a0a", borderRadius:12,
-          zIndex:10,
-          boxShadow:"0 2px 8px rgba(0,0,0,0.4), inset 0 0 0 0.5px rgba(255,255,255,0.08)",
+          position:"absolute", top:9, left:"50%", transform:"translateX(-50%)",
+          width: Math.round(width * 0.44),
+          height: Math.round(height * 0.055),
+          background:"#000",
+          borderRadius:999,
+          zIndex:20,
         }} />
 
-        {/* Status bar row */}
+        {/* Status bar */}
         <div style={{
-          position:"absolute", top:0, left:0, right:0, height:38,
+          position:"absolute", top:0, left:0, right:0,
+          height: Math.round(height * 0.115),
           display:"flex", alignItems:"flex-end", justifyContent:"space-between",
-          padding:"0 18px 4px", zIndex:9,
+          padding:`0 ${Math.round(width*0.1)}px 4px`,
+          zIndex:19,
         }}>
-          <span style={{ fontSize:9, fontWeight:700, color:"#111", letterSpacing:"-0.02em" }}>9:41</span>
-          <div style={{ display:"flex", gap:3, alignItems:"center" }}>
-            <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><rect x="0" y="3" width="2" height="5" rx="0.5" fill="#111"/><rect x="3" y="2" width="2" height="6" rx="0.5" fill="#111"/><rect x="6" y="1" width="2" height="7" rx="0.5" fill="#111"/><rect x="9" y="0" width="2" height="8" rx="0.5" fill="#111"/></svg>
-            <svg width="12" height="8" viewBox="0 0 12 8"><text y="8" fontSize="9" fill="#111">▲</text></svg>
-            <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="18" height="8" rx="2" stroke="#111" strokeWidth="0.8" fill="none"/><rect x="1" y="2" width="13" height="6" rx="1" fill="#111"/><rect x="19.5" y="3" width="2" height="4" rx="1" fill="#111"/></svg>
+          <span style={{ fontSize: Math.round(width*0.056), fontWeight:700, color:"#0f1035", letterSpacing:"-0.02em", fontFamily:"Manrope,sans-serif" }}>9:41</span>
+          <div style={{ display:"flex", gap:2, alignItems:"center" }}>
+            {/* Signal bars */}
+            <svg width={Math.round(width*0.09)} height={Math.round(width*0.065)} viewBox="0 0 14 9" fill="none">
+              <rect x="0" y="5" width="2.5" height="4" rx="0.6" fill="#0f1035"/>
+              <rect x="3.5" y="3" width="2.5" height="6" rx="0.6" fill="#0f1035"/>
+              <rect x="7" y="1" width="2.5" height="8" rx="0.6" fill="#0f1035"/>
+              <rect x="10.5" y="0" width="2.5" height="9" rx="0.6" fill="#0f1035"/>
+            </svg>
+            {/* WiFi */}
+            <svg width={Math.round(width*0.075)} height={Math.round(width*0.065)} viewBox="0 0 12 9" fill="none">
+              <path d="M6 8a1 1 0 100-2 1 1 0 000 2z" fill="#0f1035"/>
+              <path d="M3 5.5A4.2 4.2 0 016 4.3a4.2 4.2 0 013 1.2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
+              <path d="M1 3A6.8 6.8 0 016 1a6.8 6.8 0 015 2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
+            </svg>
+            {/* Battery */}
+            <svg width={Math.round(width*0.1)} height={Math.round(width*0.065)} viewBox="0 0 22 9" fill="none">
+              <rect x="0.5" y="0.5" width="18" height="8" rx="2" stroke="#0f1035" strokeWidth="0.8"/>
+              <rect x="1.5" y="1.5" width="14" height="6" rx="1.2" fill="#0f1035"/>
+              <path d="M19.5 3v3" stroke="#0f1035" strokeWidth="1.2" strokeLinecap="round"/>
+            </svg>
           </div>
         </div>
 
-        <div style={{ paddingTop:40, height:"100%", overflow:"hidden" }}>{children}</div>
+        <div style={{ paddingTop: Math.round(height * 0.115), height:"100%", overflow:"hidden" }}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -163,23 +143,35 @@ function PhoneFrame({ children, width = 168, height = 340, tilt = false }) {
 
 /* ─── Phone screen: Welcome ──────────────────────────────────────── */
 function ScreenWelcome() {
+  // Matches reference exactly: hero woman photo fills top 55%, Mio logo below, CTAs at bottom
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "12px 13px 14px", background: "#fff" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "#71767f", marginBottom: 10 }}>
-        <span style={{ fontWeight: 600 }}>9:41</span><span>●●● 🔋</span>
-      </div>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6 }}>
-        <div style={{ width: 52, height: 52, borderRadius: 16, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 20px rgba(124,58,237,0.35)" }}>
-          <span style={{ color: "#fff", fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 24 }}>M</span>
+    <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff", overflow:"hidden" }}>
+      {/* Woman photo — fills top half like reference */}
+      <div style={{ height:"52%", position:"relative", overflow:"hidden", borderRadius:"0 0 24px 24px", flexShrink:0 }}>
+        <img
+          src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=400&q=80&fit=crop&crop=top"
+          alt="Woman using Mio"
+          style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"top center" }}
+        />
+        {/* Purple gradient overlay at bottom of photo */}
+        <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"40%", background:"linear-gradient(to top,rgba(124,58,237,0.15),transparent)" }} />
+        {/* Mio logo overlay top-left */}
+        <div style={{ position:"absolute", top:10, left:12, display:"flex", alignItems:"center", gap:5 }}>
+          <div style={{ width:22, height:22, borderRadius:7, background:"linear-gradient(135deg,#7c3aed,#4f46e5)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+            <span style={{ color:"#fff", fontFamily:"Manrope,sans-serif", fontWeight:800, fontSize:11 }}>M</span>
+          </div>
+          <span style={{ fontFamily:"Manrope,sans-serif", fontWeight:800, fontSize:13, color:"#fff", textShadow:"0 1px 4px rgba(0,0,0,0.3)" }}>Mio</span>
         </div>
-        <p style={{ margin: 0, fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: 17, color: "#0f1035" }}>Mio</p>
-        <p style={{ margin: 0, fontSize: 10, color: "#6b7280", textAlign: "center", lineHeight: 1.4 }}>Your AI Assistant<br />for Everyday Life</p>
-        <p style={{ margin: "4px 0 0", fontSize: 9, color: "#6b6b80", fontWeight: 500 }}>Customise or more. You can<br />do much more with Mio.</p>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-        <div style={{ background: "linear-gradient(135deg,#7c3aed,#4f46e5)", color: "#fff", borderRadius: 13, padding: "10px 0", textAlign: "center", fontSize: 12, fontWeight: 700, letterSpacing: 0.2 }}>Get Started</div>
-        <div style={{ border: "1.5px solid #e5e7eb", borderRadius: 13, padding: "9px 0", textAlign: "center", fontSize: 12, fontWeight: 600, color: "#374151" }}>Sign In</div>
-        <p style={{ textAlign: "center", fontSize: 9, color: "#9ca3af", margin: "2px 0 0" }}>Skip for now</p>
+      {/* Text + CTAs */}
+      <div style={{ flex:1, display:"flex", flexDirection:"column", padding:"12px 14px 14px", gap:6 }}>
+        <p style={{ margin:0, fontFamily:"Manrope,sans-serif", fontWeight:800, fontSize:15, color:"#0f1035", lineHeight:1.2 }}>Your AI Assistant<br/>for Everyday Life</p>
+        <p style={{ margin:0, fontSize:9, color:"#6b7280", lineHeight:1.4 }}>Shop, dine, travel & pay — all through simple conversation.</p>
+        <div style={{ marginTop:"auto", display:"flex", flexDirection:"column", gap:6 }}>
+          <div style={{ background:"linear-gradient(135deg,#7c3aed,#4f46e5)", color:"#fff", borderRadius:12, padding:"9px 0", textAlign:"center", fontSize:11, fontWeight:700, fontFamily:"Manrope,sans-serif", boxShadow:"0 4px 12px rgba(124,58,237,0.35)" }}>Get Started</div>
+          <div style={{ border:"1.5px solid #e5e7eb", borderRadius:12, padding:"8px 0", textAlign:"center", fontSize:11, fontWeight:600, color:"#374151", fontFamily:"Manrope,sans-serif" }}>Sign In</div>
+          <p style={{ textAlign:"center", fontSize:9, color:"#9ca3af", margin:0 }}>Skip for now</p>
+        </div>
       </div>
     </div>
   );
@@ -670,7 +662,7 @@ export default function Home() {
             {/* Right — phone + chat demo */}
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                <PhoneFrame width={210} height={400} tilt={true}>
+                <PhoneFrame width={210} height={400}>
                   <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "10px 14px", background: "#fff", gap: 10 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <div style={{ width: 28, height: 28, borderRadius: 9, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -728,23 +720,13 @@ export default function Home() {
               { Screen: ScreenShopping, tall: true },
               { Screen: ScreenTravel, tall: true },
               { Screen: ScreenPayment, tall: false },
-            ].map(({ Screen, tall }, i) => {
-              // Alternating tilt angles like the Brex reference — creates a dynamic 3D gallery feel
-              const tilts = [3, -2, 0, 2, -3];
-              const tiltY = tilts[i] || 0;
-              return (
-                <div key={i} className="phone-animate" style={{
-                  animationDelay: `${i * 0.12}s`,
-                  transform: `perspective(800px) rotateY(${tiltY}deg) rotateX(1deg)`,
-                  transformStyle: "preserve-3d",
-                  marginTop: i === 2 ? -16 : i === 0 || i === 4 ? 16 : 0,
-                }}>
-                  <PhoneFrame width={168} height={tall ? 360 : 330}>
-                    <Screen />
-                  </PhoneFrame>
-                </div>
-              );
-            })}
+            ].map(({ Screen, tall }, i) => (
+              <div key={i} className="phone-animate" style={{ animationDelay: `${i * 0.12}s` }}>
+                <PhoneFrame width={168} height={tall ? 360 : 330}>
+                  <Screen />
+                </PhoneFrame>
+              </div>
+            ))}
           </div>
         </div>
       </section>
