@@ -1,7 +1,9 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import CheckIcon from "icon:check-circle";
 import ArrowRightIcon from "icon:arrow-right";
 
+// Free and Pro CTAs open the auth/signup modal (data-auth="true")
+// Business plan routes to /onboarding for merchant setup
 const PLANS = [
   {
     name: "Free",
@@ -9,7 +11,8 @@ const PLANS = [
     period: "forever",
     desc: "For personal use. No card required.",
     cta: "Get Started",
-    ctaLink: "/onboarding",
+    ctaLink: "/",       // triggers auth modal via data-auth
+    authModal: true,
     featured: false,
     features: [
       "50 AI requests/month",
@@ -25,7 +28,8 @@ const PLANS = [
     period: "per month",
     desc: "For power users who want it all.",
     cta: "Start Free Trial",
-    ctaLink: "/onboarding",
+    ctaLink: "/",       // triggers auth modal via data-auth
+    authModal: true,
     featured: true,
     badge: "Most Popular",
     features: [
@@ -45,6 +49,7 @@ const PLANS = [
     desc: "For merchants and businesses on Mio.",
     cta: "Add Your Business",
     ctaLink: "/onboarding",
+    authModal: false,
     featured: false,
     features: [
       "Everything in Pro",
@@ -59,6 +64,16 @@ const PLANS = [
 ];
 
 export default function Pricing() {
+  const navigate = useNavigate();
+
+  function handleCtaClick(e, plan) {
+    if (plan.authModal) {
+      e.preventDefault();
+      // Dispatch a custom event that Nav listens to for opening the auth modal
+      window.dispatchEvent(new CustomEvent("mio:open-auth", { detail: { mode: "signup" } }));
+    }
+  }
+
   return (
     <main style={{ minHeight: "100vh", paddingTop: 100, paddingBottom: 80, background: "#ffffff" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
@@ -112,6 +127,8 @@ export default function Pricing() {
 
               <Link
                 to={plan.ctaLink}
+                data-auth={plan.authModal ? "true" : undefined}
+                onClick={(e) => handleCtaClick(e, plan)}
                 style={{
                   display: "flex",
                   alignItems: "center",
