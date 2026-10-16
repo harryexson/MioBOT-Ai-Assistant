@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconShopping,IconFood,IconTravel,IconServices,IconPayments,IconEvents,IconNFC,IconInvoicing,IconMore } from '../components/MioIcons.jsx';
 import { Link } from "react-router";
 import ArrowRightIcon from "icon:arrow-right";
 import CheckIcon from "icon:check-circle";
@@ -12,7 +13,7 @@ import BarChartIcon from "icon:bar-chart-2";
 const SERVICE_MODULES = [
   {
     id: "shopping",
-    emoji: "🛍️",
+    iconEl: <IconShopping size={22} color="#d97706" />,
     title: "Retail Shopping",
     desc: "Find and buy anything across dozens of verified retailers — comparing price, availability, specs, shipping, and offers in a single conversation.",
     points: [
@@ -25,7 +26,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "food",
-    emoji: "🍔",
+    iconEl: <IconFood size={22} color="#b45309" />,
     title: "Restaurants & Food",
     desc: "Order delivery, pickup, or reserve a table — by voice or chat. Mio knows your preferences and never confirms an order without showing you the total first.",
     points: [
@@ -38,7 +39,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "groceries",
-    emoji: "🥦",
+    iconEl: <IconFood size={22} color="#059669" />,
     title: "Groceries",
     desc: "Shop your weekly groceries from verified supermarket partners. Mio checks freshness, price per unit, and delivery slots before you commit.",
     points: [
@@ -51,7 +52,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "hotels",
-    emoji: "🏨",
+    iconEl: <IconTravel size={22} color="#2563eb" />,
     title: "Hotels",
     desc: "Search, compare, and book hotels by voice — with verified availability, total-cost pricing, and instant confirmation. No hidden fees.",
     points: [
@@ -64,7 +65,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "flights",
-    emoji: "✈️",
+    iconEl: <IconTravel size={22} color="#2563eb" />,
     title: "Flights",
     desc: "Search across aggregators for the best combination of price, layovers, and baggage policy. Mio summarises and compares — you confirm.",
     points: [
@@ -77,7 +78,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "transport",
-    emoji: "🚗",
+    iconEl: <IconNFC size={22} color="#0891b2" />,
     title: "Transportation & Car Rental",
     desc: "Book a ride, reserve a hire car, or plan rail travel — all inside one conversation with Mio. Pricing is live and confirmed before charging.",
     points: [
@@ -90,7 +91,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "appointments",
-    emoji: "📅",
+    iconEl: <IconServices size={22} color="#059669" />,
     title: "Appointments & Professional Services",
     desc: "Book salons, clinics, personal trainers, or any appointment-based service. Mio checks live calendars and confirms your slot instantly.",
     points: [
@@ -103,7 +104,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "events",
-    emoji: "🎟️",
+    iconEl: <IconEvents size={22} color="#db2777" />,
     title: "Events & Tickets",
     desc: "Find and book concerts, sports, theatre, and more across all the major ticketing platforms — with verified seating and no duplicate purchases.",
     points: [
@@ -116,7 +117,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "payments",
-    emoji: "💳",
+    iconEl: <IconPayments size={22} color="#7c3aed" />,
     title: "Payments & Transaction History",
     desc: "Pay bills, split costs, send money, or check your spending — all within Mio. Every transaction is logged, searchable, and confirmed before it happens.",
     points: [
@@ -129,7 +130,7 @@ const SERVICE_MODULES = [
   },
   {
     id: "nfc",
-    emoji: "📡",
+    iconEl: <IconNFC size={22} color="#0891b2" />,
     title: "NFC & EasyTap Go",
     desc: "Tap an NFC tag at any partnered venue to open a full, contextual Mio session — menu, booking, or payment — without waiting in a queue.",
     points: [
@@ -186,7 +187,7 @@ export default function Features() {
         {/* Hero */}
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-1.5 text-xs font-medium text-violet-300 mb-6">
-            ✨ What Mio Can Do
+            What Mio Can Do
           </div>
           <h1 className="font-display font-800 text-5xl sm:text-6xl text-navy mb-4 leading-tight">
             10 service modules.<br />
@@ -214,7 +215,7 @@ export default function Features() {
                   }`}
                   aria-current={activeModule === i ? "true" : undefined}
                 >
-                  <span className="text-xl" aria-hidden="true">{m.emoji}</span>
+                  <span aria-hidden="true">{m.iconEl}</span>
                   <span className="text-sm font-medium">{m.title}</span>
                 </button>
               ))}
@@ -223,7 +224,7 @@ export default function Features() {
             {/* Module detail */}
             <div className={`bg-white border border-border shadow-sm rounded-2xl p-8 border ${mod.badge.includes("violet") ? "border-violet-500/25" : mod.badge.includes("orange") ? "border-orange-500/25" : mod.badge.includes("green") ? "border-green-500/25" : mod.badge.includes("blue") ? "border-blue-500/25" : mod.badge.includes("sky") ? "border-sky-500/25" : mod.badge.includes("teal") ? "border-teal-500/25" : mod.badge.includes("pink") ? "border-pink-500/25" : mod.badge.includes("yellow") ? "border-yellow-500/25" : mod.badge.includes("indigo") ? "border-indigo-500/25" : "border-red-500/25"}`}>
               <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border mb-6 ${mod.badge}`}>
-                <span aria-hidden="true">{mod.emoji}</span>
+                <span aria-hidden="true">{mod.iconEl}</span>
                 {mod.title}
               </div>
               <h3 className="font-display font-800 text-navy text-2xl sm:text-3xl mb-4">{mod.title}</h3>

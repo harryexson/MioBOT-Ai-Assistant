@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconShopping,IconFood,IconTravel,IconServices,IconPayments,IconEvents,IconNFC,IconMore,IconInvoicing } from '../components/MioIcons.jsx';
 import { Link } from "react-router";
 import CheckIcon from "icon:check-circle";
 import ArrowRightIcon from "icon:arrow-right";
@@ -14,18 +15,18 @@ const STEPS = [
 ];
 
 const INTERESTS = [
-  { icon: "🛍️", label: "Shopping" },
-  { icon: "🍔", label: "Food & Restaurants" },
-  { icon: "✈️", label: "Travel & Hotels" },
-  { icon: "📅", label: "Services & Bookings" },
-  { icon: "💳", label: "Pay Bills & Invoices" },
-  { icon: "🎟️", label: "Events & Tickets" },
-  { icon: "📡", label: "NFC & In-Store" },
-  { icon: "⚡", label: "Other" },
+  { Icon: IconShopping, color:"#d97706", label: "Shopping" },
+  { Icon: IconFood, color:"#b45309", label: "Food & Restaurants" },
+  { Icon: IconTravel, color:"#2563eb", label: "Travel & Hotels" },
+  { Icon: IconServices, color:"#059669", label: "Services & Bookings" },
+  { Icon: IconPayments, color:"#7c3aed", label: "Pay Bills & Invoices" },
+  { Icon: IconEvents, color:"#db2777", label: "Events & Tickets" },
+  { Icon: IconNFC, color:"#0891b2", label: "NFC & In-Store" },
+  { Icon: IconMore, color:"#4f46e5", label: "Other" },
 ];
 
 const PAYMENTS = [
-  { icon: "💳", label: "Credit or Debit Card", sub: "Secured with Stripe" },
+  { icon: "card", label: "Credit or Debit Card", sub: "Secured with Stripe" },
   { icon: "🍎", label: "Apple Pay", sub: "" },
   { icon: "🔵", label: "Google Pay", sub: "" },
   { icon: "🔗", label: "Link (Stripe)", sub: "" },
