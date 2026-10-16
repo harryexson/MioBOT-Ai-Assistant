@@ -47,11 +47,11 @@ export async function searchProducts(query, category = "shopping") {
   
   const results = {
     shopping: [
-      { id: "p1", name: "Sony WH-1000XM5 Headphones", price: 349.99, originalPrice: 399.99, rating: 4.8, reviews: 12847, emoji: "🎧", provider: "Amazon", commissionRate: 0.04, badge: "Best Seller", deliveryTime: "2-day" },
-      { id: "p2", name: "Apple AirPods Pro (2nd gen)", price: 189.99, originalPrice: 249.00, rating: 4.9, reviews: 9412, emoji: "🎵", provider: "Amazon", commissionRate: 0.04, badge: "Prime Deal", deliveryTime: "1-day" },
-      { id: "p3", name: "Nike Air Max 270", price: 119.99, originalPrice: 150.00, rating: 4.7, reviews: 5632, emoji: "👟", provider: "Walmart", commissionRate: 0.04, badge: "20% off", deliveryTime: "3-day" },
-      { id: "p4", name: "Samsonite Carry-On Luggage", price: 89.99, originalPrice: 129.99, rating: 4.6, reviews: 3241, emoji: "🧳", provider: "Target", commissionRate: 0.05, badge: "Sale", deliveryTime: "2-day" },
-      { id: "p5", name: "Kindle Paperwhite (16 GB)", price: 139.99, originalPrice: 159.99, rating: 4.8, reviews: 28903, emoji: "📖", provider: "Amazon", commissionRate: 0.04, badge: "Amazon Choice", deliveryTime: "1-day" },
+      { id: "p1", name: "Sony WH-1000XM5 Headphones", price: 349.99, originalPrice: 399.99, rating: 4.8, reviews: 12847, emoji: "Headphones", provider: "Amazon", commissionRate: 0.04, badge: "Best Seller", deliveryTime: "2-day" },
+      { id: "p2", name: "Apple AirPods Pro (2nd gen)", price: 189.99, originalPrice: 249.00, rating: 4.9, reviews: 9412, emoji: "Earbuds", provider: "Amazon", commissionRate: 0.04, badge: "Prime Deal", deliveryTime: "1-day" },
+      { id: "p3", name: "Nike Air Max 270", price: 119.99, originalPrice: 150.00, rating: 4.7, reviews: 5632, emoji: "Shoes", provider: "Walmart", commissionRate: 0.04, badge: "20% off", deliveryTime: "3-day" },
+      { id: "p4", name: "Samsonite Carry-On Luggage", price: 89.99, originalPrice: 129.99, rating: 4.6, reviews: 3241, emoji: "Luggage", provider: "Target", commissionRate: 0.05, badge: "Sale", deliveryTime: "2-day" },
+      { id: "p5", name: "Kindle Paperwhite (16 GB)", price: 139.99, originalPrice: 159.99, rating: 4.8, reviews: 28903, emoji: "E-Reader", provider: "Amazon", commissionRate: 0.04, badge: "Amazon Choice", deliveryTime: "1-day" },
     ],
     food: [
       { id: "f1", name: "McDonald's Big Mac Meal", price: 10.99, rating: 4.5, reviews: 2847, emoji: "🍔", provider: "DoorDash", commissionRate: 0.03, badge: "25 min", deliveryTime: "25 min", restaurant: "McDonald's" },
