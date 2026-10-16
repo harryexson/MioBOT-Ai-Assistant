@@ -145,6 +145,13 @@ export default function Nav() {
           </div>
         </div>
       )}
+      {authModal && (
+        <AuthModal
+          mode={authModal}
+          onClose={() => setAuthModal(null)}
+          onSuccess={() => setAuthModal(null)}
+        />
+      )}
     </nav>
   );
 }
