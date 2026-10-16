@@ -508,21 +508,19 @@ export default function Home() {
                 <span style={{ fontSize: 11, fontWeight: 700, color: "#7c3aed", letterSpacing: 0.5, textTransform: "uppercase" }}>AI Powered Assistant</span>
               </div>
 
-              {/* Headline — matching reference bold ultra-heavy style */}
-              <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(44px,5.5vw,78px)", lineHeight: 1.0, color: "#0f1035", margin: "0 0 4px", letterSpacing: "-0.04em" }}>
-                Talk. Find. Book.
+              {/* Headline — matching reference: "Life is easier with Mio." */}
+              <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(42px,5.5vw,76px)", lineHeight: 1.02, color: "#0f1035", margin: "0 0 6px", letterSpacing: "-0.04em" }}>
+                Life is easier
               </h1>
-              <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(44px,5.5vw,78px)", lineHeight: 1.0, margin: "0 0 24px", letterSpacing: "-0.04em" }}>
+              <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(42px,5.5vw,76px)", lineHeight: 1.02, margin: "0 0 24px", letterSpacing: "-0.04em", display:"flex", alignItems:"baseline", gap:"0.22em", flexWrap:"wrap" }}>
+                with{" "}
                 <span style={{ background: "linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Order. Pay.
+                  Mio.
                 </span>
               </h1>
 
-              <p style={{ fontFamily: "Manrope,sans-serif", fontSize: "clamp(18px,1.5vw,22px)", color: "#0f1035", fontWeight: 700, margin: "0 0 8px", letterSpacing: "-0.02em" }}>
-                One assistant. Endless possibilities.
-              </p>
-              <p style={{ fontFamily: "Space Grotesk,sans-serif", fontSize: "clamp(14px,1.1vw,16px)", color: "#4b5563", lineHeight: 1.65, margin: "0 0 30px", maxWidth: 420, fontWeight: 400 }}>
-                Mio helps you shop, dine, travel, book services and handle payments — all through natural conversation.
+              <p style={{ fontFamily: "Space Grotesk,sans-serif", fontSize: "clamp(15px,1.2vw,18px)", color: "#4b5563", lineHeight: 1.65, margin: "0 0 30px", maxWidth: 440, fontWeight: 400 }}>
+                Just ask. Mio finds, books, orders, pays and gets it done — for everyday life and for your business.
               </p>
 
               {/* CTA row */}
@@ -610,6 +608,27 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ══ CATEGORY STRIP — horizontal icon row matching reference ═ */}
+      <section style={{ padding:"24px 24px", background:"#fff", borderTop:"1px solid #f3f4f6", borderBottom:"1px solid #f3f4f6" }}>
+        <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexWrap:"wrap", gap:16 }}>
+          {[
+            { emoji:"🛍️", bg:"#fff7ed", label:"Shopping", desc:"Find and buy anything" },
+            { emoji:"🍽️", bg:"#fef9c3", label:"Food & Dining", desc:"Order pickup or delivery" },
+            { emoji:"✈️", bg:"#eff6ff", label:"Travel & Hotels", desc:"Book flights, hotels and more" },
+            { emoji:"📅", bg:"#f0fdf4", label:"Bookings & Services", desc:"Appointments, events, etc." },
+            { emoji:"💳", bg:"#faf5ff", label:"Payments", desc:"Pay bills, invoices and NFC" },
+            { emoji:"🧾", bg:"#fff1f2", label:"Invoicing", desc:"Create & send invoices with AI" },
+            { emoji:"✨", bg:"#f0f9ff", label:"And More", desc:"One assistant for everything" },
+          ].map(cat => (
+            <Link key={cat.label} to="/features" style={{ textDecoration:"none", display:"flex", flexDirection:"column", alignItems:"center", textAlign:"center", gap:6, flex:"1 1 100px", minWidth:80 }}>
+              <div style={{ width:44, height:44, borderRadius:14, background:cat.bg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20 }}>{cat.emoji}</div>
+              <p style={{ margin:0, fontFamily:"Manrope,sans-serif", fontWeight:700, fontSize:12, color:"#0f1035" }}>{cat.label}</p>
+              <p style={{ margin:0, fontSize:10, color:"#6b7280", lineHeight:1.3 }}>{cat.desc}</p>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -728,14 +747,48 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ══ EVERYTHING YOU CAN DO — photo card horizontal scroll ═ */}
+      <section style={{ padding:"72px 0 72px 24px", background:"#fff", overflow:"hidden" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", paddingRight:24, marginBottom:32 }}>
+            <h2 style={{ fontFamily:"Manrope,sans-serif", fontWeight:800, fontSize:"clamp(24px,3vw,38px)", color:"#0f1035", margin:0, letterSpacing:"-0.03em" }}>
+              Everything You Can Do with{" "}
+              <span style={{ background:"linear-gradient(135deg,#7c3aed,#4f46e5)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>Mio</span>
+            </h2>
+            <Link to="/features" style={{ display:"inline-flex", alignItems:"center", gap:6, color:"#7c3aed", fontWeight:700, fontSize:14, textDecoration:"none", flexShrink:0 }}>
+              View All Features <ArrowRightIcon size={14} />
+            </Link>
+          </div>
+          {/* Horizontal scroll photo cards */}
+          <div style={{ display:"flex", gap:16, overflowX:"auto", paddingBottom:16, paddingRight:24, scrollbarWidth:"none" }}>
+            {[
+              { img:"/static/stock_mio-product-shoes-a8da9f-0.jpg", title:"Shop Anything", desc:"Top brands to everyday essentials, compare and buy in one place." },
+              { img:"/static/stock_mio-food-dining-3591b8-0.jpg", title:"Food & Dining", desc:"Order from your favourite restaurants, schedule pickup or delivery." },
+              { img:"/static/stock_mio-travel-hotel-58c54f-0.jpg", title:"Travel & Hotels", desc:"Find and book flights, hotels and more at the best rates." },
+              { img:"/static/stock_mio-services-ee812e-0.jpg", title:"Invoicing & Business", desc:"Create estimates, send invoices, track payments with Invoingo." },
+              { img:"/static/stock_mio-services-ee812e-1.jpg", title:"Bookings & Services", desc:"Appointments, events, tickets and local services." },
+              { img:"/static/stock_mio-payments-07d846-0.jpg", title:"Payments", desc:"Secure and simple checkout with multiple payment methods." },
+              { img:"/static/stock_mio-nfc-47e2ad-0.jpg", title:"NFC & In-Store", desc:"Tap anywhere to open Mio, order, book or pay." },
+            ].map(card => (
+              <div key={card.title} style={{ flexShrink:0, width:200, borderRadius:20, overflow:"hidden", background:"#f8f7ff", boxShadow:"0 2px 12px rgba(0,0,0,0.06)", transition:"transform 0.2s, box-shadow 0.2s" }}
+                onMouseEnter={e=>{ e.currentTarget.style.transform="translateY(-4px)"; e.currentTarget.style.boxShadow="0 12px 32px rgba(124,58,237,0.12)"; }}
+                onMouseLeave={e=>{ e.currentTarget.style.transform=""; e.currentTarget.style.boxShadow="0 2px 12px rgba(0,0,0,0.06)"; }}>
+                <img src={card.img} alt={card.title} style={{ width:"100%", height:140, objectFit:"cover" }} />
+                <div style={{ padding:"14px 14px 16px" }}>
+                  <p style={{ margin:"0 0 6px", fontFamily:"Manrope,sans-serif", fontWeight:700, fontSize:14, color:"#0f1035" }}>{card.title}</p>
+                  <p style={{ margin:0, fontSize:12, color:"#6b7280", lineHeight:1.5 }}>{card.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══ PHONE MOCKUPS SECTION — 5 phones matching reference ═ */}
       <section style={{ padding: "80px 24px", background: "linear-gradient(180deg,#f8f7ff 0%,#fff 100%)", overflow: "hidden" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#7c3aed", letterSpacing: 1, textTransform: "uppercase", margin: "0 0 10px" }}>Mobile App Screens (Onboarding &amp; Key Flows)</p>
-            <h2 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(26px,3vw,38px)", color: "#0f1035", margin: 0 }}>
-              Built for how people actually live
-            </h2>
+            <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1035", margin: "0 0 6px", letterSpacing:"-0.01em" }}>Mobile App – Onboarding &amp; Key Flows</p>
           </div>
           {/* 5 phones */}
           <div style={{ display: "flex", gap: 16, justifyContent: "center", alignItems: "flex-end", flexWrap: "wrap", overflowX: "auto", padding: "0 0 16px" }}>
