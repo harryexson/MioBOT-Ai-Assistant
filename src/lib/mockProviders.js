@@ -60,10 +60,10 @@ export async function searchProducts(query, category = "shopping") {
       { id: "f4", name: "Pad Thai + Spring Rolls", price: 22.00, rating: 4.9, reviews: 654, emoji: "Noodles", provider: "DoorDash", commissionRate: 0.03, badge: "35 min", deliveryTime: "35 min", restaurant: "Thai Garden" },
     ],
     travel: [
-      { id: "t1", name: "The Langham Chicago", price: 229, rating: 4.8, reviews: 1847, emoji: "🏨", provider: "Booking.com", commissionRate: 0.04, badge: "Free cancellation", city: "Chicago, IL" },
-      { id: "t2", name: "Renaissance Chicago Downtown", price: 189, rating: 4.6, reviews: 2341, emoji: "🏩", provider: "Expedia", commissionRate: 0.05, badge: "Member deal", city: "Chicago, IL" },
-      { id: "t3", name: "Hyatt Place Chicago", price: 149, rating: 4.5, reviews: 3201, emoji: "🛎️", provider: "Hotels.com", commissionRate: 0.06, badge: "10 nights 1 free", city: "Chicago, IL" },
-      { id: "t4", name: "Chicago Riverwalk Airbnb", price: 119, rating: 4.9, reviews: 287, emoji: "🏠", provider: "Airbnb", commissionRate: 0.03, badge: "Superhost", city: "Chicago, IL" },
+      { id: "t1", name: "The Langham Chicago", price: 229, rating: 4.8, reviews: 1847, emoji: "Hotel", provider: "Booking.com", commissionRate: 0.04, badge: "Free cancellation", city: "Chicago, IL" },
+      { id: "t2", name: "Renaissance Chicago Downtown", price: 189, rating: 4.6, reviews: 2341, emoji: "Hotel", provider: "Expedia", commissionRate: 0.05, badge: "Member deal", city: "Chicago, IL" },
+      { id: "t3", name: "Hyatt Place Chicago", price: 149, rating: 4.5, reviews: 3201, emoji: "Hotel", provider: "Hotels.com", commissionRate: 0.06, badge: "10 nights 1 free", city: "Chicago, IL" },
+      { id: "t4", name: "Chicago Riverwalk Airbnb", price: 119, rating: 4.9, reviews: 287, emoji: "Rental", provider: "Airbnb", commissionRate: 0.03, badge: "Superhost", city: "Chicago, IL" },
     ],
     events: [
       { id: "e1", name: "Taylor Swift — The Eras Tour", price: 189, rating: 5.0, reviews: 9821, emoji: "🎤", provider: "Ticketmaster", commissionRate: 0.05, badge: "Hot 🔥", venue: "United Center" },
