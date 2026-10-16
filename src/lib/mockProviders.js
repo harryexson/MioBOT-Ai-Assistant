@@ -12,32 +12,32 @@
 
 export const PROVIDERS = {
   shopping: [
-    { id: "amz", name: "Amazon", logo: "🛒", commissionRate: 0.04, category: "shopping" },
-    { id: "ebay", name: "eBay", logo: "🔨", commissionRate: 0.05, category: "shopping" },
-    { id: "walmart", name: "Walmart", logo: "🏪", commissionRate: 0.04, category: "shopping" },
-    { id: "target", name: "Target", logo: "🎯", commissionRate: 0.05, category: "shopping" },
+    { id: "amz", name: "Amazon", logo: "AMZ", commissionRate: 0.04, category: "shopping" },
+    { id: "ebay", name: "eBay", logo: "eBay", commissionRate: 0.05, category: "shopping" },
+    { id: "walmart", name: "Walmart", logo: "WMT", commissionRate: 0.04, category: "shopping" },
+    { id: "target", name: "Target", logo: "TGT", commissionRate: 0.05, category: "shopping" },
   ],
   food: [
-    { id: "doordash", name: "DoorDash", logo: "🚪", commissionRate: 0.03, category: "food" },
-    { id: "ubereats", name: "Uber Eats", logo: "🚗", commissionRate: 0.03, category: "food" },
-    { id: "grubhub", name: "Grubhub", logo: "🍕", commissionRate: 0.04, category: "food" },
-    { id: "mcd", name: "McDonald's", logo: "🍔", commissionRate: 0.05, category: "food" },
+    { id: "doordash", name: "DoorDash", logo: "DoorDash", commissionRate: 0.03, category: "food" },
+    { id: "ubereats", name: "Uber Eats", logo: "UberEats", commissionRate: 0.03, category: "food" },
+    { id: "grubhub", name: "Grubhub", logo: "GH", commissionRate: 0.04, category: "food" },
+    { id: "mcd", name: "McDonald's", logo: "MCD", commissionRate: 0.05, category: "food" },
   ],
   travel: [
-    { id: "booking", name: "Booking.com", logo: "🏨", commissionRate: 0.04, category: "travel" },
-    { id: "expedia", name: "Expedia", logo: "✈️", commissionRate: 0.05, category: "travel" },
-    { id: "airbnb", name: "Airbnb", logo: "🏠", commissionRate: 0.03, category: "travel" },
-    { id: "hotels", name: "Hotels.com", logo: "🛎️", commissionRate: 0.06, category: "travel" },
+    { id: "booking", name: "Booking.com", logo: "BKG", commissionRate: 0.04, category: "travel" },
+    { id: "expedia", name: "Expedia", logo: "EXP", commissionRate: 0.05, category: "travel" },
+    { id: "airbnb", name: "Airbnb", logo: "AIR", commissionRate: 0.03, category: "travel" },
+    { id: "hotels", name: "Hotels.com", logo: "HTL", commissionRate: 0.06, category: "travel" },
   ],
   events: [
-    { id: "ticketmaster", name: "Ticketmaster", logo: "🎟️", commissionRate: 0.05, category: "events" },
-    { id: "eventbrite", name: "Eventbrite", logo: "🎪", commissionRate: 0.04, category: "events" },
-    { id: "stubhub", name: "StubHub", logo: "🎫", commissionRate: 0.10, category: "events" },
+    { id: "ticketmaster", name: "Ticketmaster", logo: "TM", commissionRate: 0.05, category: "events" },
+    { id: "eventbrite", name: "Eventbrite", logo: "EVB", commissionRate: 0.04, category: "events" },
+    { id: "stubhub", name: "StubHub", logo: "STH", commissionRate: 0.10, category: "events" },
   ],
   services: [
-    { id: "thumbtack", name: "Thumbtack", logo: "📌", commissionRate: 0.15, category: "services" },
-    { id: "taskrabbit", name: "TaskRabbit", logo: "🐰", commissionRate: 0.10, category: "services" },
-    { id: "angi", name: "Angi", logo: "🔧", commissionRate: 0.12, category: "services" },
+    { id: "thumbtack", name: "Thumbtack", logo: "TTK", commissionRate: 0.15, category: "services" },
+    { id: "taskrabbit", name: "TaskRabbit", logo: "TR", commissionRate: 0.10, category: "services" },
+    { id: "angi", name: "Angi", logo: "Angi", commissionRate: 0.12, category: "services" },
   ],
 };
 

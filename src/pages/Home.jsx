@@ -25,9 +25,9 @@ const CATEGORIES = [
 ];
 
 const STATS = [
-  { value: "1M+", label: "Happy Users" },
-  { value: "50,000+", label: "Businesses" },
-  { value: "4.8 ★", label: "App Rating" },
+  { value: "Join Now", label: "Early Access Open" },
+  { value: "Free", label: "To Get Started" },
+  { value: "10+", label: "Service Categories" },
   { value: "All in One", label: "Shop. Book. Pay." },
 ];
 
@@ -1132,7 +1132,7 @@ export default function Home() {
             Get early access to Mio
           </h2>
           <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", margin: "0 0 28px" }}>
-            Join 50,000+ businesses and 1M+ users already on the waitlist.
+            Be among the first to experience Mio — early access is free and open now.
           </p>
           <WaitlistForm />
         </div>
