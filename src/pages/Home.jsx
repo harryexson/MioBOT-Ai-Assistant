@@ -52,160 +52,149 @@ function WaveBars({ color = "#7c3aed", size = 20 }) {
   );
 }
 
-/* ─── Ultra-realistic iPhone 15 Pro — Silver/Space Gray matching Brex ref ── */
+/* ─── Ultra-realistic iPhone 15 Pro — CSS 3D perspective, Silver Titanium ── */
 function PhoneFrame({ children, width = 195, height = 400 }) {
-  const BEZEL = 8;
-  const OUTER_R = 52;
-  const INNER_R = 45;
+  const BEZEL = 7;
+  const OUTER_R = 50;
+  const INNER_R = 44;
+  const RAIL = 12; // visible side rail thickness in 3D
 
-  // Silver aluminum — cool brushed-silver flat sides, bright chrome edge highlight,
-  // matching the Brex reference image 3 exactly: thin bright left-edge catch,
-  // matte silver face, dark chamfer between face and screen
-  const BTN_SILVER = "linear-gradient(to right,#8a8a8a 0%,#d8d8d8 40%,#f0f0f0 55%,#c8c8c8 75%,#909090 100%)";
-  const BTN_SILVER_R = "linear-gradient(to left,#8a8a8a 0%,#d8d8d8 40%,#f0f0f0 55%,#c8c8c8 75%,#909090 100%)";
+  // The Brex reference shows a phone in 3D perspective — flat sides visible,
+  // rotated slightly so you see the left rail as a separate face.
+  // We replicate this with CSS perspective + rotateY on the whole frame,
+  // and render the left rail as an actual 3D side face.
+  const FRAME_FACE = "linear-gradient(160deg,#e2e2e2 0%,#c8c8c8 25%,#adadad 50%,#bababa 70%,#d4d4d4 90%,#ececec 100%)";
+  const RAIL_FACE  = "linear-gradient(to bottom,#f5f5f5 0%,#d0d0d0 20%,#a8a8a8 50%,#c0c0c0 80%,#e8e8e8 100%)";
+  const BTN_COLOR  = "linear-gradient(to bottom,#e8e8e8,#b0b0b0,#e0e0e0)";
 
   return (
-    <div style={{
-      width,
-      height,
-      borderRadius: OUTER_R,
-      // Silver aluminum face — matte cool gray matching Brex image 3
-      background: [
-        "linear-gradient(160deg,",
-        "#e8e8e8 0%,",      // top-left bright highlight
-        "#d0d0d0 10%,",     // light silver
-        "#b8b8b8 28%,",     // mid silver
-        "#a8a8a8 45%,",     // brushed center
-        "#b4b4b4 62%,",     // slight lighter mid
-        "#c8c8c8 78%,",     // right side lightens
-        "#dcdcdc 90%,",     // bottom-right catch
-        "#f0f0f0 100%",     // corner highlight
-        ")"
-      ].join(""),
-      padding: BEZEL,
-      position: "relative",
-      flexShrink: 0,
-      boxShadow: [
-        "0 40px 80px rgba(0,0,0,0.42)",
-        "0 16px 40px rgba(0,0,0,0.28)",
-        "0 4px 12px rgba(0,0,0,0.18)",
-        // Bright chrome outer edge — the thin bright line seen in Brex ref
-        "0 0 0 1.5px rgba(255,255,255,0.85)",
-        // Dark inner bevel
-        "inset 0 0 0 1px rgba(0,0,0,0.18)",
-      ].join(", "),
-    }}>
-      {/* Frame face brushed-metal sheen */}
-      <div style={{ position:"absolute", inset:0, borderRadius:OUTER_R, pointerEvents:"none", zIndex:10,
-        background:[
-          "linear-gradient(145deg,",
-          "rgba(255,255,255,0.30) 0%,",
-          "rgba(255,255,255,0.10) 18%,",
-          "rgba(255,255,255,0.02) 40%,",
-          "transparent 60%,",
-          "rgba(0,0,0,0.04) 80%,",
-          "rgba(255,255,255,0.08) 100%",
-          ")"
-        ].join(""),
-      }} />
-
-      {/* Dark chamfer ring — thin dark line just inside the outer frame, before screen */}
-      <div style={{ position:"absolute", inset: BEZEL - 1.5, borderRadius: OUTER_R - BEZEL + 2,
-        pointerEvents:"none", zIndex:11,
-        boxShadow:"inset 0 0 0 1.5px rgba(0,0,0,0.22), inset 0 0 0 0.5px rgba(255,255,255,0.08)",
-      }} />
-
-      {/* Silent/mute switch */}
-      <div style={{ position:"absolute", left:-3.5, top:"13%", width:3.5, height:13,
-        background: BTN_SILVER, borderRadius:"2px 0 0 2px",
-        boxShadow:"-1px 0 3px rgba(0,0,0,0.35), inset 0 0.5px 0 rgba(255,255,255,0.4)",
-      }} />
-      {/* Volume up */}
-      <div style={{ position:"absolute", left:-3.5, top:"20%", width:3.5, height:28,
-        background: BTN_SILVER, borderRadius:"2px 0 0 2px",
-        boxShadow:"-1px 0 3px rgba(0,0,0,0.35), inset 0 0.5px 0 rgba(255,255,255,0.4)",
-      }} />
-      {/* Volume down */}
-      <div style={{ position:"absolute", left:-3.5, top:"30%", width:3.5, height:28,
-        background: BTN_SILVER, borderRadius:"2px 0 0 2px",
-        boxShadow:"-1px 0 3px rgba(0,0,0,0.35), inset 0 0.5px 0 rgba(255,255,255,0.4)",
-      }} />
-      {/* Power button */}
-      <div style={{ position:"absolute", right:-3.5, top:"24%", width:3.5, height:54,
-        background: BTN_SILVER_R, borderRadius:"0 2px 2px 0",
-        boxShadow:"1px 0 3px rgba(0,0,0,0.35), inset 0 0.5px 0 rgba(255,255,255,0.4)",
-      }} />
-
-      {/* Screen glass */}
+    /* Perspective wrapper — gives the whole phone its 3D depth */
+    <div style={{ perspective: 900, flexShrink:0, width: width + RAIL + 10, height }}>
       <div style={{
-        background:"#fff",
-        borderRadius: INNER_R,
-        overflow:"hidden",
-        height:"100%",
-        position:"relative",
-        boxShadow:"inset 0 0 0 0.5px rgba(0,0,0,0.10)",
+        width,
+        height,
+        borderRadius: OUTER_R,
+        background: FRAME_FACE,
+        padding: BEZEL,
+        position: "relative",
+        transformStyle: "preserve-3d",
+        // Subtle rotateY shows the left rail as a real 3D face, matching Brex ref
+        transform: "rotateY(8deg) rotateX(2deg)",
+        boxShadow: [
+          "0 50px 100px rgba(0,0,0,0.40)",
+          "0 20px 50px rgba(0,0,0,0.25)",
+          "0 6px 16px rgba(0,0,0,0.15)",
+          "0 0 0 1px rgba(255,255,255,0.70)", // bright chrome outer edge
+          "inset 0 0 0 1px rgba(0,0,0,0.15)",
+        ].join(", "),
       }}>
-        {/* Glass specular highlight — top-left catch */}
-        <div style={{ position:"absolute", inset:0, borderRadius:INNER_R, pointerEvents:"none", zIndex:30,
-          background:"linear-gradient(138deg,rgba(255,255,255,0.14) 0%,rgba(255,255,255,0.04) 28%,transparent 55%)",
+        {/* Frame face brushed-metal sheen */}
+        <div style={{ position:"absolute", inset:0, borderRadius:OUTER_R, pointerEvents:"none", zIndex:10,
+          background:"linear-gradient(145deg,rgba(255,255,255,0.32) 0%,rgba(255,255,255,0.08) 30%,transparent 60%,rgba(0,0,0,0.04) 100%)",
         }} />
 
-        {/* Dynamic Island */}
+        {/* LEFT side rail — rendered as a real 3D face */}
         <div style={{
-          position:"absolute", top:11, left:"50%", transform:"translateX(-50%)",
-          width: Math.round(width * 0.41),
-          height: Math.round(height * 0.048),
-          background:"#000",
-          borderRadius:999,
-          zIndex:22,
-          boxShadow:"0 2px 6px rgba(0,0,0,0.5)",
-        }} />
-
-        {/* Status bar */}
-        <div style={{
-          position:"absolute", top:0, left:0, right:0,
-          height: Math.round(height * 0.106),
-          display:"flex", alignItems:"flex-end", justifyContent:"space-between",
-          padding:`0 ${Math.round(width*0.09)}px 5px`,
-          zIndex:21,
+          position:"absolute",
+          left: -RAIL,
+          top: OUTER_R * 0.3,
+          width: RAIL,
+          height: height - OUTER_R * 0.6,
+          background: RAIL_FACE,
+          transformOrigin: "right center",
+          transform: "rotateY(-90deg)",
+          // Buttons on the rail
         }}>
-          <span style={{ fontSize: Math.round(width*0.054), fontWeight:700, color:"#0f1035",
-            letterSpacing:"-0.02em", fontFamily:"Manrope,sans-serif" }}>9:41</span>
-          <div style={{ display:"flex", gap:2.5, alignItems:"center" }}>
-            <svg width={Math.round(width*0.088)} height={Math.round(width*0.06)} viewBox="0 0 14 9" fill="none">
-              <rect x="0" y="5" width="2.5" height="4" rx="0.6" fill="#0f1035"/>
-              <rect x="3.5" y="3" width="2.5" height="6" rx="0.6" fill="#0f1035"/>
-              <rect x="7" y="1" width="2.5" height="8" rx="0.6" fill="#0f1035"/>
-              <rect x="10.5" y="0" width="2.5" height="9" rx="0.6" fill="#0f1035"/>
-            </svg>
-            <svg width={Math.round(width*0.072)} height={Math.round(width*0.06)} viewBox="0 0 12 9" fill="none">
-              <path d="M6 8a1 1 0 100-2 1 1 0 000 2z" fill="#0f1035"/>
-              <path d="M3 5.5A4.2 4.2 0 016 4.3a4.2 4.2 0 013 1.2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
-              <path d="M1 3A6.8 6.8 0 016 1a6.8 6.8 0 015 2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
-            </svg>
-            <svg width={Math.round(width*0.095)} height={Math.round(width*0.06)} viewBox="0 0 22 9" fill="none">
-              <rect x="0.5" y="0.5" width="18" height="8" rx="2" stroke="#0f1035" strokeWidth="0.8"/>
-              <rect x="1.5" y="1.5" width="14" height="6" rx="1.2" fill="#0f1035"/>
-              <path d="M19.5 3v3" stroke="#0f1035" strokeWidth="1.2" strokeLinecap="round"/>
-            </svg>
+          {/* Mute toggle */}
+          <div style={{ position:"absolute", left:1, top:"12%", width: RAIL - 2, height:11, borderRadius:2, background: BTN_COLOR, boxShadow:"inset 0 1px 2px rgba(0,0,0,0.3)" }} />
+          {/* Vol up */}
+          <div style={{ position:"absolute", left:1, top:"22%", width: RAIL - 2, height:22, borderRadius:2, background: BTN_COLOR, boxShadow:"inset 0 1px 2px rgba(0,0,0,0.3)" }} />
+          {/* Vol down */}
+          <div style={{ position:"absolute", left:1, top:"34%", width: RAIL - 2, height:22, borderRadius:2, background: BTN_COLOR, boxShadow:"inset 0 1px 2px rgba(0,0,0,0.3)" }} />
+        </div>
+
+        {/* RIGHT side rail */}
+        <div style={{
+          position:"absolute",
+          right: -RAIL,
+          top: OUTER_R * 0.3,
+          width: RAIL,
+          height: height - OUTER_R * 0.6,
+          background: "linear-gradient(to bottom,#d0d0d0,#b0b0b0,#c8c8c8)",
+          transformOrigin: "left center",
+          transform: "rotateY(90deg)",
+        }}>
+          {/* Power button */}
+          <div style={{ position:"absolute", left:1, top:"26%", width: RAIL - 2, height:42, borderRadius:2, background: BTN_COLOR, boxShadow:"inset 0 1px 2px rgba(0,0,0,0.3)" }} />
+        </div>
+
+        {/* Screen glass */}
+        <div style={{
+          background:"#fff",
+          borderRadius: INNER_R,
+          overflow:"hidden",
+          height:"100%",
+          position:"relative",
+          boxShadow:"inset 0 0 0 0.5px rgba(0,0,0,0.10)",
+        }}>
+          {/* Glass specular glare */}
+          <div style={{ position:"absolute", inset:0, borderRadius:INNER_R, pointerEvents:"none", zIndex:30,
+            background:"linear-gradient(138deg,rgba(255,255,255,0.16) 0%,rgba(255,255,255,0.05) 30%,transparent 58%)",
+          }} />
+
+          {/* Dynamic Island */}
+          <div style={{
+            position:"absolute", top:11, left:"50%", transform:"translateX(-50%)",
+            width: Math.round(width * 0.41),
+            height: Math.round(height * 0.048),
+            background:"#000", borderRadius:999, zIndex:22,
+            boxShadow:"0 2px 6px rgba(0,0,0,0.5)",
+          }} />
+
+          {/* Status bar */}
+          <div style={{
+            position:"absolute", top:0, left:0, right:0,
+            height: Math.round(height * 0.106),
+            display:"flex", alignItems:"flex-end", justifyContent:"space-between",
+            padding:`0 ${Math.round(width*0.09)}px 5px`,
+            zIndex:21,
+          }}>
+            <span style={{ fontSize: Math.round(width*0.054), fontWeight:700, color:"#0f1035",
+              letterSpacing:"-0.02em", fontFamily:"Manrope,sans-serif" }}>9:41</span>
+            <div style={{ display:"flex", gap:2.5, alignItems:"center" }}>
+              <svg width={Math.round(width*0.088)} height={Math.round(width*0.06)} viewBox="0 0 14 9" fill="none">
+                <rect x="0" y="5" width="2.5" height="4" rx="0.6" fill="#0f1035"/>
+                <rect x="3.5" y="3" width="2.5" height="6" rx="0.6" fill="#0f1035"/>
+                <rect x="7" y="1" width="2.5" height="8" rx="0.6" fill="#0f1035"/>
+                <rect x="10.5" y="0" width="2.5" height="9" rx="0.6" fill="#0f1035"/>
+              </svg>
+              <svg width={Math.round(width*0.072)} height={Math.round(width*0.06)} viewBox="0 0 12 9" fill="none">
+                <path d="M6 8a1 1 0 100-2 1 1 0 000 2z" fill="#0f1035"/>
+                <path d="M3 5.5A4.2 4.2 0 016 4.3a4.2 4.2 0 013 1.2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
+                <path d="M1 3A6.8 6.8 0 016 1a6.8 6.8 0 015 2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
+              </svg>
+              <svg width={Math.round(width*0.095)} height={Math.round(width*0.06)} viewBox="0 0 22 9" fill="none">
+                <rect x="0.5" y="0.5" width="18" height="8" rx="2" stroke="#0f1035" strokeWidth="0.8"/>
+                <rect x="1.5" y="1.5" width="14" height="6" rx="1.2" fill="#0f1035"/>
+                <path d="M19.5 3v3" stroke="#0f1035" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div style={{ paddingTop: Math.round(height * 0.106), height:"100%", overflow:"hidden" }}>
+            {children}
           </div>
         </div>
 
-        <div style={{ paddingTop: Math.round(height * 0.106), height:"100%", overflow:"hidden" }}>
-          {children}
+        {/* Bottom speaker grille */}
+        <div style={{ position:"absolute", bottom: BEZEL + 5, left:"50%", transform:"translateX(-50%)",
+          display:"flex", gap:3.5, zIndex:15 }}>
+          {[...Array(8)].map((_,i) => (
+            <div key={i} style={{ width:2.5, height:2.5, borderRadius:"50%",
+              background:"rgba(0,0,0,0.28)",
+              boxShadow:"inset 0 0.5px 1px rgba(0,0,0,0.4), 0 0.5px 0 rgba(255,255,255,0.3)" }} />
+          ))}
         </div>
-      </div>
-
-      {/* Bottom speaker grille dots */}
-      <div style={{
-        position:"absolute", bottom: BEZEL + 5, left:"50%", transform:"translateX(-50%)",
-        display:"flex", gap:3.5, zIndex:15,
-      }}>
-        {[...Array(8)].map((_,i) => (
-          <div key={i} style={{ width:2.5, height:2.5, borderRadius:"50%",
-            background:"rgba(0,0,0,0.28)",
-            boxShadow:"inset 0 0.5px 1px rgba(0,0,0,0.4), 0 0.5px 0 rgba(255,255,255,0.3)" }} />
-        ))}
       </div>
     </div>
   );
