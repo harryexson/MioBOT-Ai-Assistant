@@ -52,85 +52,133 @@ function WaveBars({ color = "#7c3aed", size = 20 }) {
   );
 }
 
-/* ─── Ultra-realistic iPhone-style phone frame ─────────────────────── */
-function PhoneFrame({ children, width = 168, height = 340 }) {
-  // Matches reference image exactly:
-  // Pure black frame, thin ~6px bezel, large corner radius,
-  // Dynamic Island pill at top, upright portrait, no tilt
-  const BEZEL = 6;
-  const OUTER_R = 46;
-  const INNER_R = 41;
+/* ─── Ultra-realistic iPhone 15 Pro — Natural Titanium finish ──────── */
+function PhoneFrame({ children, width = 195, height = 400 }) {
+  const BEZEL = 7;
+  const OUTER_R = 54;
+  const INNER_R = 48;
 
+  // Titanium Natural — warm brushed-gold aluminum, flat sides, precise edge highlights
+  // matching the Brex reference photo exactly
   return (
     <div style={{
       width,
       height,
       borderRadius: OUTER_R,
-      background: "linear-gradient(160deg,#2a2a2a 0%,#111 50%,#1a1a1a 100%)",
+      // Outer frame: warm titanium gold gradient — matches Brex reference color exactly
+      background: [
+        "linear-gradient(165deg,",
+        "#d4c5a0 0%,",   // top-left warm highlight
+        "#b8a882 8%,",   // light gold
+        "#9a8c6e 20%,",  // mid titanium
+        "#8a7c60 35%,",  // brushed center
+        "#9e9070 55%,",  // slight warm mid
+        "#b5a47e 75%,",  // right side lightens
+        "#c8b890 90%,",  // bottom-right catch
+        "#e0d0a8 100%",  // corner highlight
+        ")"
+      ].join(""),
       padding: BEZEL,
       position: "relative",
       flexShrink: 0,
       boxShadow: [
-        "0 32px 64px rgba(0,0,0,0.35)",
-        "0 8px 24px rgba(0,0,0,0.2)",
-        "0 0 0 1px rgba(255,255,255,0.08)",
-        "inset 0 0 0 0.5px rgba(255,255,255,0.05)",
+        "0 40px 80px rgba(0,0,0,0.38)",
+        "0 12px 32px rgba(0,0,0,0.22)",
+        "0 2px 8px rgba(0,0,0,0.15)",
+        // Inner bevel — dark line between frame and screen
+        `inset 0 0 0 1px rgba(0,0,0,0.25)`,
+        // Outer edge highlight
+        "0 0 0 1px rgba(255,255,255,0.18)",
       ].join(", "),
     }}>
-      {/* Frame edge sheen — subtle highlight on left edge */}
+      {/* Frame face sheen — brushed metal highlights */}
       <div style={{ position:"absolute", inset:0, borderRadius:OUTER_R, pointerEvents:"none",
-        background:"linear-gradient(130deg,rgba(255,255,255,0.07) 0%,transparent 40%,transparent 80%,rgba(255,255,255,0.03) 100%)" }} />
+        background:[
+          "linear-gradient(160deg,",
+          "rgba(255,255,255,0.22) 0%,",
+          "rgba(255,255,255,0.06) 20%,",
+          "transparent 45%,",
+          "rgba(0,0,0,0.04) 70%,",
+          "rgba(255,255,255,0.10) 100%",
+          ")"
+        ].join(""),
+        zIndex:10,
+      }} />
 
+      {/* Silent/mute switch */}
+      <div style={{ position:"absolute", left:-3, top:"14%", width:3, height:14,
+        background:"linear-gradient(to right,#7a6e52,#b8a882,#7a6e52)",
+        borderRadius:"2px 0 0 2px",
+        boxShadow:"-1px 0 2px rgba(0,0,0,0.3)",
+      }} />
       {/* Volume up */}
-      <div style={{ position:"absolute", left:-2, top:"22%", width:2.5, height:28, background:"#333", borderRadius:"2px 0 0 2px" }} />
+      <div style={{ position:"absolute", left:-3, top:"21%", width:3, height:26,
+        background:"linear-gradient(to right,#7a6e52,#b8a882,#7a6e52)",
+        borderRadius:"2px 0 0 2px",
+        boxShadow:"-1px 0 2px rgba(0,0,0,0.3)",
+      }} />
       {/* Volume down */}
-      <div style={{ position:"absolute", left:-2, top:"32%", width:2.5, height:28, background:"#333", borderRadius:"2px 0 0 2px" }} />
-      {/* Power button */}
-      <div style={{ position:"absolute", right:-2, top:"27%", width:2.5, height:44, background:"#333", borderRadius:"0 2px 2px 0" }} />
+      <div style={{ position:"absolute", left:-3, top:"31%", width:3, height:26,
+        background:"linear-gradient(to right,#7a6e52,#b8a882,#7a6e52)",
+        borderRadius:"2px 0 0 2px",
+        boxShadow:"-1px 0 2px rgba(0,0,0,0.3)",
+      }} />
+      {/* Power/sleep button */}
+      <div style={{ position:"absolute", right:-3, top:"25%", width:3, height:52,
+        background:"linear-gradient(to left,#7a6e52,#b8a882,#7a6e52)",
+        borderRadius:"0 2px 2px 0",
+        boxShadow:"1px 0 2px rgba(0,0,0,0.3)",
+      }} />
 
-      {/* Screen */}
+      {/* Screen glass */}
       <div style={{
         background:"#fff",
         borderRadius: INNER_R,
         overflow:"hidden",
         height:"100%",
         position:"relative",
+        // Subtle glass glare
+        boxShadow:"inset 0 1px 3px rgba(255,255,255,0.6), inset 0 0 0 0.5px rgba(0,0,0,0.12)",
       }}>
-        {/* Dynamic Island — exact pill matching reference */}
+        {/* Glass glare overlay */}
+        <div style={{ position:"absolute", inset:0, borderRadius:INNER_R, pointerEvents:"none", zIndex:30,
+          background:"linear-gradient(145deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.04) 30%,transparent 60%)",
+        }} />
+
+        {/* Dynamic Island — precise black pill */}
         <div style={{
-          position:"absolute", top:9, left:"50%", transform:"translateX(-50%)",
-          width: Math.round(width * 0.44),
-          height: Math.round(height * 0.055),
+          position:"absolute", top:10, left:"50%", transform:"translateX(-50%)",
+          width: Math.round(width * 0.42),
+          height: Math.round(height * 0.05),
           background:"#000",
           borderRadius:999,
-          zIndex:20,
+          zIndex:22,
+          boxShadow:"0 1px 4px rgba(0,0,0,0.4)",
         }} />
 
         {/* Status bar */}
         <div style={{
           position:"absolute", top:0, left:0, right:0,
-          height: Math.round(height * 0.115),
+          height: Math.round(height * 0.108),
           display:"flex", alignItems:"flex-end", justifyContent:"space-between",
-          padding:`0 ${Math.round(width*0.1)}px 4px`,
-          zIndex:19,
+          padding:`0 ${Math.round(width*0.09)}px 5px`,
+          zIndex:21,
         }}>
-          <span style={{ fontSize: Math.round(width*0.056), fontWeight:700, color:"#0f1035", letterSpacing:"-0.02em", fontFamily:"Manrope,sans-serif" }}>9:41</span>
-          <div style={{ display:"flex", gap:2, alignItems:"center" }}>
-            {/* Signal bars */}
-            <svg width={Math.round(width*0.09)} height={Math.round(width*0.065)} viewBox="0 0 14 9" fill="none">
+          <span style={{ fontSize: Math.round(width*0.055), fontWeight:700, color:"#0f1035",
+            letterSpacing:"-0.02em", fontFamily:"Manrope,sans-serif" }}>9:41</span>
+          <div style={{ display:"flex", gap:2.5, alignItems:"center" }}>
+            <svg width={Math.round(width*0.088)} height={Math.round(width*0.062)} viewBox="0 0 14 9" fill="none">
               <rect x="0" y="5" width="2.5" height="4" rx="0.6" fill="#0f1035"/>
               <rect x="3.5" y="3" width="2.5" height="6" rx="0.6" fill="#0f1035"/>
               <rect x="7" y="1" width="2.5" height="8" rx="0.6" fill="#0f1035"/>
               <rect x="10.5" y="0" width="2.5" height="9" rx="0.6" fill="#0f1035"/>
             </svg>
-            {/* WiFi */}
-            <svg width={Math.round(width*0.075)} height={Math.round(width*0.065)} viewBox="0 0 12 9" fill="none">
+            <svg width={Math.round(width*0.072)} height={Math.round(width*0.062)} viewBox="0 0 12 9" fill="none">
               <path d="M6 8a1 1 0 100-2 1 1 0 000 2z" fill="#0f1035"/>
               <path d="M3 5.5A4.2 4.2 0 016 4.3a4.2 4.2 0 013 1.2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
               <path d="M1 3A6.8 6.8 0 016 1a6.8 6.8 0 015 2" stroke="#0f1035" strokeWidth="1" strokeLinecap="round" fill="none"/>
             </svg>
-            {/* Battery */}
-            <svg width={Math.round(width*0.1)} height={Math.round(width*0.065)} viewBox="0 0 22 9" fill="none">
+            <svg width={Math.round(width*0.095)} height={Math.round(width*0.062)} viewBox="0 0 22 9" fill="none">
               <rect x="0.5" y="0.5" width="18" height="8" rx="2" stroke="#0f1035" strokeWidth="0.8"/>
               <rect x="1.5" y="1.5" width="14" height="6" rx="1.2" fill="#0f1035"/>
               <path d="M19.5 3v3" stroke="#0f1035" strokeWidth="1.2" strokeLinecap="round"/>
@@ -138,9 +186,20 @@ function PhoneFrame({ children, width = 168, height = 340 }) {
           </div>
         </div>
 
-        <div style={{ paddingTop: Math.round(height * 0.115), height:"100%", overflow:"hidden" }}>
+        <div style={{ paddingTop: Math.round(height * 0.108), height:"100%", overflow:"hidden" }}>
           {children}
         </div>
+      </div>
+
+      {/* Bottom speaker grille */}
+      <div style={{
+        position:"absolute", bottom: BEZEL + 6, left:"50%", transform:"translateX(-50%)",
+        display:"flex", gap:3, zIndex:15,
+      }}>
+        {[...Array(7)].map((_,i) => (
+          <div key={i} style={{ width:2.5, height:2.5, borderRadius:"50%",
+            background:"rgba(0,0,0,0.35)", boxShadow:"inset 0 0.5px 1px rgba(0,0,0,0.5)" }} />
+        ))}
       </div>
     </div>
   );
@@ -829,7 +888,7 @@ export default function Home() {
               { Screen: ScreenPayment, tall: false },
             ].map(({ Screen, tall }, i) => (
               <div key={i} className="phone-animate" style={{ animationDelay: `${i * 0.12}s` }}>
-                <PhoneFrame width={168} height={tall ? 360 : 330}>
+                <PhoneFrame width={195} height={tall ? 420 : 380}>
                   <Screen />
                 </PhoneFrame>
               </div>
@@ -994,7 +1053,7 @@ export default function Home() {
           </div>
           <div style={{ display:"flex", gap:20, justifyContent:"center", flexWrap:"wrap" }}>
             {/* Phone: Invoice/Create */}
-            <PhoneFrame width={168} height={340}>
+            <PhoneFrame width={195} height={400}>
               <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
                 <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
                   <p style={{ margin:0, fontSize:10, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Create Invoice<br/>with MioBot</p>
@@ -1029,7 +1088,7 @@ export default function Home() {
             </PhoneFrame>
 
             {/* Phone: Travel */}
-            <PhoneFrame width={168} height={340}>
+            <PhoneFrame width={195} height={400}>
               <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
                 <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
                   <p style={{ margin:0, fontSize:10.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Travel</p>
@@ -1058,7 +1117,7 @@ export default function Home() {
             </PhoneFrame>
 
             {/* Phone: Food & Dining */}
-            <PhoneFrame width={168} height={340}>
+            <PhoneFrame width={195} height={400}>
               <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
                 <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
                   <p style={{ margin:0, fontSize:10.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Food & Dining</p>
@@ -1088,7 +1147,7 @@ export default function Home() {
             </PhoneFrame>
 
             {/* Phone: Services */}
-            <PhoneFrame width={168} height={340}>
+            <PhoneFrame width={195} height={400}>
               <div style={{ display:"flex", flexDirection:"column", height:"100%", background:"#fff" }}>
                 <div style={{ padding:"8px 10px 6px", borderBottom:"1px solid #f3f4f6" }}>
                   <p style={{ margin:0, fontSize:10.5, fontWeight:800, fontFamily:"Manrope,sans-serif", color:"#0f1035" }}>Services</p>
