@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "Mio AI",
+    "slug": "mio-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f1035"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mioai.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Mio uses your microphone for voice commands.",
+        "NSSpeechRecognitionUsageDescription": "Mio uses speech recognition to understand your requests.",
+        "NSCameraUsageDescription": "Mio uses your camera to scan QR codes and NFC tags.",
+        "NFCReaderUsageDescription": "Mio uses NFC to enable tap-to-order at supported venues."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0f1035"
+      },
+      "package": "com.mioai.app",
+      "permissions": [
+        "RECORD_AUDIO",
+        "CAMERA",
+        "NFC",
+        "INTERNET",
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-camera",
+      "expo-av",
+      "expo-speech",
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.mioai.app",
+          "enableGooglePay": true
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "your-eas-project-id"
+      }
+    }
+  }
+}
