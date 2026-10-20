@@ -1,3 +1,4 @@
+import { SUBSCRIPTION_PLANS } from "../lib/mockProviders";
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import {
@@ -15,7 +16,6 @@ import {
   Store,
 } from "lucide-react";
 import { Footer, Phone } from "./Home";
-import Providers from "./Providers";
 const content = {
   "/business": {
     eyebrow: "MIO FOR BUSINESS",
@@ -40,118 +40,11 @@ const content = {
       ],
     ],
   },
-  "/features": {
-    eyebrow: "A LITTLE HELP, EVERYWHERE",
-    title: "Many possibilities.\nOne thoughtful assistant.",
-    description:
-      "Discover the everyday experiences we’re bringing together in Mio. Start with the preview and imagine a little more room in your day.",
-    items: [
-      [
-        ShoppingBag,
-        "Find your next favorite",
-        "Explore sample product suggestions and keep the ones you love.",
-      ],
-      [
-        Utensils,
-        "Follow your cravings",
-        "Discover dining ideas through a natural conversation.",
-      ],
-      [
-        Plane,
-        "Make room for adventure",
-        "Start planning your next escape, one question at a time.",
-      ],
-      [
-        CalendarDays,
-        "Simplify your everyday",
-        "Turn a busy day into a thoughtful plan.",
-      ],
-      [
-        MessageCircle,
-        "Keep the conversation going",
-        "Ask a follow-up without starting from scratch.",
-      ],
-      [
-        ShieldCheck,
-        "Stay in the driver’s seat",
-        "Explore your options before deciding what comes next.",
-      ],
-    ],
-  },
-  "/providers": {
-    eyebrow: "CONNECTED POSSIBILITIES",
-    title: "Your world.\nA little closer together.",
-    description:
-      "A vision for shopping, dining, travel, and services in one conversation. Provider connections are planned; the current preview uses sample data.",
-    items: [
-      [
-        ShoppingBag,
-        "Retail & discovery",
-        "A simpler path from an idea to the right product.",
-      ],
-      [
-        Utensils,
-        "Restaurants & cafés",
-        "Menus that feel as approachable as a conversation.",
-      ],
-      [
-        Plane,
-        "Travel & hospitality",
-        "Find a stay that fits the way you want to travel.",
-      ],
-    ],
-  },
-  "/easytap": {
-    eyebrow: "MEET EASYTAP",
-    title: "A little tap.\nA warmer welcome.",
-    description:
-      "Explore the concept for a seamless in-store experience. Tap a venue’s tag, discover a menu, and review your choices. Hardware and live payment integrations are still to come.",
-    items: [
-      [
-        Radio,
-        "01 / Tap to discover",
-        "A venue tag opens the experience on your phone.",
-      ],
-      [
-        MessageCircle,
-        "02 / Make it yours",
-        "Browse a menu and tell Mio what you’re in the mood for.",
-      ],
-      [
-        ShieldCheck,
-        "03 / Review your choices",
-        "Check the details and choose your next step.",
-      ],
-    ],
-  },
-  "/developers": {
-    eyebrow: "BUILT TO GROW WITH YOU",
-    title: "Thoughtful experiences.\nSolid foundations.",
-    description:
-      "Mio’s source includes a React website and an Expo app for iOS and Android. Explore the project and its integration architecture.",
-    items: [
-      [
-        Code,
-        "React + Vite",
-        "Responsive pages, accessible controls, and a standalone local runtime.",
-      ],
-      [
-        Smartphone,
-        "Expo + React Native",
-        "A shared mobile experience across iOS and Android.",
-      ],
-      [
-        ShieldCheck,
-        "Integration boundaries",
-        "Live AI, authentication, commerce, and payments require configured services.",
-      ],
-    ],
-  },
 };
+
 export default function Marketing() {
   const { pathname } = useLocation();
-  if (pathname === "/providers") return <Providers />;
-  const c = content[pathname] || content["/features"];
+  const c = content["/business"];
   return (
     <main id="main" className="marketing-page">
       <section className="marketing-hero wrap">
@@ -241,32 +134,14 @@ export function PricingPage() {
             cta: "Try the preview",
             to: "/app",
           },
-          {
-            name: "Mio Personal",
-            price: "$9.99 / month · planned",
-            desc: "The vision for your everyday assistant.",
-            features: [
-              "Connected provider discovery",
-              "Personalized recommendations",
-              "Voice conversations",
-              "Proposed monthly plan",
-            ],
-            cta: "Explore features",
-            to: "/features",
-          },
-          {
-            name: "Mio Business",
-            price: "$29.99 / month · planned",
-            desc: "Thoughtful experiences for your customers.",
-            features: [
-              "Merchant dashboard concept",
-              "Conversational discovery",
-              "EasyTap in-store concept",
-              "Proposed monthly plan",
-            ],
-            cta: "View business demo",
-            to: "/merchant",
-          },
+          ...SUBSCRIPTION_PLANS.filter(plan => plan.id !== "free").map(plan => ({
+            name: "Mio " + plan.name,
+            price: plan.price === null ? "Custom · planned" : "$" + plan.price + " / month · planned",
+            desc: plan.description,
+            features: plan.features,
+            cta: plan.id === "enterprise" ? "Discuss the vision" : plan.id === "business" ? "View business demo" : "Explore features",
+            to: plan.id === "enterprise" ? "/about" : plan.id === "business" ? "/merchant" : "/features",
+          })),
         ].map((p, i) => (
           <article className={i === 0 ? "featured-plan" : ""} key={p.name}>
             <span className="eyebrow">{p.name}</span>
@@ -314,8 +189,11 @@ export function LegalPage() {
           <p>
             The website loads fonts from Google Fonts. Following the GitHub link
             opens an external service with its own privacy practices. This build
-            does not include analytics or an email collection service.
+            does not include analytics. Optional account, contact, partner-interest,
+            and early-access forms use the configured account service when enabled.
           </p>
+          <h2>Voice input and account services</h2>
+          <p>Voice input starts only when you choose the microphone. Your browser’s speech recognition service may process audio under its own terms. When account services are configured, submitted account and application details are sent to that service, and signed-in search history may be stored with your account.</p>
           <h2>Before launch</h2>
           <p>
             A complete privacy policy and contact information must be provided

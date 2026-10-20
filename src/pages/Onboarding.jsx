@@ -199,9 +199,9 @@ export default function Onboarding() {
               </div>
               <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>You're all set!</h2>
               <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6, fontSize: 15 }}>
-                Mio is ready to help. Just speak or type — your personal AI assistant is always here.
+                Your preview is ready. Explore sample conversations; no account or payment method was created by these demonstration steps.
               </p>
-              <Link to="/" className="btn-primary" style={{ display: "flex", justifyContent: "center", padding: "14px 0", fontSize: 15, textDecoration: "none" }}>
+              <Link to="/app" className="btn-primary" style={{ display: "flex", justifyContent: "center", padding: "14px 0", fontSize: 15, textDecoration: "none" }}>
                 Start Using Mio <ArrowRightIcon size={18} aria-hidden="true" />
               </Link>
             </div>

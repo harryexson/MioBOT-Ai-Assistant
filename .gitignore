@@ -1,4 +1,5 @@
 node_modules/
+merge-review/
 tooling/node_modules/
 mobile/node_modules/
 mobile/.expo/

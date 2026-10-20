@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 import useLandingMotion from "../components/useLandingMotion";
+import { ServiceCoverage, MobileJourney, PartnerEcosystem, EasyTapJourney, PlatformTools, EarlyAccess } from "../components/PlatformSections";
+import MioVoiceBot from "../components/MioVoiceBot";
 import { Link } from "react-router";
 import {
   ArrowRight,
@@ -306,6 +308,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <ServiceCoverage />
+      <section className="wrap platform-section" id="voice-discovery"><MioVoiceBot /></section>
       <section className="demo-section" id="in-action">
         <div className="wrap demo-layout">
           <div className="demo-copy">
@@ -392,6 +396,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <MobileJourney />
       <section className="how-section wrap">
         <div className="section-heading">
           <div>
@@ -431,6 +436,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <PartnerEcosystem />
       <section className="business-banner wrap">
         <div>
           <span className="eyebrow">A LITTLE MIO FOR YOUR BUSINESS</span>
@@ -447,6 +453,8 @@ export default function Home() {
           <Link className="button-dark" to="/business">
             Meet Mio for business <ArrowUpRight size={17} />
           </Link>
+          <ul className="business-capabilities">{["Orders, customers & menus", "Revenue & analytics", "Team roles & integrations", "NFC & checkout concepts"].map(item => <li key={item}><Check size={14} />{item}</li>)}</ul>
+          <div className="business-workspaces"><Link to="/merchant">Merchant dashboard <ArrowUpRight size={14} /></Link><Link to="/admin">Platform admin preview <ArrowUpRight size={14} /></Link></div>
         </div>
         <div className="business-preview">
           <div>
@@ -480,6 +488,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <EasyTapJourney />
+      <PlatformTools />
       <section className="faq-section wrap">
         <div>
           <span className="eyebrow">A FEW THINGS YOU MIGHT BE WONDERING</span>
@@ -518,6 +528,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <EarlyAccess />
       <section className="final-cta wrap">
         <div className="cta-star">✳</div>
         <span className="eyebrow">MAKE SPACE FOR THE GOOD STUFF</span>
@@ -548,6 +559,8 @@ export function Footer() {
         <Link to="/features">Explore</Link>
         <Link to="/pricing">Pricing</Link>
         <Link to="/developers">Developers</Link>
+        <Link to="/providers">Integrations</Link>
+        <Link to="/about">About & contact</Link>
         <Link to="/privacy">Privacy</Link>
         <Link to="/terms">Terms</Link>
       </nav>

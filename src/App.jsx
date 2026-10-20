@@ -1,4 +1,14 @@
-import { Routes, Route } from "react-router";
+import { lazy, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router";
+import { AuthProvider } from "./lib/useAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Footer } from "./pages/Home";
+const Search = lazy(() => import("./pages/Search"));
+const VoiceSearch = lazy(() => import("./pages/VoiceSearch"));
+const SignIn = lazy(() => import("./pages/SignIn"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
+const CommissionDashboard = lazy(() => import("./pages/CommissionDashboard"));
+const About = lazy(() => import("./pages/About"));
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
 import Onboarding from "./pages/Onboarding";
@@ -25,10 +35,14 @@ function Preview({ children }) {
     </>
   );
 }
+function Detail({ children, sample = false }) {
+  return <div className="unified-detail">{sample && <p className="platform-notice">Interactive preview · Results, prices, availability, and transactions shown here are sample data.</p>}{children}<Footer /></div>;
+}
 export default function App() {
   return (
-    <>
+    <AuthProvider>
       <Nav />
+      <Suspense fallback={<main id="main" className="wrap platform-section" aria-busy="true">Opening Mio…</main>}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/app" element={<Experience />} />
@@ -41,6 +55,14 @@ export default function App() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/business" element={<Marketing />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/search" element={<Detail sample><Search /></Detail>} />
+        <Route path="/voice" element={<Detail sample><VoiceSearch /></Detail>} />
+        <Route path="/signin" element={<Detail><SignIn /></Detail>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Detail><UserDashboard /></Detail></ProtectedRoute>} />
+        <Route path="/commissions" element={<Detail><CommissionDashboard /></Detail>} />
+        <Route path="/integrations" element={<Navigate to="/providers" replace />} />
+        <Route path="/partners" element={<Navigate to="/providers" replace />} />
+        <Route path="/about" element={<Detail><About /></Detail>} />
         <Route path="/privacy" element={<LegalPage />} />
         <Route path="/terms" element={<LegalPage />} />
         <Route
@@ -69,6 +91,7 @@ export default function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+      </Suspense>
+    </AuthProvider>
   );
 }

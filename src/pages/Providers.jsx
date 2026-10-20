@@ -1,43 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Bookmark, Check, Search, ShieldCheck, Sparkles } from "lucide-react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useSearchParams } from "react-router";
+import IntegrationApplication from "../components/IntegrationApplication";
 import { Footer } from "./Home";
 
-const PARTNERS = [
-  ["Amazon", "Shopping", "🛒", "200M+ shoppers", "1–10%", "per sale", "Easy", "350M+ products · search · price comparison · reviews"],
-  ["eBay", "Shopping", "🔨", "135M+ buyers", "1–6%", "per sale", "Easy", "New and used goods · auctions · collectibles · price discovery"],
-  ["Walmart", "Shopping", "🏪", "120M+ shoppers", "1–4%", "per sale", "Easy", "Everyday retail · grocery · pickup · delivery"],
-  ["CJ Affiliate", "Shopping", "🔗", "3,800+ brands", "Varies", "per retailer", "Moderate", "Affiliate network · deep links · tracking · cross-device attribution"],
-  ["Rakuten Advertising", "Shopping", "🌸", "1,000+ brands", "Varies", "per retailer", "Moderate", "Brand partnerships · deals · reporting · multi-currency"],
-  ["DoorDash", "Food & Grocery", "🚪", "600K+ restaurants", "3–5%", "per order", "Moderate", "Restaurant search · menus · ordering · delivery tracking"],
-  ["Uber Eats", "Food & Grocery", "🚗", "Global", "3–6%", "per order", "Moderate", "Restaurant and grocery delivery · group and scheduled orders"],
-  ["Instacart", "Food & Grocery", "🛒", "1,400+ retailers", "3–5%", "per order", "Easy", "Multi-store groceries · delivery · retailer selection"],
-  ["Grubhub", "Food & Grocery", "🍕", "22M+ diners", "4%", "per order", "Moderate", "Restaurant discovery · delivery estimates · rewards"],
-  ["Amadeus", "Travel", "✈️", "Global travel network", "1–3%", "per booking", "Advanced", "Flight search · hotel data · trip planning"],
-  ["Booking.com", "Travel", "🏨", "2.4M+ properties", "4–6%", "per stay", "Easy", "Property discovery · availability · booking referrals"],
-  ["Expedia", "Travel", "🌍", "Global travel network", "3–6%", "per booking", "Moderate", "Flights and stays · package discovery · price alerts"],
-  ["Airbnb", "Travel", "🏠", "Global stays", "$40–75", "per booking", "Moderate", "Unique stays · experiences · longer-trip discovery"],
-  ["Viator / Tripadvisor", "Travel", "🎡", "300K+ experiences", "8%", "per booking", "Easy", "Tours · activities · experiences · review discovery"],
-  ["Ticketmaster", "Events", "🎟️", "500M+ tickets / year", "2–5%", "per ticket", "Moderate", "Concerts · sports · theatre · event discovery"],
-  ["Eventbrite", "Events", "🎪", "3M+ events / year", "4%", "per ticket", "Easy", "Local events · classes · festivals · conferences"],
-  ["StubHub", "Events", "🎫", "10M+ buyers", "5–10%", "per ticket", "Moderate", "Resale tickets · last-minute discovery · fan protection"],
-  ["SeatGeek", "Events", "🏟️", "20M+ users", "5–10%", "per ticket", "Moderate", "Ticket search · value signals · venue maps"],
-  ["Thumbtack", "Home Services", "📌", "1,000+ service categories", "10–20%", "per lead", "Moderate", "Local pros · quotes · home services discovery"],
-  ["Taskrabbit", "Home Services", "🐰", "140+ cities", "15%", "per booking", "Easy", "Tasker matching · assembly · cleaning · moving"],
-  ["Angi", "Home Services", "🔧", "150M+ reviews", "10–15%", "per lead", "Moderate", "Home improvement pros · service discovery · reviews"],
-  ["Zocdoc", "Health", "🏥", "6M+ patients / month", "Per appointment", "per booking", "Advanced", "Doctor discovery · availability · insurance information"],
-  ["GoodRx", "Health", "💊", "25M+ users", "Per prescription", "per referral", "Easy", "Prescription price comparison · pharmacy discovery · coupons"],
-  ["Calm / Headspace", "Health", "🧘", "150M+ downloads", "20–30%", "per subscription", "Easy", "Mindfulness · sleep · wellness subscriptions"],
-  ["NerdWallet", "Finance", "💳", "20M+ monthly users", "$50–300", "per conversion", "Moderate", "Financial product discovery · comparisons · rate search"],
-  ["Lemonade", "Finance", "🍋", "1.5M+ customers", "$20–150", "per policy", "Easy", "Insurance discovery · quotes · policy referrals"],
-  ["Uber", "Transport", "🚕", "131M+ monthly users", "$5–15", "per new rider", "Moderate", "Ride discovery · estimates · scheduled trips"],
-  ["Rome2Rio", "Transport", "🗺️", "12M+ monthly users", "CPC + 2–4%", "per booking", "Easy", "Compare plane · train · bus · ferry · car journeys"],
-  ["Stripe Connect", "Payments", "💳", "Global", "Processing margin", "per transaction", "Moderate", "Payments infrastructure · merchant payouts · revenue splitting"],
-  ["Klarna", "Payments", "🛍️", "150M+ users", "1–3%", "per transaction", "Easy", "Pay-over-time options · checkout referrals"],
-  ["PayPal", "Payments", "🅿️", "Global", "Varies", "per transaction", "Moderate", "Digital checkout · wallet payments · merchant services"],
-];
-
-const CATEGORIES = ["All categories", "Shopping", "Food & Grocery", "Travel", "Events", "Home Services", "Health", "Finance", "Transport", "Payments"];
+import { PARTNERS, CATEGORIES } from "../data/partners";
 const STORAGE_KEY = "mio-integration-shortlist";
 
 function readSaved() {
@@ -51,8 +18,11 @@ function readSaved() {
 
 export default function Providers() {
   const { pathname } = useLocation();
+  const [params] = useSearchParams();
+  const [selectedPartner, setSelectedPartner] = useState(null);
   const [category, setCategory] = useState(CATEGORIES[0]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(params.get("q") || "");
+  useEffect(() => setQuery(params.get("q") || ""), [params]);
   const [saved, setSaved] = useState(readSaved);
   const [savedOnly, setSavedOnly] = useState(false);
 
@@ -121,6 +91,7 @@ export default function Providers() {
               <p className="partner-description">{partner[7]}</p>
               <div className="commission-estimate"><span>Illustrative earning</span><strong>{partner[4]}</strong><small>{partner[5]}</small></div>
               <div className="partner-card-foot"><span>Partnership to be confirmed</span><span className="partner-status-dot" aria-hidden="true" /></div>
+              <button type="button" className="partner-apply" onClick={() => setSelectedPartner(partner)} aria-label={`Explore ${partner[0]} application`}>Explore & apply <ArrowRight size={14} /></button>
             </article>
           ))}
         </div>
@@ -131,6 +102,7 @@ export default function Providers() {
         <span className="eyebrow">BUILDING A MORE CONNECTED EVERYDAY</span><h2>Let’s make useful connections.</h2><p>Explore Mio’s product direction, or visit the project to see how the experience is taking shape.</p><div><Link to="/developers" className="button-primary">Explore Mio <ArrowRight size={17} /></Link><a href="https://github.com/harryexson/MioBOT-Ai-Assistant" target="_blank" rel="noreferrer" className="button-dark">View the project</a></div>
       </section>
     </main>
+    {selectedPartner && <IntegrationApplication partner={selectedPartner} onClose={() => setSelectedPartner(null)} />}
     <Footer />
     </>
   );

@@ -14,7 +14,11 @@ npm run build
 
 The setup script installs the packages listed in `package.local.json` without replacing the platform manifest. Node 22+ is recommended. The standalone Vite config replaces the original IONOS-only import and uses Lucide icons.
 
-Routes: `/`, `/features`, `/pricing`, `/providers`, `/easytap`, `/developers`, `/app`, `/privacy`, `/terms`. Original merchant/admin/checkout previews remain available and are explicitly marked as demonstrations. `/onboarding` and `/widget` open the new interactive experience.
+One homepage merges the preserved hero and motion with service modules, eight mobile journeys, voice/typed discovery, integrations, merchant/admin links, EasyTap, engine features and early access. See MERGE-REPORT.md.
+
+Routes include /search, /voice, /signin, /dashboard, /commissions and /about alongside the existing previews. /onboarding and /widget mount their dedicated flows. /integrations and /partners redirect to the canonical /providers catalog.
+
+For optional account and application services, copy .env.example to .env.local and configure VITE_POCKETBASE_URL. Backend collection and access-rule requirements are in MERGE-REPORT.md. Sample discovery works without credentials.
 
 The `/providers` page is a searchable, filterable directory of 31 prospective partner integrations. Its commission figures and audience metrics come from the planning brief and are illustrative only; partner agreements, API availability, rates, and eligibility are not verified. Saved shortlist selections stay in browser `localStorage`.
 
@@ -42,6 +46,6 @@ This is a working product preview, not a live commerce service. Before public la
 
 Website hosting must serve `index.html` for SPA routes. `index.html` currently uses a root base; adjust the base and Vite base together for a subdirectory deployment. The IONOS preview could not be fetched by the web reader; the GitHub source was used as the implementation baseline.
 
-## Local environment note
+## Canonical workspace
 
-C: ran out of disk space during setup. The complete working/runtime copy is in `D:/MioBot-workspace/miobot`; source changes are also copied back to the original C: workspace. Dependencies and build caches are intentionally kept on D:.
+The active unified project is this repository root, with one Home.jsx and one active native mobile/App.tsx. Start the current website with npm run dev; a separate local port may be used if another project occupies 5173. Preserved legacy mobile source is a reference, not a second running application.

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { ArrowRight as ArrowRightIcon } from "lucide-react";
 import { CheckCircle as CheckIcon } from "lucide-react";
 import { Mic as MicIcon } from "lucide-react";
@@ -9,138 +8,7 @@ import { Zap as ZapIcon } from "lucide-react";
 import { Wifi as WifiIcon } from "lucide-react";
 import { BarChart2 as BarChartIcon } from "lucide-react";
 
-const SERVICE_MODULES = [
-  {
-    id: "shopping",
-    emoji: "🛍️",
-    title: "Retail Shopping",
-    desc: "Find and buy anything across dozens of verified retailers — comparing price, availability, specs, shipping, and offers in a single conversation.",
-    points: [
-      "Real-time multi-provider price comparison",
-      "Product specs, reviews, and delivery estimates",
-      "Cart management across multiple merchants",
-      "Order tracking and cancellation where supported",
-    ],
-    badge: "bg-violet-500/15 text-violet-300 border-violet-500/25",
-  },
-  {
-    id: "food",
-    emoji: "🍔",
-    title: "Restaurants & Food",
-    desc: "Order delivery, pickup, or reserve a table — by voice or chat. Mio knows your preferences and never confirms an order without showing you the total first.",
-    points: [
-      "Live menu browsing and customisation",
-      "Dietary preference memory and filtering",
-      "Delivery and pickup scheduling",
-      "Table reservations via OpenTable, Resy and partners",
-    ],
-    badge: "bg-orange-500/15 text-orange-300 border-orange-500/25",
-  },
-  {
-    id: "groceries",
-    emoji: "🥦",
-    title: "Groceries",
-    desc: "Shop your weekly groceries from verified supermarket partners. Mio checks freshness, price per unit, and delivery slots before you commit.",
-    points: [
-      "Multi-supermarket basket comparison",
-      "Recurring order suggestions based on history",
-      "Delivery slot availability in real time",
-      "Substitution preferences saved automatically",
-    ],
-    badge: "bg-green-500/15 text-green-300 border-green-500/25",
-  },
-  {
-    id: "hotels",
-    emoji: "🏨",
-    title: "Hotels",
-    desc: "Search, compare, and book hotels by voice — with verified availability, total-cost pricing, and instant confirmation. No hidden fees.",
-    points: [
-      "Verified real-time availability",
-      "Full price breakdown before confirmation",
-      "Instant booking confirmation",
-      "Cancellation workflows where supported",
-    ],
-    badge: "bg-blue-500/15 text-blue-300 border-blue-500/25",
-  },
-  {
-    id: "flights",
-    emoji: "✈️",
-    title: "Flights",
-    desc: "Search across aggregators for the best combination of price, layovers, and baggage policy. Mio summarises and compares — you confirm.",
-    points: [
-      "Multi-aggregator live price search",
-      "Layover and duration preferences",
-      "Baggage and fare-class comparison",
-      "Booking confirmation and e-ticket storage",
-    ],
-    badge: "bg-sky-500/15 text-sky-300 border-sky-500/25",
-  },
-  {
-    id: "transport",
-    emoji: "🚗",
-    title: "Transportation & Car Rental",
-    desc: "Book a ride, reserve a hire car, or plan rail travel — all inside one conversation with Mio. Pricing is live and confirmed before charging.",
-    points: [
-      "Ride-hailing across Uber, Bolt, and partners",
-      "Car rental comparison and reservation",
-      "National Rail journey planning and booking",
-      "Real-time estimated arrival and pricing",
-    ],
-    badge: "bg-teal-500/15 text-teal-300 border-teal-500/25",
-  },
-  {
-    id: "appointments",
-    emoji: "📅",
-    title: "Appointments & Professional Services",
-    desc: "Book salons, clinics, personal trainers, or any appointment-based service. Mio checks live calendars and confirms your slot instantly.",
-    points: [
-      "Real-time availability from live calendars",
-      "Voice or chat booking in seconds",
-      "Reminders added to your schedule",
-      "Easy cancellation and rescheduling",
-    ],
-    badge: "bg-pink-500/15 text-pink-300 border-pink-500/25",
-  },
-  {
-    id: "events",
-    emoji: "🎟️",
-    title: "Events & Tickets",
-    desc: "Find and book concerts, sports, theatre, and more across all the major ticketing platforms — with verified seating and no duplicate purchases.",
-    points: [
-      "Multi-platform event and ticket search",
-      "Verified seat availability only",
-      "Idempotent booking (no duplicate charges)",
-      "E-ticket delivery and digital wallet storage",
-    ],
-    badge: "bg-yellow-500/15 text-yellow-300 border-yellow-500/25",
-  },
-  {
-    id: "payments",
-    emoji: "💳",
-    title: "Payments & Transaction History",
-    desc: "Pay bills, split costs, send money, or check your spending — all within Mio. Every transaction is logged, searchable, and confirmed before it happens.",
-    points: [
-      "Card, Apple Pay, Google Pay, and PayPal",
-      "Tokenised — raw credentials never stored",
-      "Full transaction history in-app",
-      "Refunds and cancellations within Mio",
-    ],
-    badge: "bg-indigo-500/15 text-indigo-300 border-indigo-500/25",
-  },
-  {
-    id: "nfc",
-    emoji: "📡",
-    title: "NFC & EasyTap Go",
-    desc: "Tap an NFC tag at any partnered venue to open a full, contextual Mio session — menu, booking, or payment — without waiting in a queue.",
-    points: [
-      "Works at restaurants, shops, events, and clinics",
-      "Signed, expiring session tokens — nothing stored in tags",
-      "Full menu or catalog loaded by tap",
-      "Confirm and pay without leaving the Mio experience",
-    ],
-    badge: "bg-red-500/15 text-red-300 border-red-500/25",
-  },
-];
+import { SERVICE_MODULES } from "../data/services";
 
 const CORE_FEATURES = [
   {
@@ -176,7 +44,9 @@ const CORE_FEATURES = [
 ];
 
 export default function Features() {
-  const [activeModule, setActiveModule] = useState(0);
+  const [params, setParams] = useSearchParams();
+  const activeModule = Math.max(0, SERVICE_MODULES.findIndex(item => item.id === params.get("module")));
+  const setActiveModule = index => setParams({ module: SERVICE_MODULES[index].id }, { preventScrollReset: true });
   const mod = SERVICE_MODULES[activeModule];
 
   return (

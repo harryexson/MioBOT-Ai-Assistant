@@ -129,4 +129,10 @@ Note: Push requires GitHub credentials — provide a personal access token or SS
 - `Marketing.jsx` implements associated marketing, pricing, and preview disclosure pages.
 - `mobile/App.tsx` is a credential-free React Native preview; the original entry is `mobile/LegacyApp.tsx`.
 - Root website uses DM Sans, warm off-white and violet; custom imagery is in `public/images`.
-- Active runtime/install copy on D: because C: is nearly full; preserve source in original workspace as capacity permits.
+- Active source and standalone runtime are in this repository root.
+
+## Unified upstream merge (2026-10-20)
+- One homepage retains the custom portrait and motion while exposing ten service modules, eight app journeys, voice/search, partner ecosystem, EasyTap and engine features.
+- Shared content is in src/data; /integrations and /partners redirect to /providers; /voice shares Search and useSpeechInput.
+- AuthProvider and incoming account modules use optional PocketBase configured by VITE_POCKETBASE_URL. Unconfigured write forms are unavailable; search and commission previews are explicitly sample data.
+- MERGE-REPORT.md maps the upstream source and verification; scripts/verify-unified.mjs checks browser parity.
