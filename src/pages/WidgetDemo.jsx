@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import MicIcon from "icon:mic";
-import SendIcon from "icon:send";
-import XIcon from "icon:x";
-import ChevronDownIcon from "icon:chevron-down";
-import ShoppingBagIcon from "icon:shopping-bag";
-import MapPinIcon from "icon:map-pin";
-import StarIcon from "icon:star";
-import ClockIcon from "icon:clock";
+import { Mic as MicIcon } from "lucide-react";
+import { Send as SendIcon } from "lucide-react";
+import { X as XIcon } from "lucide-react";
+import { ChevronDown as ChevronDownIcon } from "lucide-react";
+import { ShoppingBag as ShoppingBagIcon } from "lucide-react";
+import { MapPin as MapPinIcon } from "lucide-react";
+import { Star as StarIcon } from "lucide-react";
+import { Clock as ClockIcon } from "lucide-react";
 
 const DEMO_FLOWS = {
   shopping: [
@@ -23,7 +23,7 @@ const DEMO_FLOWS = {
     { role: "user", text: "I'll take the Sony ones" },
     { role: "mio", text: "Adding Sony WH-1000XM4 to your cart from Amazon — $128 + free shipping. Confirm purchase?" },
     { role: "user", text: "Yes, confirm" },
-    { role: "mio", text: "Order placed! You'll receive a confirmation email shortly. Anything else?" },
+    { role: "mio", text: "Sample checkout complete — no order was placed and no email was sent. Want to explore another scenario?" },
   ],
   food: [
     { role: "mio", text: "Hi! I'm Mio. I can help you order food, book a table, or find nearby restaurants." },
@@ -38,7 +38,7 @@ const DEMO_FLOWS = {
     { role: "user", text: "Napoli Express please" },
     { role: "mio", text: "Margherita pizza from Napoli Express — $14.90, arrives in ~25 min. Confirm?" },
     { role: "user", text: "Confirmed!" },
-    { role: "mio", text: "Order placed! Track your delivery live in the app." },
+    { role: "mio", text: "Sample checkout complete — no order was placed. You can try another scenario." },
   ],
   travel: [
     { role: "mio", text: "Hello! I can help with flights, hotels, and transport. Where are you headed?" },
@@ -53,7 +53,7 @@ const DEMO_FLOWS = {
     { role: "user", text: "Book Arlo Nomad please" },
     { role: "mio", text: "2 nights at Arlo Nomad — $318 total, includes breakfast, free cancellation. Confirm?" },
     { role: "user", text: "Yes book it" },
-    { role: "mio", text: "Booked! Confirmation sent to your email. Enjoy New York!" },
+    { role: "mio", text: "Sample booking complete — nothing was reserved and no email was sent. Enjoy exploring New York!" },
   ],
 };
 
@@ -250,13 +250,13 @@ export default function WidgetDemo() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 text-center border-b border-white/8">
         <div className="max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border shadow-sm border border-violet-500/30 text-violet-300 text-xs font-medium mb-6">
-            Embeddable Mio Widget
+            Widget concept · interactive sample
           </div>
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-navy mb-4">
-            Add Mio to <span className="gradient-text">any website</span>
+            Imagine Mio on <span className="gradient-text">your website</span>
           </h1>
           <p className="text-gray-600 text-lg mb-3">
-            One line of code gives your visitors a fully capable voice and chat AI assistant — shopping, ordering, booking, and payments included.
+            Explore a scripted preview of how a Mio assistant could support shopping, dining, and travel. The public widget, live AI, speech recognition, provider search, and checkout are not connected yet.
           </p>
         </div>
       </section>
@@ -316,8 +316,8 @@ export default function WidgetDemo() {
             {/* Right: controls + code */}
             <div className="space-y-6">
               <div>
-                <h2 className="text-navy font-display font-bold text-2xl mb-2">Try a live demo</h2>
-                <p className="text-gray-500 text-sm">Pick a scenario and interact with the Mio widget — type or tap the mic button.</p>
+                <h2 className="text-navy font-display font-bold text-2xl mb-2">Try the interactive preview</h2>
+                <p className="text-gray-500 text-sm">Explore scripted shopping, dining, and travel examples. The mic button inserts a sample prompt; it does not record audio. No live AI, provider search, orders, bookings, or payments are connected.</p>
               </div>
 
               {/* Scenario selector */}
@@ -344,11 +344,11 @@ export default function WidgetDemo() {
               {/* Features list */}
               <div className="space-y-3">
                 {[
-                  { icon: "🎙️", title: "Voice & Chat", desc: "Natural conversation in spoken or typed form" },
-                  { icon: "🃏", title: "Rich Product Cards", desc: "Images, prices, ratings, and availability inline" },
-                  { icon: "✅", title: "Explicit Confirmation", desc: "Every purchase requires a clear user approval" },
-                  { icon: "🔒", title: "Secure by Design", desc: "No credentials in client code — public key only" },
-                  { icon: "🎨", title: "Fully Themeable", desc: "Match your brand with a single data attribute" },
+                  { icon: "🎙️", title: "Scripted chat preview", desc: "Explore sample conversation flows; no audio is recorded" },
+                  { icon: "🃏", title: "Sample result cards", desc: "Illustrative products, prices, and ratings for the concept" },
+                  { icon: "✅", title: "Approval-first concept", desc: "The proposed flow shows a confirmation step before checkout" },
+                  { icon: "🔒", title: "No credentials needed", desc: "This preview does not connect to an API or ask for keys" },
+                  { icon: "🎨", title: "Widget design concept", desc: "A visual example; no embeddable script has been released" },
                 ].map((f) => (
                   <div key={f.title} className="flex items-start gap-3 p-3 bg-white border border-border shadow-sm rounded-xl border border-white/8">
                     <span className="text-xl" aria-hidden="true">{f.icon}</span>

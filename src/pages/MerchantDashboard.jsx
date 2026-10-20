@@ -1,20 +1,20 @@
 import { useState } from "react";
-import TrendingUpIcon from "icon:trending-up";
-import ShoppingBagIcon from "icon:shopping-bag";
-import UsersIcon from "icon:users";
-import DollarSignIcon from "icon:dollar-sign";
-import PackageIcon from "icon:package";
-import CalendarIcon from "icon:calendar";
-import MessageSquareIcon from "icon:message-square";
-import SettingsIcon from "icon:settings";
-import BellIcon from "icon:bell";
-import CheckCircleIcon from "icon:check-circle";
-import ClockIcon from "icon:clock";
-import XCircleIcon from "icon:x-circle";
-import BarChart2Icon from "icon:bar-chart-2";
-import StarIcon from "icon:star";
-import PlusIcon from "icon:plus";
-import FilterIcon from "icon:filter";
+import { TrendingUp as TrendingUpIcon } from "lucide-react";
+import { ShoppingBag as ShoppingBagIcon } from "lucide-react";
+import { Users as UsersIcon } from "lucide-react";
+import { DollarSign as DollarSignIcon } from "lucide-react";
+import { Package as PackageIcon } from "lucide-react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { MessageSquare as MessageSquareIcon } from "lucide-react";
+import { Settings as SettingsIcon } from "lucide-react";
+import { Bell as BellIcon } from "lucide-react";
+import { CheckCircle as CheckCircleIcon } from "lucide-react";
+import { Clock as ClockIcon } from "lucide-react";
+import { XCircle as XCircleIcon } from "lucide-react";
+import { BarChart2 as BarChart2Icon } from "lucide-react";
+import { Star as StarIcon } from "lucide-react";
+import { Plus as PlusIcon } from "lucide-react";
+import { Filter as FilterIcon } from "lucide-react";
 
 const TABS = ["Overview", "Orders", "Products", "Bookings", "Customers", "Analytics", "Team", "Integrations"];
 
@@ -156,7 +156,7 @@ function OverviewTab() {
       <div className="bg-white border border-border shadow-sm rounded-xl p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-navy font-semibold">Recent Orders</h3>
-          <span className="text-xs text-violet-400 font-medium">Live updates</span>
+          <span className="text-xs text-violet-400 font-medium">Sample activity</span>
         </div>
         <div className="space-y-3">
           {ORDERS.slice(0, 3).map((o) => {
@@ -369,7 +369,7 @@ export default function MerchantDashboard() {
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-3">
               <h1 className="text-navy font-display font-bold text-lg">Merchant Dashboard</h1>
-              <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 text-xs rounded-full border border-emerald-500/30">Live</span>
+              <span className="px-2 py-0.5 bg-violet-500/15 text-violet-200 text-xs rounded-full border border-violet-400/25">Preview</span>
             </div>
             <div className="flex items-center gap-3">
               <button className="relative p-2 rounded-lg text-gray-500 hover:text-navy hover:bg-white/8 transition-colors" aria-label="Notifications">

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import ArrowRightIcon from "icon:arrow-right";
-import CheckIcon from "icon:check-circle";
-import MicIcon from "icon:mic";
-import SearchIcon from "icon:search";
-import ShieldIcon from "icon:shield-check";
-import ZapIcon from "icon:zap";
-import WifiIcon from "icon:wifi";
-import BarChartIcon from "icon:bar-chart-2";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
+import { CheckCircle as CheckIcon } from "lucide-react";
+import { Mic as MicIcon } from "lucide-react";
+import { Search as SearchIcon } from "lucide-react";
+import { ShieldCheck as ShieldIcon } from "lucide-react";
+import { Zap as ZapIcon } from "lucide-react";
+import { Wifi as WifiIcon } from "lucide-react";
+import { BarChart2 as BarChartIcon } from "lucide-react";
 
 const SERVICE_MODULES = [
   {
@@ -186,20 +186,23 @@ export default function Features() {
         {/* Hero */}
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-1.5 text-xs font-medium text-violet-300 mb-6">
-            ✨ What Mio Can Do
+            ✨ Mio’s Product Concept
           </div>
           <h1 className="font-display font-800 text-5xl sm:text-6xl text-navy mb-4 leading-tight">
             10 service modules.<br />
             <span className="gradient-text">One conversation.</span>
           </h1>
           <p className="text-gray-600 text-lg max-w-xl mx-auto">
-            Mio is the only assistant that handles every aspect of daily life — from finding the best deal to confirming your booking.
+            Explore the everyday services Mio is designed to bring together. This preview uses sample results; live AI, provider connections, and transactions are still in development.
           </p>
         </div>
 
         {/* 10 service modules — tabbed */}
         <section className="mb-24">
           <h2 className="font-display font-700 text-2xl text-navy mb-6">Service modules</h2>
+          <p className="mb-6 rounded-xl border border-violet-500/20 bg-violet-500/5 px-4 py-3 text-sm text-gray-600">
+            These are planned capabilities. This preview does not connect to service providers, check live availability, or complete transactions.
+          </p>
           <div className="grid lg:grid-cols-[280px_1fr] gap-4">
             {/* Module list */}
             <nav aria-label="Service modules" className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
@@ -256,7 +259,7 @@ export default function Features() {
             The Mio AI engine
           </h2>
           <p className="text-gray-500 text-center mb-12 max-w-xl mx-auto">
-            Every service module is powered by the same centralized intelligence layer — so your preferences, context, and payment methods carry across all of them.
+            Mio is designed around a shared intelligence layer that could carry preferences and context between services. Live AI and account memory are not connected in this preview.
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {CORE_FEATURES.map((f) => (
@@ -274,8 +277,8 @@ export default function Features() {
         {/* Provider link */}
         <div className="bg-white border border-border shadow-sm rounded-2xl p-8 border border-white/10 flex flex-col sm:flex-row items-center gap-6 mb-16">
           <div className="flex-1">
-            <h2 className="font-display font-700 text-navy text-xl mb-2">See all connected providers</h2>
-            <p className="text-gray-500 text-sm">Live health status, supported operations, latency, and uptime — for all 40+ providers across every category.</p>
+            <h2 className="font-display font-700 text-navy text-xl mb-2">Explore the integration directory</h2>
+            <p className="text-gray-500 text-sm">Browse prospective partners, categories, and illustrative commission ranges. Provider APIs are not connected in this preview.</p>
           </div>
           <Link
             to="/providers"

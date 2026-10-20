@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import CheckIcon from "icon:check-circle";
-import ShieldIcon from "icon:shield-check";
-import CreditCardIcon from "icon:credit-card";
-import ArrowRightIcon from "icon:arrow-right";
-import LockIcon from "icon:lock";
-import SmartphoneIcon from "icon:smartphone";
-import ZapIcon from "icon:zap";
-import ReceiptIcon from "icon:receipt";
+import { CheckCircle as CheckIcon } from "lucide-react";
+import { ShieldCheck as ShieldIcon } from "lucide-react";
+import { CreditCard as CreditCardIcon } from "lucide-react";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
+import { Lock as LockIcon } from "lucide-react";
+import { Smartphone as SmartphoneIcon } from "lucide-react";
+import { Zap as ZapIcon } from "lucide-react";
+import { Receipt as ReceiptIcon } from "lucide-react";
 
 const PAYMENT_METHODS = [
   { id: "card", label: "Card", icon: "💳", badge: null },

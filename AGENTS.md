@@ -68,7 +68,7 @@ src/
     DeveloperPortal.jsx   # Developer portal — API reference, SDKs, guides, code samples (/developers)
     WidgetDemo.jsx        # Embeddable Mio widget live demo — shopping, food, travel scenarios (/widget)
     EasyTapGo.jsx         # NFC/EasyTap Go integration — scenarios, security, SDK setup (/easytap)
-    Providers.jsx         # Universal provider gateway — live status, ops matrix, 10 categories (/providers)
+    Providers.jsx         # Prospective partner catalog — search, categories, commission estimates, saved shortlist (/providers)
     Checkout.jsx          # Checkout & payments flow — live demo, steps, trust features (/checkout)
     NotFound.jsx          # 404 page
 public/
@@ -122,3 +122,11 @@ works from any of them — so two rules keep links and assets from breaking:
 Remote: https://github.com/harryexson/MioBOT-Ai-Assistant.git
 Branch: dev
 Note: Push requires GitHub credentials — provide a personal access token or SSH key to push.
+## Standalone redesign (2026-10-18)
+- Standalone Vite configuration and Lucide imports replace the IONOS-only runtime imports.
+- `package.local.json` + `scripts/setup-local.mjs` install a local runtime without changing the platform dependency manifest.
+- `Experience.jsx` implements `/app`, with in-memory sample conversations and localStorage saved item IDs.
+- `Marketing.jsx` implements associated marketing, pricing, and preview disclosure pages.
+- `mobile/App.tsx` is a credential-free React Native preview; the original entry is `mobile/LegacyApp.tsx`.
+- Root website uses DM Sans, warm off-white and violet; custom imagery is in `public/images`.
+- Active runtime/install copy on D: because C: is nearly full; preserve source in original workspace as capacity permits.

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import ArrowRightIcon from "icon:arrow-right";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
 
 export default function NotFound() {
   return (

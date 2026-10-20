@@ -1,310 +1,137 @@
-import { useState } from "react";
-import { Link } from "react-router";
-import CheckIcon from "icon:check-circle";
-import AlertIcon from "icon:alert-triangle";
-import ClockIcon from "icon:clock";
-import ZapIcon from "icon:zap";
-import ShieldIcon from "icon:shield-check";
-import ArrowRightIcon from "icon:arrow-right";
-import RefreshIcon from "icon:refresh-cw";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, Bookmark, Check, Search, ShieldCheck, Sparkles } from "lucide-react";
+import { Link, useLocation } from "react-router";
+import { Footer } from "./Home";
 
-const PROVIDERS = [
-  {
-    category: "Retail Shopping",
-    emoji: "🛍️",
-    status: "operational",
-    latency: "142ms",
-    uptime: "99.97%",
-    providers: ["Amazon", "eBay", "Currys", "John Lewis", "ASOS", "Zalando"],
-    ops: ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "createCart", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"],
-  },
-  {
-    category: "Restaurants & Food",
-    emoji: "🍔",
-    status: "operational",
-    latency: "98ms",
-    uptime: "99.94%",
-    providers: ["Just Eat", "Deliveroo", "Uber Eats", "OpenTable", "Resy"],
-    ops: ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "createCart", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"],
-  },
-  {
-    category: "Groceries",
-    emoji: "🥦",
-    status: "operational",
-    latency: "115ms",
-    uptime: "99.91%",
-    providers: ["Ocado", "Tesco Online", "Sainsbury's", "Waitrose", "Morrisons"],
-    ops: ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "createCart", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"],
-  },
-  {
-    category: "Hotels",
-    emoji: "🏨",
-    status: "operational",
-    latency: "203ms",
-    uptime: "99.88%",
-    providers: ["Booking.com", "Hotels.com", "Expedia", "Airbnb", "Marriott"],
-    ops: ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"],
-  },
-  {
-    category: "Flights",
-    emoji: "✈️",
-    status: "degraded",
-    latency: "487ms",
-    uptime: "98.21%",
-    providers: ["Skyscanner", "Kayak", "Google Flights", "British Airways", "easyJet"],
-    ops: ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "prepareCheckout", "confirmTransaction", "getOrderStatus"],
-    note: "Elevated latency on Skyscanner API — fallback active",
-  },
-  {
-    category: "Transportation",
-    emoji: "🚗",
-    status: "operational",
-    latency: "131ms",
-    uptime: "99.96%",
-    providers: ["Uber", "Bolt", "Enterprise", "Hertz", "National Rail"],
-    ops: ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "createCart", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"],
-  },
-  {
-    category: "Appointments & Services",
-    emoji: "📅",
-    status: "operational",
-    latency: "89ms",
-    uptime: "99.99%",
-    providers: ["Fresha", "Treatwell", "Doctify", "Calendly", "SimplyBook"],
-    ops: ["search", "getDetails", "getAvailability", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"],
-  },
-  {
-    category: "Events & Tickets",
-    emoji: "🎟️",
-    status: "operational",
-    latency: "177ms",
-    uptime: "99.82%",
-    providers: ["Ticketmaster", "Eventbrite", "StubHub", "AXS", "See Tickets"],
-    ops: ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "prepareCheckout", "confirmTransaction", "getOrderStatus"],
-  },
-  {
-    category: "Payments & Billing",
-    emoji: "💳",
-    status: "operational",
-    latency: "54ms",
-    uptime: "99.999%",
-    providers: ["Stripe", "Apple Pay", "Google Pay", "PayPal", "Open Banking"],
-    ops: ["getPrice", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"],
-  },
-  {
-    category: "NFC & EasyTap Go",
-    emoji: "📡",
-    status: "operational",
-    latency: "61ms",
-    uptime: "99.98%",
-    providers: ["EasyTap Go SDK", "NFC session gateway"],
-    ops: ["getDetails", "getAvailability", "getPrice", "createCart", "prepareCheckout", "confirmTransaction"],
-  },
+const PARTNERS = [
+  ["Amazon", "Shopping", "🛒", "200M+ shoppers", "1–10%", "per sale", "Easy", "350M+ products · search · price comparison · reviews"],
+  ["eBay", "Shopping", "🔨", "135M+ buyers", "1–6%", "per sale", "Easy", "New and used goods · auctions · collectibles · price discovery"],
+  ["Walmart", "Shopping", "🏪", "120M+ shoppers", "1–4%", "per sale", "Easy", "Everyday retail · grocery · pickup · delivery"],
+  ["CJ Affiliate", "Shopping", "🔗", "3,800+ brands", "Varies", "per retailer", "Moderate", "Affiliate network · deep links · tracking · cross-device attribution"],
+  ["Rakuten Advertising", "Shopping", "🌸", "1,000+ brands", "Varies", "per retailer", "Moderate", "Brand partnerships · deals · reporting · multi-currency"],
+  ["DoorDash", "Food & Grocery", "🚪", "600K+ restaurants", "3–5%", "per order", "Moderate", "Restaurant search · menus · ordering · delivery tracking"],
+  ["Uber Eats", "Food & Grocery", "🚗", "Global", "3–6%", "per order", "Moderate", "Restaurant and grocery delivery · group and scheduled orders"],
+  ["Instacart", "Food & Grocery", "🛒", "1,400+ retailers", "3–5%", "per order", "Easy", "Multi-store groceries · delivery · retailer selection"],
+  ["Grubhub", "Food & Grocery", "🍕", "22M+ diners", "4%", "per order", "Moderate", "Restaurant discovery · delivery estimates · rewards"],
+  ["Amadeus", "Travel", "✈️", "Global travel network", "1–3%", "per booking", "Advanced", "Flight search · hotel data · trip planning"],
+  ["Booking.com", "Travel", "🏨", "2.4M+ properties", "4–6%", "per stay", "Easy", "Property discovery · availability · booking referrals"],
+  ["Expedia", "Travel", "🌍", "Global travel network", "3–6%", "per booking", "Moderate", "Flights and stays · package discovery · price alerts"],
+  ["Airbnb", "Travel", "🏠", "Global stays", "$40–75", "per booking", "Moderate", "Unique stays · experiences · longer-trip discovery"],
+  ["Viator / Tripadvisor", "Travel", "🎡", "300K+ experiences", "8%", "per booking", "Easy", "Tours · activities · experiences · review discovery"],
+  ["Ticketmaster", "Events", "🎟️", "500M+ tickets / year", "2–5%", "per ticket", "Moderate", "Concerts · sports · theatre · event discovery"],
+  ["Eventbrite", "Events", "🎪", "3M+ events / year", "4%", "per ticket", "Easy", "Local events · classes · festivals · conferences"],
+  ["StubHub", "Events", "🎫", "10M+ buyers", "5–10%", "per ticket", "Moderate", "Resale tickets · last-minute discovery · fan protection"],
+  ["SeatGeek", "Events", "🏟️", "20M+ users", "5–10%", "per ticket", "Moderate", "Ticket search · value signals · venue maps"],
+  ["Thumbtack", "Home Services", "📌", "1,000+ service categories", "10–20%", "per lead", "Moderate", "Local pros · quotes · home services discovery"],
+  ["Taskrabbit", "Home Services", "🐰", "140+ cities", "15%", "per booking", "Easy", "Tasker matching · assembly · cleaning · moving"],
+  ["Angi", "Home Services", "🔧", "150M+ reviews", "10–15%", "per lead", "Moderate", "Home improvement pros · service discovery · reviews"],
+  ["Zocdoc", "Health", "🏥", "6M+ patients / month", "Per appointment", "per booking", "Advanced", "Doctor discovery · availability · insurance information"],
+  ["GoodRx", "Health", "💊", "25M+ users", "Per prescription", "per referral", "Easy", "Prescription price comparison · pharmacy discovery · coupons"],
+  ["Calm / Headspace", "Health", "🧘", "150M+ downloads", "20–30%", "per subscription", "Easy", "Mindfulness · sleep · wellness subscriptions"],
+  ["NerdWallet", "Finance", "💳", "20M+ monthly users", "$50–300", "per conversion", "Moderate", "Financial product discovery · comparisons · rate search"],
+  ["Lemonade", "Finance", "🍋", "1.5M+ customers", "$20–150", "per policy", "Easy", "Insurance discovery · quotes · policy referrals"],
+  ["Uber", "Transport", "🚕", "131M+ monthly users", "$5–15", "per new rider", "Moderate", "Ride discovery · estimates · scheduled trips"],
+  ["Rome2Rio", "Transport", "🗺️", "12M+ monthly users", "CPC + 2–4%", "per booking", "Easy", "Compare plane · train · bus · ferry · car journeys"],
+  ["Stripe Connect", "Payments", "💳", "Global", "Processing margin", "per transaction", "Moderate", "Payments infrastructure · merchant payouts · revenue splitting"],
+  ["Klarna", "Payments", "🛍️", "150M+ users", "1–3%", "per transaction", "Easy", "Pay-over-time options · checkout referrals"],
+  ["PayPal", "Payments", "🅿️", "Global", "Varies", "per transaction", "Moderate", "Digital checkout · wallet payments · merchant services"],
 ];
 
-const OPS_SHORT = ["search", "getDetails", "getAvail.", "getPrice", "getOffers", "createCart", "checkout", "confirm", "orderStatus", "cancel"];
-const OPS_FULL = ["search", "getDetails", "getAvailability", "getPrice", "getOffers", "createCart", "prepareCheckout", "confirmTransaction", "getOrderStatus", "cancelOrRefund"];
+const CATEGORIES = ["All categories", "Shopping", "Food & Grocery", "Travel", "Events", "Home Services", "Health", "Finance", "Transport", "Payments"];
+const STORAGE_KEY = "mio-integration-shortlist";
 
-function StatusBadge({ status }) {
-  if (status === "operational") {
-    return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-500/15 text-green-400 border border-green-500/20">
-        <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" aria-hidden="true" />
-        Operational
-      </span>
-    );
+function readSaved() {
+  try {
+    const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
   }
-  if (status === "degraded") {
-    return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">
-        <AlertIcon className="w-3 h-3" aria-hidden="true" />
-        Degraded
-      </span>
-    );
-  }
-  return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-500/15 text-red-400 border border-red-500/20">
-      <span className="w-1.5 h-1.5 rounded-full bg-red-400" aria-hidden="true" />
-      Outage
-    </span>
-  );
 }
 
 export default function Providers() {
-  const [expanded, setExpanded] = useState(null);
-  const [filter, setFilter] = useState("all");
+  const { pathname } = useLocation();
+  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [query, setQuery] = useState("");
+  const [saved, setSaved] = useState(readSaved);
+  const [savedOnly, setSavedOnly] = useState(false);
 
-  const filtered = PROVIDERS.filter(p =>
-    filter === "all" ? true : p.status === filter
-  );
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch { /* Storage may be unavailable in private browsing. */ }
+  }, [saved]);
 
-  const operational = PROVIDERS.filter(p => p.status === "operational").length;
-  const degraded = PROVIDERS.filter(p => p.status === "degraded").length;
+  const visible = useMemo(() => {
+    const search = query.trim().toLowerCase();
+    return PARTNERS.filter((partner) => {
+      const matchesCategory = category === CATEGORIES[0] || partner[1] === category;
+      const matchesSearch = !search || partner.join(" ").toLowerCase().includes(search);
+      const matchesSaved = !savedOnly || saved.includes(partner[0]);
+      return matchesCategory && matchesSearch && matchesSaved;
+    });
+  }, [category, query, saved, savedOnly]);
+
+  function toggleSaved(name) {
+    setSaved((current) => {
+      return current.includes(name) ? current.filter((item) => item !== name) : [...current, name];
+    });
+  }
 
   return (
-    <main className="min-h-screen pt-28 pb-24 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
-
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-1.5 text-xs font-medium text-violet-300 mb-6">
-            <ZapIcon className="w-3.5 h-3.5" aria-hidden="true" />
-            Provider Gateway
-          </div>
-          <h1 className="font-display font-800 text-5xl sm:text-6xl text-navy mb-4 leading-tight">
-            Universal provider<br />
-            <span className="gradient-text">connectivity</span>
-          </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Mio connects to verified providers across all 10 service categories through a unified gateway — with health monitoring, rate-limit policies, and graceful fallback.
-          </p>
+    <>
+    <main id="main" className="integration-page">
+      <section className="integration-hero wrap">
+        <div className="integration-orbit" aria-hidden="true"><span>✦</span></div>
+        <span className="eyebrow"><Sparkles size={14} /> PARTNER ECOSYSTEM · IN DEVELOPMENT</span>
+        <h1>30+ ways to make<br /><span>everyday earn.</span></h1>
+        <p>Explore the partner integrations Mio is designed to connect with across shopping, food, travel, events, services and payments.</p>
+        <div className="integration-hero-actions">
+          <a className="button-primary" href={`${pathname}#directory`}>Explore integrations <ArrowRight size={17} /></a>
+          <a className="button-dark" href={`${pathname}#revenue`}>How the model works</a>
         </div>
+        <div className="integration-stats" aria-label="Integration directory overview">
+          <div><strong>31</strong><span>integration prospects</span></div>
+          <div><strong>9</strong><span>categories covered</span></div>
+          <div><strong>3</strong><span>potential revenue streams</span></div>
+          <div><strong>1</strong><span>assistant experience</span></div>
+        </div>
+        <p className="estimate-note"><ShieldCheck size={15} /> Partnership availability and commission figures are estimates from the planning brief. Rates, APIs and eligibility require confirmation with each provider.</p>
+      </section>
 
-        {/* Summary stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-          {[
-            { label: "Total providers", value: "40+", sub: "across all categories", icon: <ZapIcon className="w-4 h-4" aria-hidden="true" /> },
-            { label: "Operational", value: operational, sub: "of 10 categories", icon: <CheckIcon className="w-4 h-4" aria-hidden="true" />, color: "text-green-400" },
-            { label: "Degraded", value: degraded, sub: "with active fallback", icon: <AlertIcon className="w-4 h-4" aria-hidden="true" />, color: "text-yellow-400" },
-            { label: "Avg uptime", value: "99.87%", sub: "last 30 days", icon: <ClockIcon className="w-4 h-4" aria-hidden="true" /> },
-          ].map((s) => (
-            <div key={s.label} className="bg-white border border-border shadow-sm rounded-2xl p-5 border border-white/10">
-              <div className={`mb-2 ${s.color || "text-violet-400"}`}>{s.icon}</div>
-              <div className={`font-display font-800 text-2xl text-navy mb-0.5 ${s.color || ""}`}>{s.value}</div>
-              <div className="text-gray-500 text-xs">{s.label}</div>
-              <div className="text-navy/35 text-[10px] mt-0.5">{s.sub}</div>
-            </div>
+      <section id="revenue" className="revenue-section wrap">
+        <div className="section-heading"><span className="eyebrow">A BUSINESS MODEL WITH RANGE</span><h2>Three ways Mio can earn.</h2><p>Potential revenue streams designed around useful recommendations and clear user choice.</p></div>
+        <div className="revenue-grid">
+          <article><span className="revenue-icon">↗</span><span className="eyebrow">01 / TRANSACTIONS</span><h3>Referral commissions</h3><p>When a user chooses a partner product, booking or order, an eligible referral may earn a commission under that partner’s program terms.</p><strong>Illustrative range · 1–20%</strong></article>
+          <article><span className="revenue-icon">◎</span><span className="eyebrow">02 / QUALIFIED LEADS</span><h3>Lead fees</h3><p>For services that begin with a quote or consultation, partners may pay for a qualified introduction where a lead program is available.</p><strong>Illustrative range · $5–$300</strong></article>
+          <article><span className="revenue-icon">▤</span><span className="eyebrow">03 / SUBSCRIPTIONS</span><h3>Plans for people & business</h3><p>Future paid plans and merchant tools could support Mio’s platform, subject to product launch and final pricing.</p><strong>Planning examples · $9.99–$99.99/mo</strong></article>
+        </div>
+      </section>
+
+      <section id="directory" className="directory-section wrap">
+        <div className="directory-heading"><div><span className="eyebrow">THE PARTNER LANDSCAPE</span><h2>Every connection, in one place.</h2><p>Browse the providers Mio could work with as the product develops.</p></div><button aria-pressed={savedOnly} className={`shortlist-toggle ${savedOnly ? "active" : ""}`} onClick={() => setSavedOnly(!savedOnly)}><Bookmark size={16} /> Shortlist <span>{saved.length}</span></button></div>
+        <label className="integration-search"><Search size={18} /><span className="sr-only">Search integrations</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by provider, category or capability…" /></label>
+        <div className="category-filters" aria-label="Filter by category">{CATEGORIES.map((item) => <button key={item} aria-pressed={category === item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}</div>
+        <div className="directory-result-line"><span>{visible.length} integration{visible.length === 1 ? "" : "s"}</span><span>Prospective connections · availability varies</span></div>
+        <div className="integration-grid">
+          {visible.map((partner, index) => (
+            <article className="integration-card" key={partner[0]}>
+              <div className="integration-card-top"><span className="partner-icon" aria-hidden="true">{partner[2]}</span><button className={`save-partner ${saved.includes(partner[0]) ? "saved" : ""}`} onClick={() => toggleSaved(partner[0])} aria-label={`${saved.includes(partner[0]) ? "Remove" : "Add"} ${partner[0]} ${saved.includes(partner[0]) ? "from" : "to"} shortlist`} title={saved.includes(partner[0]) ? "Remove from shortlist" : "Add to shortlist"}>{saved.includes(partner[0]) ? <Check size={16} /> : <Bookmark size={16} />}</button></div>
+              <span className="partner-category">{partner[1]} <i>·</i> {partner[6]} setup concept</span>
+              <h3>{partner[0]}</h3>
+              <p className="partner-audience">{partner[3]}</p>
+              <p className="partner-description">{partner[7]}</p>
+              <div className="commission-estimate"><span>Illustrative earning</span><strong>{partner[4]}</strong><small>{partner[5]}</small></div>
+              <div className="partner-card-foot"><span>Partnership to be confirmed</span><span className="partner-status-dot" aria-hidden="true" /></div>
+            </article>
           ))}
         </div>
+        {visible.length === 0 && <div className="integration-empty"><span>✦</span><h3>No integrations found</h3><p>Try another search or clear your category filter.</p><button className="button-dark" onClick={() => { setQuery(""); setCategory(CATEGORIES[0]); setSavedOnly(false); }}>Reset filters</button></div>}
+      </section>
 
-        {/* Filter */}
-        <div className="flex gap-2 mb-8 flex-wrap">
-          {["all", "operational", "degraded"].map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all border capitalize ${
-                filter === f
-                  ? "gradient-bg text-navy border-transparent"
-                  : "bg-white border border-border shadow-sm border-white/10 text-gray-500 hover:text-navy"
-              }`}
-            >
-              {f === "all" ? "All categories" : f.charAt(0).toUpperCase() + f.slice(1)}
-            </button>
-          ))}
-          <div className="ml-auto flex items-center gap-2 text-gray-400 text-xs">
-            <RefreshIcon className="w-3.5 h-3.5" aria-hidden="true" />
-            Updated live
-          </div>
-        </div>
-
-        {/* Provider cards */}
-        <div className="space-y-3 mb-16">
-          {filtered.map((p, i) => (
-            <div key={p.category} className={`bg-white border border-border shadow-sm rounded-2xl border transition-all ${expanded === i ? "border-violet-500/30" : "border-white/10 hover:border-white/20"}`}>
-              {/* Row header */}
-              <button
-                className="w-full flex items-center gap-4 p-5 text-left"
-                onClick={() => setExpanded(expanded === i ? null : i)}
-                aria-expanded={expanded === i}
-              >
-                <span className="text-2xl shrink-0" aria-hidden="true">{p.emoji}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-navy text-sm">{p.category}</div>
-                  <div className="text-navy/45 text-xs mt-0.5 truncate">
-                    {p.providers.slice(0, 3).join(", ")}{p.providers.length > 3 ? ` +${p.providers.length - 3} more` : ""}
-                  </div>
-                </div>
-                <div className="hidden sm:flex items-center gap-6 shrink-0">
-                  <div className="text-right">
-                    <div className="text-gray-700 text-xs font-medium">{p.latency}</div>
-                    <div className="text-gray-400 text-[10px]">latency</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-green-400 text-xs font-medium">{p.uptime}</div>
-                    <div className="text-gray-400 text-[10px]">uptime</div>
-                  </div>
-                </div>
-                <StatusBadge status={p.status} />
-                <span className="text-navy/30 text-xs ml-2">{expanded === i ? "▲" : "▼"}</span>
-              </button>
-
-              {/* Expanded detail */}
-              {expanded === i && (
-                <div className="border-t border-white/10 p-5">
-                  {p.note && (
-                    <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 rounded-lg px-4 py-2.5 mb-5 text-xs text-yellow-300">
-                      <AlertIcon className="w-4 h-4 shrink-0" aria-hidden="true" />
-                      {p.note}
-                    </div>
-                  )}
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Connected providers</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {p.providers.map((pv) => (
-                          <span key={pv} className="bg-white border border-border shadow-sm px-2.5 py-1 rounded-lg text-xs text-gray-600 border border-white/10">
-                            {pv}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Supported operations</h3>
-                      <div className="grid grid-cols-2 gap-1.5">
-                        {OPS_FULL.map((op, oi) => {
-                          const supported = p.ops.includes(op);
-                          return (
-                            <div key={op} className={`flex items-center gap-1.5 text-xs ${supported ? "text-gray-600" : "text-navy/25"}`}>
-                              {supported
-                                ? <CheckIcon className="w-3 h-3 text-green-400 shrink-0" aria-hidden="true" />
-                                : <span className="w-3 h-3 flex items-center justify-center text-navy/20 shrink-0" aria-hidden="true">–</span>
-                              }
-                              {OPS_SHORT[oi]}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Architecture note */}
-        <div className="bg-white border border-border shadow-sm rounded-3xl p-10 border border-white/10 mb-16">
-          <div className="flex items-center gap-3 mb-6">
-            <ShieldIcon className="w-6 h-6 text-violet-400" aria-hidden="true" />
-            <h2 className="font-display font-700 text-navy text-xl">Gateway architecture</h2>
-          </div>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {[
-              { title: "Sandbox & production", desc: "Every provider has a full sandbox mode. No live charges happen during testing — ever." },
-              { title: "Health monitoring", desc: "Latency, error rates, and availability are checked continuously. Degraded providers trigger automatic fallback." },
-              { title: "No unauthorised scraping", desc: "Mio only connects to providers through their official APIs or verified partnership agreements." },
-            ].map((n) => (
-              <div key={n.title} className="bg-white border border-border shadow-sm rounded-xl p-5 border border-white/5">
-                <h3 className="font-semibold text-navy text-sm mb-2">{n.title}</h3>
-                <p className="text-gray-500 text-xs leading-relaxed">{n.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <Link
-            to="/developers"
-            className="inline-flex items-center gap-2 gradient-bg text-navy font-semibold px-10 py-4 rounded-xl hover:opacity-90 transition-all shadow-xl glow-violet text-lg"
-          >
-            View Developer Docs
-            <ArrowRightIcon className="w-5 h-5" aria-hidden="true" />
-          </Link>
-        </div>
-
-      </div>
+      <section className="integration-cta wrap">
+        <span className="eyebrow">BUILDING A MORE CONNECTED EVERYDAY</span><h2>Let’s make useful connections.</h2><p>Explore Mio’s product direction, or visit the project to see how the experience is taking shape.</p><div><Link to="/developers" className="button-primary">Explore Mio <ArrowRight size={17} /></Link><a href="https://github.com/harryexson/MioBOT-Ai-Assistant" target="_blank" rel="noreferrer" className="button-dark">View the project</a></div>
+      </section>
     </main>
+    <Footer />
+    </>
   );
 }

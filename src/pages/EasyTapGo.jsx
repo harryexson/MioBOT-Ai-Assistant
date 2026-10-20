@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import ArrowRightIcon from "icon:arrow-right";
-import CheckIcon from "icon:check-circle";
-import ZapIcon from "icon:zap";
-import ShieldIcon from "icon:shield-check";
-import SmartphoneIcon from "icon:smartphone";
-import WifiIcon from "icon:wifi";
-import StoreIcon from "icon:store";
-import UtensilsIcon from "icon:utensils";
-import CalendarIcon from "icon:calendar";
-import CreditCardIcon from "icon:credit-card";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
+import { CheckCircle as CheckIcon } from "lucide-react";
+import { Zap as ZapIcon } from "lucide-react";
+import { ShieldCheck as ShieldIcon } from "lucide-react";
+import { Smartphone as SmartphoneIcon } from "lucide-react";
+import { Wifi as WifiIcon } from "lucide-react";
+import { Store as StoreIcon } from "lucide-react";
+import { Utensils as UtensilsIcon } from "lucide-react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { CreditCard as CreditCardIcon } from "lucide-react";
 
 const SCENARIOS = [
   {
@@ -79,14 +79,14 @@ export default function EasyTapGo() {
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-1.5 text-xs font-medium text-violet-300 mb-6">
             <WifiIcon className="w-3.5 h-3.5" aria-hidden="true" />
-            EasyTap Go Integration
+            EasyTap Go · Concept flow
           </div>
           <h1 className="font-display font-800 text-5xl sm:text-6xl text-navy mb-6 leading-tight">
             One tap.<br />
             <span className="gradient-text">The whole experience.</span>
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-10">
-            EasyTap Go connects Mio to the physical world. A single NFC tap launches a fully contextual Mio session — ordering, booking, shopping, or paying — right where your customer is standing.
+            Explore how a venue’s NFC tag could open a contextual Mio experience for ordering, booking, shopping, or paying. NFC hardware and live checkout are not connected in this preview.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

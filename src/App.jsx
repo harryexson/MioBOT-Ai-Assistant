@@ -1,34 +1,72 @@
 import { Routes, Route } from "react-router";
-import Nav from "./components/Nav.jsx";
-import Home from "./pages/Home.jsx";
-import Onboarding from "./pages/Onboarding.jsx";
-import Features from "./pages/Features.jsx";
-import Pricing from "./pages/Pricing.jsx";
-import MerchantDashboard from "./pages/MerchantDashboard.jsx";
-import AdminDashboard from "./pages/AdminDashboard.jsx";
-import DeveloperPortal from "./pages/DeveloperPortal.jsx";
-import WidgetDemo from "./pages/WidgetDemo.jsx";
-import EasyTapGo from "./pages/EasyTapGo.jsx";
-import Providers from "./pages/Providers.jsx";
-import Checkout from "./pages/Checkout.jsx";
-import NotFound from "./pages/NotFound.jsx";
-
+import Nav from "./components/Nav";
+import Home from "./pages/Home";
+import Onboarding from "./pages/Onboarding";
+import Features from "./pages/Features";
+import DeveloperPortal from "./pages/DeveloperPortal";
+import WidgetDemo from "./pages/WidgetDemo";
+import EasyTapGo from "./pages/EasyTapGo";
+import Providers from "./pages/Providers";
+import Experience from "./pages/Experience";
+import Settings from "./pages/Settings";
+import Marketing, { LegalPage, PricingPage } from "./pages/Marketing";
+import MerchantDashboard from "./pages/MerchantDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import Checkout from "./pages/Checkout";
+import NotFound from "./pages/NotFound";
+function Preview({ children }) {
+  return (
+    <>
+      <div className="legacy-notice">
+        Concept dashboard · All figures and actions are sample data. No live
+        transactions.
+      </div>
+      {children}
+    </>
+  );
+}
 export default function App() {
   return (
     <>
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/features" element={<Features />} />
+        <Route path="/app" element={<Experience />} />
         <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/merchant" element={<MerchantDashboard />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/providers" element={<Providers />} />
+        <Route path="/easytap" element={<EasyTapGo />} />
         <Route path="/developers" element={<DeveloperPortal />} />
         <Route path="/widget" element={<WidgetDemo />} />
-        <Route path="/easytap" element={<EasyTapGo />} />
-        <Route path="/providers" element={<Providers />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/business" element={<Marketing />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/privacy" element={<LegalPage />} />
+        <Route path="/terms" element={<LegalPage />} />
+        <Route
+          path="/merchant"
+          element={
+            <Preview>
+              <MerchantDashboard />
+            </Preview>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <Preview>
+              <AdminDashboard />
+            </Preview>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Preview>
+              <Checkout />
+            </Preview>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

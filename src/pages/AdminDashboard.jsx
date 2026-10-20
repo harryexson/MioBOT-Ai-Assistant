@@ -1,17 +1,17 @@
 import { useState } from "react";
-import ShieldIcon from "icon:shield";
-import UsersIcon from "icon:users";
-import ServerIcon from "icon:server";
-import AlertTriangleIcon from "icon:alert-triangle";
-import CheckCircleIcon from "icon:check-circle";
-import ActivityIcon from "icon:activity";
-import GlobeIcon from "icon:globe";
-import KeyIcon from "icon:key";
-import BarChart2Icon from "icon:bar-chart-2";
-import BellIcon from "icon:bell";
-import SettingsIcon from "icon:settings";
-import XCircleIcon from "icon:x-circle";
-import RefreshCwIcon from "icon:refresh-cw";
+import { Shield as ShieldIcon } from "lucide-react";
+import { Users as UsersIcon } from "lucide-react";
+import { Server as ServerIcon } from "lucide-react";
+import { AlertTriangle as AlertTriangleIcon } from "lucide-react";
+import { CheckCircle as CheckCircleIcon } from "lucide-react";
+import { Activity as ActivityIcon } from "lucide-react";
+import { Globe as GlobeIcon } from "lucide-react";
+import { Key as KeyIcon } from "lucide-react";
+import { BarChart2 as BarChart2Icon } from "lucide-react";
+import { Bell as BellIcon } from "lucide-react";
+import { Settings as SettingsIcon } from "lucide-react";
+import { XCircle as XCircleIcon } from "lucide-react";
+import { RefreshCw as RefreshCwIcon } from "lucide-react";
 
 const PLATFORM_STATS = [
   { label: "Total Merchants", value: "52,841", change: "+312 this week", up: true, icon: UsersIcon },
@@ -210,7 +210,7 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-3">
               <h1 className="text-navy font-display font-bold text-lg">Platform Admin</h1>
-              <span className="px-2 py-0.5 bg-red-500/20 text-red-300 text-xs rounded-full border border-red-500/30">Restricted</span>
+              <span className="px-2 py-0.5 bg-violet-500/15 text-violet-200 text-xs rounded-full border border-violet-400/25">Preview</span>
             </div>
             <div className="flex items-center gap-3">
               <button className="p-2 rounded-lg text-gray-500 hover:text-navy hover:bg-white/8 transition-colors" aria-label="Notifications">

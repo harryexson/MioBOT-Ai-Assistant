@@ -1,0 +1,61 @@
+:root { --mio-settle: cubic-bezier(.22,1,.36,1); }
+.landing { overflow: clip; }
+.hero { perspective: 1400px; }
+.hero-art { transform-style: preserve-3d; transition: transform 650ms var(--mio-settle); isolation: isolate; }
+.portrait-frame { box-shadow: 0 32px 65px -35px #472b6c65, 0 0 0 1px #ffffffb0; transform: translateZ(0); }
+.portrait-frame::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 1px #fff9; pointer-events: none; }
+.hero-orbit { position: absolute; border: 1px solid #bda0e469; border-radius: 50%; pointer-events: none; }
+.hero-orbit-back { inset: 30% -9% -7% -6%; transform: rotate(-24deg); z-index: -1; border-width: 1px 9px 1px 1px; box-shadow: 8px 15px 25px -15px #7645e84a; }
+.hero-orbit-front { width: 150px; height: 46px; left: -43px; bottom: 110px; transform: rotate(-28deg) translateZ(35px); border-color: #ffffffa3; z-index: 2; }
+.float-request, .float-answer { backdrop-filter: blur(18px); background: #fffffff2; border-color: #fff; box-shadow: 0 1px 1px #fff inset, 0 12px 36px -16px #42275e48; z-index: 3; }
+.float-request { animation: mio-card-drift 8s cubic-bezier(.45,0,.55,1) infinite; }
+.float-answer { animation: mio-card-drift 9s cubic-bezier(.45,0,.55,1) infinite -4s; }
+.floating-orb { z-index: 4; }
+.mio-orb::after { content: ""; position: absolute; width: 38%; height: 19%; border-radius: 50%; top: 11%; left: 16%; background: #ffffff55; filter: blur(8px); transform: rotate(-25deg); }
+.mio-orb svg { animation: none; }
+.hero-copy > .eyebrow, .hero h1, .hero-copy > p, .hero-actions, .hero-note { animation: mio-arrive 700ms var(--mio-settle) both; }
+.hero h1 { animation-delay: 70ms; text-wrap: balance; }
+.hero-copy > p { animation-delay: 140ms; }
+.hero-actions { animation-delay: 210ms; }
+.hero-note { animation-delay: 260ms; }
+.motion-toolbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; gap: 12px; color: #897a95; font-size: 10px; letter-spacing: .2px; }
+.motion-toolbar button { display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border-radius: 20px; border: 1px solid #e9e0f1; color: #786589; background: #fcfafc; cursor: pointer; }
+.motion-ready { opacity: 0; translate: 0 16px; transition: opacity 650ms var(--mio-settle), translate 650ms var(--mio-settle); transition-delay: var(--reveal-delay, 0ms); }
+.motion-ready.motion-visible { opacity: 1; translate: 0 0; }
+.service-card { position: relative; box-shadow: inset 0 1px 0 #fffc, 0 12px 24px -22px #4d315a6b; transition: transform 350ms var(--mio-settle), opacity 650ms var(--mio-settle), translate 650ms var(--mio-settle); }
+.service-card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(145deg,#ffffff60,transparent 55%); pointer-events: none; }
+.service-card .service-illustration { transition: transform 500ms var(--mio-settle); transform: perspective(700px) rotateX(4deg) rotateY(-8deg); }
+.service-card:hover .service-illustration { transform: perspective(700px) rotateX(-3deg) rotateY(5deg) translateY(-5px); }
+.phone-stage { perspective: 1200px; }
+.phone-stage .product-phone { transform: rotate(-5deg) rotateY(-12deg) rotateX(4deg); transition: transform 700ms var(--mio-settle); box-shadow: 5px 5px 0 #aaa0b5, 20px 30px 55px -12px #3e235d45; }
+.phone-stage:hover .product-phone { transform: rotate(-2deg) rotateY(-3deg) rotateX(1deg); }
+.phone-result { animation: mio-result 380ms var(--mio-settle) both; }
+.business-preview { transform: perspective(1000px) rotateY(-7deg) rotateX(3deg); box-shadow: 14px 24px 40px -24px #3e235d50; transition: transform 600ms var(--mio-settle); }
+.business-banner:hover .business-preview { transform: perspective(1000px) rotateY(-2deg) rotateX(1deg); }
+.button-primary, .button-dark, .nav-cta { transition: transform 180ms var(--mio-settle), background 180ms var(--mio-settle); }
+.button-primary:active, .button-dark:active, .service-card:active { transform: scale(.98); }
+.button-primary > svg, .text-link > svg { transition: transform 220ms var(--mio-settle); }
+.button-primary:hover > svg, .text-link:hover > svg { transform: translate(2px,-2px); }
+.landing[data-motion="paused"] *, .landing[data-motion="paused"] *::before, .landing[data-motion="paused"] *::after { animation-play-state: paused !important; transition: none !important; }
+.landing[data-motion="paused"] .motion-ready { opacity: 1; translate: none; }
+.landing[data-motion="paused"] .hero-copy > .eyebrow,
+.landing[data-motion="paused"] .hero h1,
+.landing[data-motion="paused"] .hero-copy > p,
+.landing[data-motion="paused"] .hero-actions,
+.landing[data-motion="paused"] .hero-note { animation: none !important; }
+@keyframes mio-arrive { from { opacity: 0; transform: translateY(12px); filter: blur(3px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes mio-card-drift { 0%,100% { transform: translate3d(0,0,28px); } 50% { transform: translate3d(0,-7px,28px); } }
+@keyframes mio-result { from { opacity: .4; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@media (hover: none), (max-width: 760px) {
+  .hero-art { transform: none !important; }
+  .hero-orbit-back { inset: 34% -3% -4%; }
+  .hero-orbit-front { display: none; }
+  .motion-toolbar > span { max-width: 190px; }
+  .phone-stage .product-phone { transform: rotate(-4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready { opacity: 1; translate: none; }
+  .hero-art, .service-card .service-illustration, .phone-stage .product-phone, .business-preview { transform: none !important; }
+  .motion-toolbar { display: none; }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

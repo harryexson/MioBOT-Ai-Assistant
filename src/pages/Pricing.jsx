@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import CheckIcon from "icon:check-circle";
-import ArrowRightIcon from "icon:arrow-right";
+import { CheckCircle as CheckIcon } from "lucide-react";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
 
 const PLANS = [
   {

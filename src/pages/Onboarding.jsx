@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import CheckIcon from "icon:check-circle";
-import ArrowRightIcon from "icon:arrow-right";
-import ArrowLeftIcon from "icon:arrow-left";
-import MicIcon from "icon:mic";
+import { CheckCircle as CheckIcon } from "lucide-react";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
+import { ArrowLeft as ArrowLeftIcon } from "lucide-react";
+import { Mic as MicIcon } from "lucide-react";
 
 const STEPS = [
   { id: "welcome", title: "Welcome to Mio" },
