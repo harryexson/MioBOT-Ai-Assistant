@@ -1,6 +1,6 @@
 # Project Setup
 
-Last updated: 2026-10-15
+Last updated: 2026-10-14
 
 Factual state of this project, for the assistant's reference. Record project
 state here only — structure, installed packages, active patterns. Keep it brief.
@@ -68,7 +68,7 @@ src/
     DeveloperPortal.jsx   # Developer portal — API reference, SDKs, guides, code samples (/developers)
     WidgetDemo.jsx        # Embeddable Mio widget live demo — shopping, food, travel scenarios (/widget)
     EasyTapGo.jsx         # NFC/EasyTap Go integration — scenarios, security, SDK setup (/easytap)
-    Providers.jsx         # Universal provider gateway — live status, ops matrix, 10 categories (/providers)
+    Providers.jsx         # Prospective partner catalog — search, categories, commission estimates, saved shortlist (/providers)
     Checkout.jsx          # Checkout & payments flow — live demo, steps, trust features (/checkout)
     NotFound.jsx          # 404 page
 public/
@@ -79,7 +79,7 @@ index.html              # Title: "Mio AI — Talk. Find. Book. Order. Pay."
 ## Design system
 
 - **Typefaces:** Syne (display/headings) + DM Sans (body) via Google Fonts vite-ignore link
-- **Palette:** White background (#ffffff), navy text (#0f1035), violet/purple gradient (#7c3aed → #4f46e5)
+- **Palette:** Deep navy background (#06061a), violet/purple gradient (#7c3aed → #4f46e5)
 - **Theme tokens:** `--font-display`, `--font-sans`, `--color-navy`, `--color-violet` in @theme
 - **Utilities:** `.glass`, `.glass-light`, `.gradient-bg`, `.gradient-text`, `.glow-violet`, `.phone-mockup`
 - **Animations:** float, pulse-glow, slide-up, wave (CSS keyframes in index.css)
@@ -122,9 +122,17 @@ works from any of them — so two rules keep links and assets from breaking:
 Remote: https://github.com/harryexson/MioBOT-Ai-Assistant.git
 Branch: dev
 Note: Push requires GitHub credentials — provide a personal access token or SSH key to push.
+## Standalone redesign (2026-10-18)
+- Standalone Vite configuration and Lucide imports replace the IONOS-only runtime imports.
+- `package.local.json` + `scripts/setup-local.mjs` install a local runtime without changing the platform dependency manifest.
+- `Experience.jsx` implements `/app`, with in-memory sample conversations and localStorage saved item IDs.
+- `Marketing.jsx` implements associated marketing, pricing, and preview disclosure pages.
+- `mobile/App.tsx` is a credential-free React Native preview; the original entry is `mobile/LegacyApp.tsx`.
+- Root website uses DM Sans, warm off-white and violet; custom imagery is in `public/images`.
+- Active source and standalone runtime are in this repository root.
 
-## Auth
-- Users sign up / sign in via AuthModal component (src/components/AuthModal.jsx)
-- Modal opens from Nav "Get Started" and "Sign In" buttons
-- Auth context in src/lib/useAuth.jsx — useAuth() gives { user, login, signup, logout, isLoggedIn }
-- PocketBase users collection (auth type) — fields: name, email, password, plan, role
+## Unified upstream merge (2026-10-20)
+- One homepage retains the custom portrait and motion while exposing ten service modules, eight app journeys, voice/search, partner ecosystem, EasyTap and engine features.
+- Shared content is in src/data; /integrations and /partners redirect to /providers; /voice shares Search and useSpeechInput.
+- AuthProvider and incoming account modules use optional PocketBase configured by VITE_POCKETBASE_URL. Unconfigured write forms are unavailable; search and commission previews are explicitly sample data.
+- MERGE-REPORT.md maps the upstream source and verification; scripts/verify-unified.mjs checks browser parity.

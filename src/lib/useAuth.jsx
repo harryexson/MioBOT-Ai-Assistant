@@ -1,19 +1,19 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { pb } from "./pb.js";
+import { pb, backendConfigured } from "./pb.js";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(pb.authStore.record);
+  const [user, setUser] = useState(backendConfigured && pb.authStore.isValid ? pb.authStore.record : null);
 
   useEffect(() => {
     // Refresh token on startup if already logged in
-    if (pb.authStore.isValid) {
+    if (backendConfigured && pb.authStore.isValid) {
       pb.collection("users").authRefresh().catch(() => pb.authStore.clear());
     }
 
     const unsub = pb.authStore.onChange((token, record) => {
-      setUser(record);
+      setUser(backendConfigured && pb.authStore.isValid ? record : null);
     });
     return () => unsub();
   }, []);

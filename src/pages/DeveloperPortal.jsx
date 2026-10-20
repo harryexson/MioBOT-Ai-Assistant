@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { IconMore,IconNFC } from '../components/MioIcons.jsx';
-import CodeIcon from "icon:code";
-import KeyIcon from "icon:key";
-import BookOpenIcon from "icon:book-open";
-import ZapIcon from "icon:zap";
-import CopyIcon from "icon:copy";
-import CheckIcon from "icon:check";
-import TerminalIcon from "icon:terminal";
-import LayersIcon from "icon:layers";
-import ArrowRightIcon from "icon:arrow-right";
-import ExternalLinkIcon from "icon:external-link";
-import ShieldIcon from "icon:shield-check";
+import { Code as CodeIcon } from "lucide-react";
+import { Key as KeyIcon } from "lucide-react";
+import { BookOpen as BookOpenIcon } from "lucide-react";
+import { Zap as ZapIcon } from "lucide-react";
+import { Copy as CopyIcon } from "lucide-react";
+import { Check as CheckIcon } from "lucide-react";
+import { Terminal as TerminalIcon } from "lucide-react";
+import { Layers as LayersIcon } from "lucide-react";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
+import { ExternalLink as ExternalLinkIcon } from "lucide-react";
+import { ShieldCheck as ShieldIcon } from "lucide-react";
 
 const ENDPOINTS = [
   {
@@ -59,12 +58,12 @@ const METHOD_COLOR = {
 };
 
 const SDKS = [
-  { name: "JavaScript / TypeScript", icon: "🟡", install: "npm install @mio-ai/sdk", badge: "Official" },
-  { name: "React Native", icon: "⚛️", install: "npm install @mio-ai/react-native", badge: "Official" },
-  { name: "Python", icon: "🐍", install: "pip install mio-ai", badge: "Official" },
-  { name: "iOS Swift", icon: "🍎", install: "Swift Package Manager", badge: "Official" },
-  { name: "Android Kotlin", icon: "android", install: "implementation 'ai.mio:sdk:1.0'", badge: "Official" },
-  { name: "REST API", icon: "rest", install: "No SDK needed — use any HTTP client", badge: "Standard" },
+  { name: "JavaScript / TypeScript", icon: "🟡", install: "Planned SDK", badge: "Planned" },
+  { name: "React Native", icon: "⚛️", install: "Planned SDK", badge: "Planned" },
+  { name: "Python", icon: "🐍", install: "Planned SDK", badge: "Planned" },
+  { name: "iOS Swift", icon: "🍎", install: "Planned SDK", badge: "Planned" },
+  { name: "Android Kotlin", icon: "🤖", install: "Planned SDK", badge: "Planned" },
+  { name: "REST API", icon: "🌐", install: "Example contract only", badge: "Concept" },
 ];
 
 const GUIDES = [
@@ -135,11 +134,10 @@ const order = await mio.transactions.confirm({
   confirmation: true,
 });`;
 
-const WIDGET_CODE = `<!-- Add Mio to any page — one line -->
-<script src="https://cdn.mio-ai.com/widget/v1.js"
+const WIDGET_CODE = `<!-- Illustrative only — no public Mio widget SDK is available yet. -->
+<script src="https://example.com/mio-widget.js"
   data-api-key="YOUR_PUBLIC_KEY"
-  data-merchant-id="YOUR_MERCHANT_ID"
-  data-theme="dark">
+  data-merchant-id="YOUR_MERCHANT_ID">
 </script>`;
 
 export default function DeveloperPortal() {
@@ -153,19 +151,19 @@ export default function DeveloperPortal() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-border shadow-sm border border-violet-500/30 text-violet-300 text-xs font-medium mb-6">
             <CodeIcon size={12} />
-            Developer Portal — API v1.0
+            Developer concepts · sample API
           </div>
           <h1 className="text-4xl sm:text-5xl font-display font-bold text-navy mb-4">
             Build with <span className="gradient-text">Mio AI</span>
           </h1>
           <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-            Integrate voice-first commerce, booking, and payments into your app or website using the Mio API. One integration, every service category.
+            Explore the proposed API and SDK experience. Mio’s public API, packages, and credentials are not available in this preview.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <button className="px-5 py-2.5 rounded-xl gradient-bg text-navy font-semibold text-sm hover:opacity-90 transition-opacity flex items-center gap-2">
-              Get API Key <ArrowRightIcon size={14} />
+            <button onClick={() => document.getElementById("api-access")?.scrollIntoView({ behavior: "smooth" })} className="px-5 py-2.5 rounded-xl gradient-bg text-navy font-semibold text-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+              API availability <ArrowRightIcon size={14} />
             </button>
-            <button className="px-5 py-2.5 rounded-xl bg-white border border-border shadow-sm border border-white/12 text-navy text-sm hover:bg-white/8 transition-colors flex items-center gap-2">
+            <button onClick={() => document.getElementById("quick-start")?.scrollIntoView({ behavior: "smooth" })} className="px-5 py-2.5 rounded-xl bg-white border border-border shadow-sm border border-white/12 text-navy text-sm hover:bg-white/8 transition-colors flex items-center gap-2">
               <BookOpenIcon size={14} /> Read Docs
             </button>
           </div>
@@ -175,7 +173,7 @@ export default function DeveloperPortal() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
 
         {/* API Key box */}
-        <section>
+        <section id="api-access">
           <div className="bg-white border border-border shadow-sm rounded-xl p-6 border border-violet-500/20">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
               <div className="flex items-center gap-3">
@@ -183,25 +181,24 @@ export default function DeveloperPortal() {
                   <KeyIcon size={18} className="text-navy" />
                 </div>
                 <div>
-                  <h2 className="text-navy font-semibold">Your API Keys</h2>
-                  <p className="text-gray-500 text-sm">Sandbox mode active — safe for testing</p>
+                  <h2 className="text-navy font-semibold">API access preview</h2>
+                  <p className="text-gray-500 text-sm">No API keys are issued in this demo</p>
                 </div>
               </div>
               <div className="sm:ml-auto">
-                <span className="px-2.5 py-1 bg-amber-500/20 text-amber-300 text-xs rounded-full border border-amber-500/30">Sandbox</span>
+                <span className="px-2.5 py-1 bg-amber-500/20 text-amber-300 text-xs rounded-full border border-amber-500/30">Preview only</span>
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
-              {[
-                { label: "Public Key", value: "pk_test_4xR9mK2vNbLqP7wZ…" },
-                { label: "Secret Key", value: "sk_test_••••••••••••••••••••••" },
+                {[
+                { label: "Public key", value: "Not issued" },
+                { label: "Secret key", value: "Not available" },
               ].map((k) => (
                 <div key={k.label} className="bg-black/30 border border-white/8 rounded-lg px-4 py-3 flex items-center justify-between">
                   <div>
                     <p className="text-gray-500 text-xs mb-1">{k.label}</p>
                     <p className="text-navy text-sm font-mono">{k.value}</p>
                   </div>
-                  <CopyButton text={k.value} />
                 </div>
               ))}
             </div>
@@ -210,10 +207,11 @@ export default function DeveloperPortal() {
         </section>
 
         {/* Quick start */}
-        <section>
+        <section id="quick-start">
           <h2 className="text-navy font-display font-bold text-xl mb-5">Quick Start</h2>
+          <p className="text-gray-500 text-sm mb-4">The endpoint names and snippets below illustrate a proposed interface. They are not backed by a live API or released SDK.</p>
           <div className="space-y-4">
-            <CodeBlock lang="bash" code="npm install @mio-ai/sdk" />
+            <CodeBlock lang="status" code="# Mio SDK packages are not released yet" />
             <CodeBlock lang="javascript" code={EXAMPLE_CODE} />
           </div>
         </section>
@@ -221,11 +219,11 @@ export default function DeveloperPortal() {
         {/* Embeddable widget */}
         <section>
           <h2 className="text-navy font-display font-bold text-xl mb-2">Embeddable Widget</h2>
-          <p className="text-gray-500 text-sm mb-4">Drop a fully working Mio AI assistant onto any website — voice, chat, cards, and maps included.</p>
+          <p className="text-gray-500 text-sm mb-4">Preview the proposed widget integration. The public widget script and live provider connections are not available yet.</p>
           <CodeBlock lang="html" code={WIDGET_CODE} />
           <div className="mt-4 p-4 bg-white border border-border shadow-sm rounded-xl border border-white/8 flex items-start gap-3">
             <ZapIcon size={16} className="text-violet-400 mt-0.5 shrink-0" />
-            <p className="text-gray-600 text-sm">The widget connects to your approved provider list only. No raw credentials are exposed — only your public key is needed in client-side code.</p>
+            <p className="text-gray-600 text-sm">This is a visual concept for a future embed. The sample script does not load a widget, call a provider, or accept credentials.</p>
           </div>
         </section>
 
@@ -272,7 +270,7 @@ export default function DeveloperPortal() {
               <div key={sdk.name} className="bg-white border border-border shadow-sm rounded-xl p-4 border border-white/8 hover:border-violet-500/20 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xl" aria-hidden="true">sdk.icon==="android" ? <IconMore size={18} color="#3ddc84" /> : <IconNFC size={18} color="#0891b2" /></span>
+                    <span className="text-xl" aria-hidden="true">{sdk.icon}</span>
                     <p className="text-navy text-sm font-medium">{sdk.name}</p>
                   </div>
                   <span className="px-2 py-0.5 bg-violet-500/20 text-violet-300 text-xs rounded-full border border-violet-500/30">{sdk.badge}</span>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { pb } from "../lib/pb.js";
+import { pb, backendConfigured } from "../lib/pb.js";
 
 // SVG icons
 const IconMail = () => (
@@ -124,7 +124,7 @@ export default function About() {
       background: "linear-gradient(135deg, #0f1035 0%, #1e1b4b 100%)",
       padding: "80px 24px",
     },
-    contactInner: { maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "start" },
+    contactInner: { maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))", gap: 48, alignItems: "start" },
     contactH2: {
       fontFamily: "Manrope, sans-serif", fontWeight: 800,
       fontSize: "clamp(28px,3.5vw,44px)", color: "#fff",
@@ -193,21 +193,21 @@ export default function About() {
 
       {/* Mission */}
       <div style={s.section}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))", gap: 48, alignItems: "center" }}>
           <div>
             <h2 style={s.sectionH2}>One assistant.<br />Endless possibilities.</h2>
             <p style={{ ...s.sectionSub, marginBottom: 24 }}>
               We believe the future of getting things done is conversational. You shouldn't need to know which app to open, which merchant to search, or how to navigate a checkout flow. You should just be able to ask.
             </p>
             <p style={{ ...s.sectionSub, marginBottom: 0 }}>
-              Mio connects you to the best services across shopping, food, travel, bookings, and payments — and handles everything through a single, intelligent interface that understands what you actually need.
+              Mio is designed to bring shopping, food, travel, bookings, and payments into one thoughtful experience. Today, you can explore the product through interactive samples while connected services are developed.
             </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             {[
               { n: "10+", l: "Service categories" },
-              { n: "Early Access", l: "Join now — free" },
-              { n: "30+", l: "Partner integrations" },
+              { n: "Preview", l: "Explore for free" },
+              { n: "30+", l: "Prospective partners" },
               { n: "1 App", l: "For everything" },
             ].map(({ n, l }) => (
               <div key={l} style={{ background: "#f5f3ff", borderRadius: 16, padding: "24px 20px", textAlign: "center" }}>
@@ -270,21 +270,21 @@ export default function About() {
           <div>
             <h2 style={s.contactH2}>Get in touch</h2>
             <p style={s.contactSub}>
-              Whether you're a potential partner, a business wanting to list on Mio, press, or just someone with a question — we'd love to hear from you. We read every message.
+              Explore the project, share feedback, or discuss a future partnership. The contact form is a preview; project feedback is available on GitHub.
             </p>
             <div style={s.infoItem}>
               <span style={s.infoIcon}><IconMail /></span>
-              <span style={s.infoText}>hello@mio.ai</span>
+              <span style={s.infoText}>Mio project & community</span>
             </div>
             <div style={s.infoItem}>
               <span style={s.infoIcon}><IconMapPin /></span>
-              <span style={s.infoText}>United Kingdom</span>
+              <span style={s.infoText}>Built for everyday life</span>
             </div>
             <div style={s.socialRow}>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={s.socialBtn} aria-label="Follow on X (Twitter)">
+              <a href="https://github.com/harryexson/MioBOT-Ai-Assistant" target="_blank" rel="noopener noreferrer" style={s.socialBtn} aria-label="View Mio on GitHub">
                 <IconTwitter />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={s.socialBtn} aria-label="Follow on LinkedIn">
+              <a href="https://github.com/harryexson/MioBOT-Ai-Assistant/issues" target="_blank" rel="noopener noreferrer" style={s.socialBtn} aria-label="Mio project feedback">
                 <IconLinkedIn />
               </a>
             </div>
@@ -317,10 +317,11 @@ export default function About() {
 
                 {status === "error" && (
                   <div style={{ ...s.errorBanner, marginBottom: 16 }}>
-                    Something went wrong — please try again or email us directly at hello@mio.ai
+                    Your message could not be sent. Please try again later or visit the project on GitHub.
                   </div>
                 )}
-                <button type="submit" style={s.submitBtn} disabled={status === "sending"}>
+                {!backendConfigured && <p className="connection-note">The contact form is not available in this preview. You can leave project feedback on GitHub.</p>}
+                <button type="submit" style={{ ...s.submitBtn, opacity: backendConfigured ? 1 : .5 }} disabled={!backendConfigured || status === "sending"}>
                   {status === "sending" ? "Sending…" : "Send Message"}
                 </button>
               </form>

@@ -7,9 +7,16 @@
  * - Services: Thumbtack, TaskRabbit API
  * - Events: Ticketmaster Discovery API, Eventbrite
  * - Payments: Stripe, PayPal Commerce
- * Commission rates represent real referral program rates.
+ * Commission rates are unverified illustrative planning values.
  */
 
+export function inferCategory(query = "") {
+  if (/pizza|food|sushi|restaurant|dinner|burger|meal/i.test(query)) return "food";
+  if (/hotel|flight|travel|airbnb|resort|vacation/i.test(query)) return "travel";
+  if (/concert|ticket|event|music|nba|comedy/i.test(query)) return "events";
+  if (/plumb|clean|trainer|repair|service|dog walker/i.test(query)) return "services";
+  return "shopping";
+}
 export const PROVIDERS = {
   shopping: [
     { id: "amz", name: "Amazon", logo: "AMZ", commissionRate: 0.04, category: "shopping" },
@@ -82,16 +89,12 @@ export async function searchProducts(query, category = "shopping") {
   // Filter by query if provided
   if (query && query.trim()) {
     const q = query.toLowerCase();
-    return categoryResults.filter(r => 
-      r.name.toLowerCase().includes(q) || 
-      (r.restaurant || "").toLowerCase().includes(q) ||
-      (r.badge || "").toLowerCase().includes(q)
-    ).length > 0 
-      ? categoryResults.filter(r => 
-          r.name.toLowerCase().includes(q) || 
-          (r.restaurant || "").toLowerCase().includes(q)
-        )
-      : categoryResults;
+    const budget = q.match(/(?:under|below|less than)\s*\$?([\d,.]+)/);
+    const words = q.replace(/(?:under|below|less than)\s*\$?[\d,.]+/g, "").split(/\W+/).filter(word => word.length > 2 && !["find","show","near","for","the","some","get","with","order","book","need"].includes(word));
+    return categoryResults.filter(item => {
+      const text = [item.name, item.emoji, item.restaurant, item.badge, item.city, item.venue, item.provider].filter(Boolean).join(" ").toLowerCase();
+      return (!words.length || words.some(word => text.includes(word))) && (!budget || item.price <= Number(budget[1].replaceAll(",", "")));
+    });
   }
   
   return categoryResults;

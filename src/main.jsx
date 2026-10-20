@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import App from "./App.jsx";
 import "./index.css";
+import "./motion.css";
+import "./platform.css";
 
 const basename = new URL(document.baseURI).pathname.replace(/\/$/, "");
 

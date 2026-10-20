@@ -1,0 +1,10 @@
+{
+  "image": {
+    "loaded": true,
+    "src": "images/mio-portrait.png"
+  },
+  "providerCount": 31,
+  "mobileOverflow": false,
+  "reducedMotionAnimation": "none",
+  "errors": []
+}

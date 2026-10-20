@@ -1,97 +1,35 @@
-# Mio AI — Mobile App (React Native / Expo)
+# Mio mobile preview
 
-A production-ready React Native app for iOS and Android, built with Expo, Supabase, and Stripe.
+A native Expo / React Native experience for iOS and Android, with matching violet branding and a custom portrait welcome screen.
 
-## Quick start
+## Run
 
-### 1. Install dependencies
-```bash
-cd mobile
+```sh
 npm install
+npm start
 ```
 
-### 2. Configure environment
-```bash
-cp .env.example .env
-```
-Open `.env` and fill in your keys:
-- **Supabase URL + anon key** — from [supabase.com](https://supabase.com) → Project Settings → API
-- **Stripe publishable key** — from [dashboard.stripe.com/apikeys](https://dashboard.stripe.com/apikeys) (use the publishable key only)
-- **Mio API base URL** — your deployed backend
+This project uses Expo SDK 57 and the current Expo Go-compatible React Native runtime. The active app is a sample preview that can be tested without an account or API keys.
 
-### 3. Set up your data store
-In your Supabase project, go to **SQL Editor** and paste the contents of `supabase-schema.sql`, then click **Run**. This creates all the tables, security rules, and indexes.
+The default app requires no backend credentials. It includes welcome, 11 everyday service use cases, sample conversations, save/unsave, a saved collection, editable preview preferences, a prospective provider directory, privacy information, and reset flows. Suggestions are deterministic examples; no real order, booking, payment, NFC scan, speech recognition, or AI request occurs. Saved picks, conversations, and preferences are held in memory for the current run. Provider names in the mobile preview are concepts and are not connected integrations.
 
-### 4. Run the app
+## Checks and native builds
 
-**On your phone (easiest):**
-```bash
-npx expo start
-```
-Scan the QR code with the Expo Go app (iOS App Store / Google Play).
-
-**On iOS Simulator (Mac only):**
-```bash
-npx expo start --ios
+```sh
+npm run typecheck
+npx expo export --platform ios --platform android
+npx eas-cli login
+npx eas-cli init
+npm run build:android
+npm run build:ios
 ```
 
-**On Android Emulator:**
-```bash
-npx expo start --android
-```
+`expo export` verifies JavaScript bundling; it does not produce an installable app. Sign in with your own Expo account, then run `eas init` once to create/link the EAS project and add its project ID to `app.json`. `npm run build:android` creates an internal-distribution APK you can download and install on an Android device. For iOS, EAS needs Apple signing credentials; internal device builds also require registered devices. Store publishing is not configured.
 
-## Building for the App Store / Google Play
+The native preview has no real personal/business signup, admin authorization, or backend connection. The web routes `/merchant` and `/admin` are sample dashboards for design review and contain mock data; they do not provide secure customer accounts. Real signup and role-based access require a configured auth/database service and server-side policies. Keep any service-role secrets out of the app and Git.
 
-### Install EAS CLI
-```bash
-npm install -g eas-cli
-eas login
-eas build:configure
-```
+`tsconfig.json` checks the new preview entry point. The preserved legacy screens are not included in that check and require a separate integration audit. `LegacyApp.tsx` preserves the original Supabase/Stripe entry point; do not switch to it until valid configuration and backend services exist.
 
-### Build Android APK
-```bash
-eas build --platform android
-```
+## Assets
 
-### Build iOS IPA (requires Apple Developer account)
-```bash
-eas build --platform ios
-```
-
-## Project structure
-
-```
-mobile/
-  App.tsx                          # Root — Stripe + auth + navigation
-  app.json                         # Expo config (bundle IDs, permissions, plugins)
-  supabase-schema.sql              # Run once in Supabase SQL Editor
-  .env.example                     # Copy to .env and fill in your keys
-  src/
-    screens/
-      OnboardingScreen.tsx         # 5-step onboarding (welcome → interests → voice → account → done)
-      HomeScreen.tsx               # Home with categories, AI picks, recent conversations
-      ChatScreen.tsx               # AI chat with voice, quick replies, and result cards
-    navigation/
-      AppNavigator.tsx             # Stack + bottom tab navigation
-    services/
-      supabase.ts                  # Auth, profiles, conversations, orders
-      mioApi.ts                    # Mio AI engine: chat, shopping, hotels, flights, food, events
-      stripe.ts                    # Payment sheet, Apple Pay, Google Pay
-    store/
-      useStore.ts                  # Zustand global state (auth, conversation, cart)
-```
-
-## API integrations (ready to connect)
-
-All integrations are scaffolded in `src/services/mioApi.ts`. Your backend handles the actual API calls and secret keys — the mobile app only talks to your own Mio API server.
-
-| Service | Provider | Sign up |
-|---------|----------|---------|
-| Hotels | Amadeus | [developers.amadeus.com](https://developers.amadeus.com) |
-| Flights | Amadeus Flight Offers | [developers.amadeus.com](https://developers.amadeus.com) |
-| Restaurants | Yelp Fusion | [fusion.yelp.com](https://fusion.yelp.com) |
-| Shopping | RapidAPI retailers | [rapidapi.com](https://rapidapi.com) |
-| Payments | Stripe | [stripe.com](https://stripe.com) |
-| Auth + data | Supabase | [supabase.com](https://supabase.com) |
-| Maps | Google Maps | [console.cloud.google.com](https://console.cloud.google.com) |
+`assets/mio-portrait.png` is the project’s custom AI-generated portrait. App icon and store artwork are launch tasks. The config does not reference the missing placeholder icon/splash files from the original repository.

@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
-import ZapIcon from "icon:zap";
+import { Link, useNavigate, useSearchParams } from "react-router";
+import { backendConfigured, unavailableMessage } from "../lib/pb";
+import { Zap as ZapIcon } from "lucide-react";
 import { useAuth } from "../lib/useAuth.jsx";
 
 export default function SignIn() {
   const { login, signup } = useAuth();
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const [mode, setMode] = useState("login"); // login | signup
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +25,8 @@ export default function SignIn() {
       } else {
         await signup(email, password, name);
       }
-      navigate("/");
+      const next = params.get("next");
+      navigate(["/dashboard", "/commissions", "/settings"].includes(next) ? next : "/dashboard");
     } catch (err) {
       setStatus("error");
       const msg = err?.response?.message || err?.message || "Something went wrong. Please try again.";
@@ -73,7 +76,8 @@ export default function SignIn() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {!backendConfigured && <p role="status" className="connection-note">{unavailableMessage} <Link to="/app">Explore the preview →</Link></p>}
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {mode === "signup" && (
               <div>
                 <label htmlFor="auth-name" style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 6 }}>Full name</label>
@@ -122,7 +126,7 @@ export default function SignIn() {
               </div>
             )}
 
-            <button type="submit" className="btn-primary" disabled={status === "loading"} style={{ width: "100%", justifyContent: "center", marginTop: 4, fontSize: 15 }}>
+            <button type="submit" className="btn-primary" disabled={!backendConfigured || status === "loading"} style={{ width: "100%", justifyContent: "center", marginTop: 4, fontSize: 15 }}>
               {status === "loading" ? (mode === "login" ? "Signing in…" : "Creating account…") : (mode === "login" ? "Sign In" : "Create Account")}
             </button>
           </form>

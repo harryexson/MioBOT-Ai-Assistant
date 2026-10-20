@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { pb } from "../lib/pb.js";
 import { IconSearch, IconUser, IconCheck } from "./MioIcons.jsx";
-import ArrowRightIcon from "icon:arrow-right";
-import XIcon from "icon:x";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
+import { X as XIcon } from "lucide-react";
 
 /* ── Auth Modal — Sign Up / Sign In ───────────────────────────────── */
 export default function AuthModal({ mode = "signup", onClose, onSuccess }) {

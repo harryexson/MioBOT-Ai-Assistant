@@ -153,16 +153,18 @@ export default function UserDashboard() {
       try {
         const [ordersRes, searchesRes, subsRes] = await Promise.all([
           pb.collection("orders").getList(1, 20, {
+            filter: pb.filter("user_id = {:id}", { id: user.id }),
             sort: "-created",
             signal: controller.signal,
           }).catch(() => ({ items: [] })),
           pb.collection("searches").getList(1, 20, {
+            filter: pb.filter("user_id = {:id}", { id: user.id }),
             sort: "-created",
             signal: controller.signal,
           }).catch(() => ({ items: [] })),
           pb.collection("subscriptions").getList(1, 1, {
             sort: "-created",
-            filter: `status = "active"`,
+            filter: pb.filter('user_id = {:id} && status = "active"', { id: user.id }),
             signal: controller.signal,
           }).catch(() => ({ items: [] })),
         ]);
@@ -177,7 +179,7 @@ export default function UserDashboard() {
     }
     load();
     return () => controller.abort();
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, user?.id]);
 
   if (!isLoggedIn) return null;
 

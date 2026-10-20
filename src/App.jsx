@@ -1,58 +1,97 @@
-import { Routes, Route } from "react-router";
-import { AuthProvider } from "./lib/useAuth.jsx";
-import Nav from "./components/Nav.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Home from "./pages/Home.jsx";
-import Search from "./pages/Search.jsx";
-import SignIn from "./pages/SignIn.jsx";
-import Onboarding from "./pages/Onboarding.jsx";
-import Features from "./pages/Features.jsx";
-import Pricing from "./pages/Pricing.jsx";
-import MerchantDashboard from "./pages/MerchantDashboard.jsx";
-import AdminDashboard from "./pages/AdminDashboard.jsx";
-import DeveloperPortal from "./pages/DeveloperPortal.jsx";
-import WidgetDemo from "./pages/WidgetDemo.jsx";
-import EasyTapGo from "./pages/EasyTapGo.jsx";
-import Providers from "./pages/Providers.jsx";
-import Checkout from "./pages/Checkout.jsx";
-import Integrations from "./pages/Integrations.jsx";
-import PartnerPortal from "./pages/PartnerPortal.jsx";
-import CommissionDashboard from "./pages/CommissionDashboard.jsx";
-import VoiceSearch from "./pages/VoiceSearch.jsx";
-import UserDashboard from "./pages/UserDashboard.jsx";
-import Privacy from "./pages/Privacy.jsx";
-import Terms from "./pages/Terms.jsx";
-import About from "./pages/About.jsx";
-import NotFound from "./pages/NotFound.jsx";
-
+import { lazy, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router";
+import { AuthProvider } from "./lib/useAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Footer } from "./pages/Home";
+const Search = lazy(() => import("./pages/Search"));
+const VoiceSearch = lazy(() => import("./pages/VoiceSearch"));
+const SignIn = lazy(() => import("./pages/SignIn"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
+const CommissionDashboard = lazy(() => import("./pages/CommissionDashboard"));
+const About = lazy(() => import("./pages/About"));
+import Nav from "./components/Nav";
+import Home from "./pages/Home";
+import Onboarding from "./pages/Onboarding";
+import Features from "./pages/Features";
+import DeveloperPortal from "./pages/DeveloperPortal";
+import WidgetDemo from "./pages/WidgetDemo";
+import EasyTapGo from "./pages/EasyTapGo";
+import Providers from "./pages/Providers";
+import Experience from "./pages/Experience";
+import Settings from "./pages/Settings";
+import Marketing, { LegalPage, PricingPage } from "./pages/Marketing";
+import MerchantDashboard from "./pages/MerchantDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import Checkout from "./pages/Checkout";
+import NotFound from "./pages/NotFound";
+function Preview({ children }) {
+  return (
+    <>
+      <div className="legacy-notice">
+        Concept dashboard · All figures and actions are sample data. No live
+        transactions.
+      </div>
+      {children}
+    </>
+  );
+}
+function Detail({ children, sample = false }) {
+  return <div className="unified-detail">{sample && <p className="platform-notice">Interactive preview · Results, prices, availability, and transactions shown here are sample data.</p>}{children}<Footer /></div>;
+}
 export default function App() {
   return (
     <AuthProvider>
       <Nav />
+      <Suspense fallback={<main id="main" className="wrap platform-section" aria-busy="true">Opening Mio…</main>}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/features" element={<Features />} />
+        <Route path="/app" element={<Experience />} />
         <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/merchant" element={<ProtectedRoute><MerchantDashboard /></ProtectedRoute>} />
-        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/providers" element={<Providers />} />
+        <Route path="/easytap" element={<EasyTapGo />} />
         <Route path="/developers" element={<DeveloperPortal />} />
         <Route path="/widget" element={<WidgetDemo />} />
-        <Route path="/easytap" element={<EasyTapGo />} />
-        <Route path="/providers" element={<Providers />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/integrations" element={<Integrations />} />
-        <Route path="/partners" element={<PartnerPortal />} />
-        <Route path="/commissions" element={<ProtectedRoute><CommissionDashboard /></ProtectedRoute>} />
-        <Route path="/voice" element={<VoiceSearch />} />
-        <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/business" element={<Marketing />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/search" element={<Detail sample><Search /></Detail>} />
+        <Route path="/voice" element={<Detail sample><VoiceSearch /></Detail>} />
+        <Route path="/signin" element={<Detail><SignIn /></Detail>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Detail><UserDashboard /></Detail></ProtectedRoute>} />
+        <Route path="/commissions" element={<Detail><CommissionDashboard /></Detail>} />
+        <Route path="/integrations" element={<Navigate to="/providers" replace />} />
+        <Route path="/partners" element={<Navigate to="/providers" replace />} />
+        <Route path="/about" element={<Detail><About /></Detail>} />
+        <Route path="/privacy" element={<LegalPage />} />
+        <Route path="/terms" element={<LegalPage />} />
+        <Route
+          path="/merchant"
+          element={
+            <Preview>
+              <MerchantDashboard />
+            </Preview>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <Preview>
+              <AdminDashboard />
+            </Preview>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Preview>
+              <Checkout />
+            </Preview>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </Suspense>
     </AuthProvider>
   );
 }

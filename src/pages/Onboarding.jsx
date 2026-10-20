@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { IconShopping,IconFood,IconTravel,IconServices,IconPayments,IconEvents,IconNFC,IconMore,IconInvoicing } from '../components/MioIcons.jsx';
 import { Link } from "react-router";
-import CheckIcon from "icon:check-circle";
-import ArrowRightIcon from "icon:arrow-right";
-import ArrowLeftIcon from "icon:arrow-left";
-import MicIcon from "icon:mic";
+import { CheckCircle as CheckIcon } from "lucide-react";
+import { ArrowRight as ArrowRightIcon } from "lucide-react";
+import { ArrowLeft as ArrowLeftIcon } from "lucide-react";
+import { Mic as MicIcon } from "lucide-react";
 
 const STEPS = [
   { id: "welcome", title: "Welcome to Mio" },
@@ -15,18 +14,18 @@ const STEPS = [
 ];
 
 const INTERESTS = [
-  { Icon: IconShopping, color:"#d97706", label: "Shopping" },
-  { Icon: IconFood, color:"#b45309", label: "Food & Restaurants" },
-  { Icon: IconTravel, color:"#2563eb", label: "Travel & Hotels" },
-  { Icon: IconServices, color:"#059669", label: "Services & Bookings" },
-  { Icon: IconPayments, color:"#7c3aed", label: "Pay Bills & Invoices" },
-  { Icon: IconEvents, color:"#db2777", label: "Events & Tickets" },
-  { Icon: IconNFC, color:"#0891b2", label: "NFC & In-Store" },
-  { Icon: IconMore, color:"#4f46e5", label: "Other" },
+  { icon: "🛍️", label: "Shopping" },
+  { icon: "🍔", label: "Food & Restaurants" },
+  { icon: "✈️", label: "Travel & Hotels" },
+  { icon: "📅", label: "Services & Bookings" },
+  { icon: "💳", label: "Pay Bills & Invoices" },
+  { icon: "🎟️", label: "Events & Tickets" },
+  { icon: "📡", label: "NFC & In-Store" },
+  { icon: "⚡", label: "Other" },
 ];
 
 const PAYMENTS = [
-  { icon: "card", label: "Credit or Debit Card", sub: "Secured with Stripe" },
+  { icon: "💳", label: "Credit or Debit Card", sub: "Secured with Stripe" },
   { icon: "🍎", label: "Apple Pay", sub: "" },
   { icon: "🔵", label: "Google Pay", sub: "" },
   { icon: "🔗", label: "Link (Stripe)", sub: "" },
@@ -65,16 +64,16 @@ export default function Onboarding() {
           {step === 0 && (
             <div style={{ textAlign: "center" }}>
               <div style={{ width: 64, height: 64, borderRadius: 18, background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 8px 24px rgba(124,58,237,0.3)" }}>
-                <span style={{ color: "#fff", fontFamily: "Manrope, sans-serif", fontWeight: 800, fontSize: 28 }}>M</span>
+                <span style={{ color: "#fff", fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: 28 }}>M</span>
               </div>
-              <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>Welcome to Mio</h1>
+              <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>Welcome to Mio</h1>
               <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6, fontSize: 15 }}>
                 Your voice-first AI assistant for shopping, dining, travel, bookings, and payments. All in one place.
               </p>
               <button onClick={next} className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: 15, padding: "14px 0" }}>
                 Get Started <ArrowRightIcon size={18} aria-hidden="true" />
               </button>
-              <p style={{ color: "#71767f", fontSize: 13, marginTop: 14 }}>
+              <p style={{ color: "#9ca3af", fontSize: 13, marginTop: 14 }}>
                 Already have an account?{" "}
                 <Link to="/" style={{ color: "#7c3aed", fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
               </p>
@@ -84,8 +83,8 @@ export default function Onboarding() {
           {/* Step 1: Interests */}
           {step === 1 && (
             <div>
-              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>What would you like to use Mio for?</h2>
-              <p style={{ color: "#71767f", fontSize: 13, marginBottom: 20 }}>Choose one or add more later</p>
+              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>What would you like to use Mio for?</h2>
+              <p style={{ color: "#9ca3af", fontSize: 13, marginBottom: 20 }}>Choose one or add more later</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
                 {INTERESTS.map(({ icon, label }) => (
                   <button
@@ -127,7 +126,7 @@ export default function Onboarding() {
               <div style={{ width: 80, height: 80, borderRadius: "50%", margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "center", background: voiceEnabled ? "linear-gradient(135deg,#7c3aed,#4f46e5)" : "#f3f4f6", transition: "all 0.3s", boxShadow: voiceEnabled ? "0 8px 24px rgba(124,58,237,0.3)" : "none" }}>
                 <MicIcon size={34} style={{ color: voiceEnabled ? "#ffffff" : "#9ca3af" }} aria-hidden="true" />
               </div>
-              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 10 }}>Enable Voice</h2>
+              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 10 }}>Enable Voice</h2>
               <p style={{ color: "#6b7280", marginBottom: 24, lineHeight: 1.6, fontSize: 14 }}>
                 Speak naturally to Mio — ask questions, place orders, and get updates hands-free.
               </p>
@@ -143,7 +142,7 @@ export default function Onboarding() {
                 <button onClick={back} style={{ background: "#f3f4f6", border: "none", borderRadius: 12, padding: "12px 16px", cursor: "pointer", color: "#374151" }}>
                   <ArrowLeftIcon size={16} aria-hidden="true" />
                 </button>
-                <button onClick={next} style={{ flex: 1, background: "transparent", border: "1.5px solid #e5e7eb", borderRadius: 12, padding: "12px 0", cursor: "pointer", color: "#71767f", fontSize: 13, fontWeight: 500 }}>
+                <button onClick={next} style={{ flex: 1, background: "transparent", border: "1.5px solid #e5e7eb", borderRadius: 12, padding: "12px 0", cursor: "pointer", color: "#9ca3af", fontSize: 13, fontWeight: 500 }}>
                   Skip for now
                 </button>
                 {voiceEnabled && (
@@ -158,8 +157,8 @@ export default function Onboarding() {
           {/* Step 3: Payment */}
           {step === 3 && (
             <div>
-              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>Add a payment method</h2>
-              <p style={{ color: "#71767f", fontSize: 13, marginBottom: 18 }}>Your payment information is safe and securely encrypted.</p>
+              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0f1035", marginBottom: 4 }}>Add a payment method</h2>
+              <p style={{ color: "#9ca3af", fontSize: 13, marginBottom: 18 }}>Your payment information is safe and securely encrypted.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 18 }}>
                 {PAYMENTS.map(({ icon, label, sub }) => (
                   <button
@@ -171,14 +170,14 @@ export default function Onboarding() {
                     <span style={{ fontSize: 22, width: 32, textAlign: "center" }} aria-hidden="true">{icon}</span>
                     <div style={{ textAlign: "left" }}>
                       <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#0f1035" }}>{label}</p>
-                      {sub && <p style={{ margin: 0, fontSize: 11, color: "#71767f" }}>{sub}</p>}
+                      {sub && <p style={{ margin: 0, fontSize: 11, color: "#9ca3af" }}>{sub}</p>}
                     </div>
                     {paymentChosen === label && <CheckIcon size={14} style={{ color: "#7c3aed", marginLeft: "auto" }} aria-hidden="true" />}
                   </button>
                 ))}
                 <button style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: "transparent", border: "1.5px dashed #e5e7eb", borderRadius: 12, cursor: "pointer" }}>
                   <span style={{ fontSize: 20, color: "#7c3aed", width: 32, textAlign: "center" }}>+</span>
-                  <span style={{ fontSize: 13, color: "#71767f" }}>Add Later</span>
+                  <span style={{ fontSize: 13, color: "#9ca3af" }}>Add Later</span>
                 </button>
               </div>
               <div style={{ display: "flex", gap: 10 }}>
@@ -198,11 +197,11 @@ export default function Onboarding() {
               <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 8px 32px rgba(124,58,237,0.35)" }}>
                 <CheckIcon size={40} style={{ color: "#ffffff" }} aria-hidden="true" />
               </div>
-              <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>You're all set!</h2>
+              <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 28, color: "#0f1035", marginBottom: 10 }}>You're all set!</h2>
               <p style={{ color: "#6b7280", marginBottom: 28, lineHeight: 1.6, fontSize: 15 }}>
-                Mio is ready to help. Just speak or type — your personal AI assistant is always here.
+                Your preview is ready. Explore sample conversations; no account or payment method was created by these demonstration steps.
               </p>
-              <Link to="/" className="btn-primary" style={{ display: "flex", justifyContent: "center", padding: "14px 0", fontSize: 15, textDecoration: "none" }}>
+              <Link to="/app" className="btn-primary" style={{ display: "flex", justifyContent: "center", padding: "14px 0", fontSize: 15, textDecoration: "none" }}>
                 Start Using Mio <ArrowRightIcon size={18} aria-hidden="true" />
               </Link>
             </div>
