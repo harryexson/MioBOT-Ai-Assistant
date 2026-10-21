@@ -18,6 +18,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
+import { friendlyBackendError, mobilePb, restoreSession, signIn, signOut, signUp } from "./src/services/pocketbase";
 const purple = "#7645e8";
 const picks = [
   {
@@ -198,7 +199,41 @@ function MioPreview() {
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [remindersEnabled, setRemindersEnabled] = useState(true);
   const [memoryEnabled, setMemoryEnabled] = useState(true);
+  const [account, setAccount] = useState<any>(null);
+  const [authMode, setAuthMode] = useState<"signin" | "signup" | null>(null);
+  const [authName, setAuthName] = useState("");
+  const [authEmail, setAuthEmail] = useState("");
+  const [authPassword, setAuthPassword] = useState("");
+  const [accountPlan, setAccountPlan] = useState<"personal" | "business">("personal");
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState("");
   const scroll = useRef<ScrollView>(null);
+  useEffect(() => {
+    let alive = true;
+    const unsubscribe = mobilePb.authStore.onChange((_token, record) => {
+      if (alive) setAccount(record);
+    }, true);
+    restoreSession().then((record) => { if (alive) setAccount(record); }).catch(() => {});
+    return () => { alive = false; unsubscribe(); };
+  }, []);
+  async function submitAuth() {
+    setAuthLoading(true);
+    setAuthError("");
+    try {
+      const result = authMode === "signup"
+        ? await signUp(authEmail, authPassword, authName, accountPlan)
+        : await signIn(authEmail, authPassword);
+      setAccount(result);
+      setAuthMode(null);
+      setAuthPassword("");
+      setAcceptedTerms(false);
+    } catch (error) {
+      setAuthError(friendlyBackendError(error));
+    } finally {
+      setAuthLoading(false);
+    }
+  }
   function ask(text: string) {
     if (!text.trim()) return;
     const q = text.trim();
@@ -486,18 +521,70 @@ function MioPreview() {
         ) : (
           <ScrollView contentContainerStyle={s.homeContent}>
             <Text style={s.eyebrow}>YOUR SPACE</Text>
-            <Text style={s.heading}>A thoughtful start.</Text>
-            <View style={s.profileCard}>
-              <Icon name="user" size={34} />
-              <Text style={s.emptyTitle}>Hello, explorer.</Text>
-              <Text style={s.muted}>You’re using Mio in preview mode.</Text>
-            </View>
+            <Text style={s.heading}>{account ? "Your Mio account." : "A thoughtful start."}</Text>
+            {account ? (
+              <View style={s.profileCard}>
+                <Icon name="user" size={34} />
+                <Text style={s.emptyTitle}>Hello, {account.name || account.email}.</Text>
+                <Text style={s.muted}>{account.email}</Text>
+                <View style={s.planBadge}><Text style={s.planBadgeText}>{account.plan === "business" ? "Business account" : "Personal account"}</Text></View>
+                <Text style={[s.muted, { textAlign: "center" }]}>Your sign-in is stored securely on this device. Orders and provider services are not connected yet.</Text>
+                <TouchableOpacity accessibilityRole="button" style={s.authSecondary} onPress={() => { signOut(); setAccount(null); }}>
+                  <Text style={s.authSecondaryText}>Sign out</Text>
+                </TouchableOpacity>
+              </View>
+            ) : authMode ? (
+              <View style={[s.profileCard, s.authCard]}>
+                <Text style={s.authTitle}>{authMode === "signup" ? "Create your account" : "Welcome back"}</Text>
+                <Text style={[s.muted, { textAlign: "center" }]}>Sign in with the same Mio account you use on the website.</Text>
+                {authMode === "signup" && <>
+                  <TextInput accessibilityLabel="Full name" placeholder="Full name" placeholderTextColor="#a594ae" style={s.authInput} value={authName} onChangeText={setAuthName} autoComplete="name" />
+                  <Text style={s.authLabel}>Account type</Text>
+                  <View style={s.planSwitch}>
+                    {(["personal", "business"] as const).map((plan) => (
+                      <TouchableOpacity key={plan} accessibilityRole="button" accessibilityState={{ selected: accountPlan === plan }} onPress={() => setAccountPlan(plan)} style={[s.planOption, accountPlan === plan && s.planOptionActive]}>
+                        <Text style={[s.planOptionText, accountPlan === plan && s.planOptionTextActive]}>{plan === "personal" ? "Personal" : "Business"}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </>}
+                <TextInput accessibilityLabel="Email address" placeholder="Email address" placeholderTextColor="#a594ae" style={s.authInput} value={authEmail} onChangeText={setAuthEmail} autoCapitalize="none" keyboardType="email-address" autoComplete="email" />
+                <TextInput accessibilityLabel="Password" placeholder="Password (8 characters minimum)" placeholderTextColor="#a594ae" style={s.authInput} value={authPassword} onChangeText={setAuthPassword} secureTextEntry autoCapitalize="none" autoComplete={authMode === "signup" ? "new-password" : "current-password"} />
+                {authMode === "signup" && <TouchableOpacity accessibilityRole="checkbox" accessibilityState={{ checked: acceptedTerms }} style={s.consentRow} onPress={() => setAcceptedTerms((checked) => !checked)}>
+                  <Icon name={acceptedTerms ? "check-square" : "square"} size={19} color={acceptedTerms ? purple : "#a594ae"} />
+                  <Text style={s.consentText}>I agree to Mio’s Terms of Service and Privacy Policy.</Text>
+                </TouchableOpacity>}
+                {!!authError && <Text accessibilityRole="alert" style={s.authError}>{authError}</Text>}
+                <TouchableOpacity accessibilityRole="button" disabled={authLoading || (authMode === "signup" && !acceptedTerms)} style={[s.primary, { opacity: authLoading || (authMode === "signup" && !acceptedTerms) ? 0.55 : 1 }]} onPress={submitAuth}>
+                  <Text style={s.primaryText}>{authLoading ? "Please wait…" : authMode === "signup" ? "Create account" : "Sign in"}</Text>
+                  {!authLoading && <Icon name="arrow-up-right" color="white" />}
+                </TouchableOpacity>
+                <TouchableOpacity accessibilityRole="button" style={s.authSecondary} onPress={() => { setAuthMode(authMode === "signup" ? "signin" : "signup"); setAuthError(""); }}>
+                  <Text style={s.authSecondaryText}>{authMode === "signup" ? "Already have an account? Sign in" : "New to Mio? Create an account"}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity accessibilityRole="button" style={s.authSecondary} onPress={() => { setAuthMode(null); setAuthError(""); }}>
+                  <Text style={s.authCancel}>Back to profile</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={s.profileCard}>
+                <Icon name="user" size={34} />
+                <Text style={s.emptyTitle}>Make Mio yours.</Text>
+                <Text style={[s.muted, { textAlign: "center" }]}>Sign in or create a personal or business account. Account access uses Mio’s PocketBase service.</Text>
+                <TouchableOpacity accessibilityRole="button" style={s.primary} onPress={() => { setAuthMode("signin"); setAuthError(""); }}>
+                  <Text style={s.primaryText}>Sign in</Text><Icon name="arrow-up-right" color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity accessibilityRole="button" style={s.authSecondary} onPress={() => { setAuthMode("signup"); setAuthError(""); }}>
+                  <Text style={s.authSecondaryText}>Create an account</Text>
+                </TouchableOpacity>
+              </View>
+            )}
             <Text style={s.sectionTitle}>Designed with you in mind</Text>
             {[
               [
                 "shield",
                 "Your information",
-                "No account, payment details, or personal data are required.",
+                account ? "Sign-in credentials are stored in device secure storage. Connect the production backend before using real orders or payment details." : "No account is needed to explore. Sign-in becomes available when the PocketBase server is reachable.",
               ],
               [
                 "message-circle",
@@ -886,6 +973,23 @@ const s = StyleSheet.create({
     gap: 15,
     marginVertical: 25,
   },
+  authCard: { alignItems: "stretch", padding: 22, gap: 12 },
+  authTitle: { fontSize: 20, fontWeight: "700", color: "#382b42", textAlign: "center" },
+  authLabel: { fontSize: 11, fontWeight: "600", color: "#806b91", marginBottom: -5 },
+  authInput: { width: "100%", borderWidth: 1, borderColor: "#dccce8", borderRadius: 12, paddingVertical: 12, paddingHorizontal: 14, backgroundColor: "#fff", color: "#554361", fontSize: 13 },
+  planSwitch: { flexDirection: "row", gap: 8 },
+  planOption: { flex: 1, paddingVertical: 11, borderWidth: 1, borderColor: "#dccce8", borderRadius: 11, alignItems: "center", backgroundColor: "#fff" },
+  planOptionActive: { borderColor: purple, backgroundColor: "#f2ebff" },
+  planOptionText: { color: "#806b91", fontSize: 12, fontWeight: "600" },
+  planOptionTextActive: { color: purple },
+  planBadge: { backgroundColor: "#fff", borderRadius: 20, paddingVertical: 7, paddingHorizontal: 13 },
+  planBadgeText: { fontSize: 11, fontWeight: "600", color: purple },
+  consentRow: { flexDirection: "row", alignItems: "center", gap: 9, paddingVertical: 4 },
+  consentText: { flex: 1, color: "#806b91", fontSize: 10, lineHeight: 16 },
+  authError: { backgroundColor: "#fff0f0", color: "#9f3434", borderRadius: 10, padding: 11, fontSize: 11, lineHeight: 17 },
+  authSecondary: { alignItems: "center", paddingVertical: 7 },
+  authSecondaryText: { color: purple, fontSize: 12, fontWeight: "600" },
+  authCancel: { color: "#9c87aa", fontSize: 11 },
   profileRow: {
     flexDirection: "row",
     gap: 15,

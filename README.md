@@ -18,11 +18,13 @@ One homepage merges the preserved hero and motion with service modules, eight mo
 
 Routes include /search, /voice, /signin, /dashboard, /commissions and /about alongside the existing previews. /onboarding and /widget mount their dedicated flows. /integrations and /partners redirect to the canonical /providers catalog.
 
-The web app uses the MioBot PocketBase endpoint at `https://pb-mzj62.aibuilder.ionos.com` for accounts and application forms. Set `VITE_POCKETBASE_URL` to override it for another environment. Backend collection fields and access rules are in MERGE-REPORT.md. Discovery previews work without signing in.
+The web app and native app use the MioBot PocketBase endpoint at `https://pb-mzj62.aibuilder.ionos.com` for account flows. Set `VITE_POCKETBASE_URL` or `EXPO_PUBLIC_POCKETBASE_URL` to override it. The supplied hostname currently fails DNS resolution, so account creation and sign-in cannot complete until IONOS restores the host or supplies the correct URL. Backend collection fields and access rules are in MERGE-REPORT.md. Discovery previews work without signing in.
 
 The `/providers` page is a searchable, filterable directory of 31 prospective partner integrations. Its commission figures and audience metrics come from the planning brief and are illustrative only; partner agreements, API availability, rates, and eligibility are not verified. Saved shortlist selections stay in browser `localStorage`.
 
-The app demo supports four sample scenario types, free-text prompts, saving/unsaving suggestions, a saved collection, and a new conversation action. Saved identifiers use browser localStorage; messages stay in memory. No AI or payment network calls are made by the new demo.
+See [API-INTEGRATION-PLAN.md](API-INTEGRATION-PLAN.md) for a vetted provider matrix, sandbox options, access requirements, and the server-side credential plan.
+
+The web app supports sample discovery scenarios, free-text prompts, saving/unsaving suggestions, and a saved collection. Saved identifiers use browser localStorage; messages stay in memory. No AI or payment network calls are made by the sample discovery flow.
 
 ## Mobile
 
@@ -36,8 +38,9 @@ The hero image is AI-generated specifically for this project, inspired by the us
 
 ## Deployment and real-service work
 
-This is a working product preview, not a live commerce service. Before public launch:
-- Connect a server-side AI service, real provider APIs, and authenticated user storage.
+The website and mobile app contain implemented PocketBase account flows, but the configured server is currently unreachable. Search, commerce, payments, and merchant/admin dashboards are still previews, not live services. Before public launch:
+- Restore the PocketBase host and confirm collection fields, access rules, email delivery, backups, and admin protection.
+- Connect a server-side AI service and approved provider APIs.
 - Validate all prices and inventory on the server; require an explicit confirmation for every real transaction.
 - Configure Stripe server-side payment intents and webhooks; never ship secret keys to clients.
 - Replace example dashboard data with authorized merchant data.
