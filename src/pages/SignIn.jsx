@@ -12,6 +12,7 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [accountPlan, setAccountPlan] = useState("personal");
   const [status, setStatus] = useState("idle"); // idle | loading | error
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -20,13 +21,17 @@ export default function SignIn() {
     setStatus("loading");
     setErrorMsg("");
     try {
+      let account;
       if (mode === "login") {
-        await login(email, password);
+        account = await login(email, password);
       } else {
-        await signup(email, password, name);
+        account = await signup(email, password, name, accountPlan);
       }
       const next = params.get("next");
-      navigate(["/dashboard", "/commissions", "/settings"].includes(next) ? next : "/dashboard");
+      const destination = ["/dashboard", "/commissions", "/settings"].includes(next)
+        ? next
+        : account?.plan === "business" ? "/merchant" : "/dashboard";
+      navigate(destination);
     } catch (err) {
       setStatus("error");
       const msg = err?.response?.message || err?.message || "Something went wrong. Please try again.";
@@ -34,6 +39,8 @@ export default function SignIn() {
         setErrorMsg("Incorrect email or password. Please try again.");
       } else if (msg.includes("already exists")) {
         setErrorMsg("An account with this email already exists. Sign in instead.");
+      } else if (err?.status === 0 || /failed to fetch|network|load failed/i.test(msg)) {
+        setErrorMsg("Mio’s account service could not be reached. Check that the PocketBase server is online and its URL is correct, then try again.");
       } else {
         setErrorMsg(msg);
       }
@@ -90,6 +97,12 @@ export default function SignIn() {
                   required
                   style={{ width: "100%", padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e5e7eb", fontSize: 14, fontFamily: "DM Sans,sans-serif", outline: "none", boxSizing: "border-box" }}
                 />
+                <label htmlFor="auth-plan" style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", margin: "14px 0 6px" }}>Account type</label>
+                <select id="auth-plan" value={accountPlan} onChange={e => setAccountPlan(e.target.value)} style={{ width: "100%", padding: "12px 16px", borderRadius: 12, border: "1.5px solid #e5e7eb", background: "#fff", fontSize: 14, fontFamily: "DM Sans,sans-serif", boxSizing: "border-box" }}>
+                  <option value="personal">Personal account</option>
+                  <option value="business">Business account</option>
+                </select>
+                <small style={{ display: "block", marginTop: 6, color: "#6b7280" }}>This creates a preview account and does not start a paid subscription.</small>
               </div>
             )}
             <div>
@@ -143,8 +156,8 @@ export default function SignIn() {
 
         <p style={{ textAlign: "center", fontSize: 12, color: "#6d727a", marginTop: 20 }}>
           By continuing you agree to Mio's{" "}
-          <Link to="#" style={{ color: "#7c3aed" }}>Terms of Service</Link> and{" "}
-          <Link to="#" style={{ color: "#7c3aed" }}>Privacy Policy</Link>.
+          <Link to="/terms" style={{ color: "#7c3aed" }}>Terms of Service</Link> and{" "}
+          <Link to="/privacy" style={{ color: "#7c3aed" }}>Privacy Policy</Link>.
         </p>
       </div>
     </div>

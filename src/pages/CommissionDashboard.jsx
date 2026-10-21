@@ -14,7 +14,7 @@ export default function CommissionDashboard() {
   useEffect(() => {
     if (preview || !user) return;
     const controller = new AbortController();
-    pb.collection("commission_ledger").getList(1, 100, { sort: "-created", filter: pb.filter("user_id = {:id}", { id: user.id }), signal: controller.signal })
+    pb.collection("commissions").getList(1, 100, { sort: "-created", filter: pb.filter("user_id = {:id}", { id: user.id }), signal: controller.signal })
       .then(result => { if (!controller.signal.aborted) setRecords(result.items); })
       .catch(error => { if (!error.isAbort && !controller.signal.aborted) setNotice("Commission data could not be loaded. Please try again later."); });
     return () => controller.abort();
