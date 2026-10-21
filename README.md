@@ -18,7 +18,7 @@ One homepage merges the preserved hero and motion with service modules, eight mo
 
 Routes include /search, /voice, /signin, /dashboard, /commissions and /about alongside the existing previews. /onboarding and /widget mount their dedicated flows. /integrations and /partners redirect to the canonical /providers catalog.
 
-For optional account and application services, copy .env.example to .env.local and configure VITE_POCKETBASE_URL. Backend collection and access-rule requirements are in MERGE-REPORT.md. Sample discovery works without credentials.
+The web app uses the MioBot PocketBase endpoint at `https://pb-mzj62.aibuilder.ionos.com` for accounts and application forms. Set `VITE_POCKETBASE_URL` to override it for another environment. Backend collection fields and access rules are in MERGE-REPORT.md. Discovery previews work without signing in.
 
 The `/providers` page is a searchable, filterable directory of 31 prospective partner integrations. Its commission figures and audience metrics come from the planning brief and are illustrative only; partner agreements, API availability, rates, and eligibility are not verified. Saved shortlist selections stay in browser `localStorage`.
 
