@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { pb } from "../lib/pb.js";
+import { mioApi } from "../lib/mio-api.js";
 import { useAuth } from "../lib/useAuth.jsx";
 
 const PLAN_COLORS = {
@@ -135,15 +135,17 @@ function SearchCard({ search }) {
 }
 
 export default function UserDashboard() {
-  const { user, logout, isLoggedIn } = useAuth();
+  const { user, logout, isLoggedIn, isPending } = useAuth();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [searches, setSearches] = useState([]);
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [dataError, setDataError] = useState("");
   const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
+    if (isPending) return;
     if (!isLoggedIn) {
       navigate("/");
       return;
@@ -151,24 +153,18 @@ export default function UserDashboard() {
     const controller = new AbortController();
     async function load() {
       try {
-        const [ordersRes, searchesRes, subsRes] = await Promise.all([
-          pb.collection("orders").getList(1, 20, {
-            filter: pb.filter("user_id = {:id}", { id: user.id }),
-            sort: "-created",
-            signal: controller.signal,
-          }).catch(() => ({ items: [] })),
-          pb.collection("searches").getList(1, 20, {
-            filter: pb.filter("user_id = {:id}", { id: user.id }),
-            sort: "-created",
-            signal: controller.signal,
-          }).catch(() => ({ items: [] })),
-          pb.collection("subscriptions").getList(1, 1, {
-            sort: "-created",
-            filter: pb.filter('user_id = {:id} && status = "active"', { id: user.id }),
-            signal: controller.signal,
-          }).catch(() => ({ items: [] })),
+        const results = await Promise.allSettled([
+          mioApi.getOrders(),
+          mioApi.getSearches(),
+          mioApi.getSubscriptions(),
         ]);
-        setOrders(ordersRes.items || []);
+        if (controller.signal.aborted) return;
+        const [ordersResult, searchesResult, subscriptionsResult] = results;
+        if (results.some(result => result.status === "rejected")) setDataError("Your account data could not be reached. Check the Vercel and Neon setup, then refresh this page.");
+        const ordersRes = ordersResult.status === "fulfilled" ? ordersResult.value : { items: [] };
+        const searchesRes = searchesResult.status === "fulfilled" ? searchesResult.value : { items: [] };
+        const subsRes = subscriptionsResult.status === "fulfilled" ? subscriptionsResult.value : { items: [] };
+        setOrders((ordersRes.items || []).map(order => ({ ...order, total_amount: Number(order.total_amount || 0) })));
         setSearches(searchesRes.items || []);
         setSubscription(subsRes.items?.[0] || null);
       } catch (e) {
@@ -179,8 +175,9 @@ export default function UserDashboard() {
     }
     load();
     return () => controller.abort();
-  }, [isLoggedIn, navigate, user?.id]);
+  }, [isLoggedIn, isPending, navigate, user?.id]);
 
+  if (isPending) return <main id="main" className="wrap platform-section" aria-busy="true">Loading your Mio account…</main>;
   if (!isLoggedIn) return null;
 
   const plan = user?.plan || "free";
@@ -231,6 +228,7 @@ export default function UserDashboard() {
       </div>
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
+        {dataError && <p role="alert" className="connection-note">{dataError}</p>}
         {/* Welcome */}
         <div style={{ marginBottom: 32 }}>
           <h1 style={{ fontFamily: "Manrope,sans-serif", fontWeight: 800, fontSize: "clamp(24px,4vw,36px)", color: "#0f1035", margin: 0, letterSpacing: "-0.03em" }}>

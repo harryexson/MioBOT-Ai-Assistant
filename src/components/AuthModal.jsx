@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { pb } from "../lib/pb.js";
+import { useAuth } from "../lib/useAuth.jsx";
 import { IconSearch, IconUser, IconCheck } from "./MioIcons.jsx";
 import { ArrowRight as ArrowRightIcon } from "lucide-react";
 import { X as XIcon } from "lucide-react";
 
 /* ── Auth Modal — Sign Up / Sign In ───────────────────────────────── */
 export default function AuthModal({ mode = "signup", onClose, onSuccess }) {
+  const { login, signup } = useAuth();
   const [tab, setTab] = useState(mode); // "signup" | "signin"
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,16 +20,9 @@ export default function AuthModal({ mode = "signup", onClose, onSuccess }) {
     setLoading(true);
     try {
       if (tab === "signup") {
-        await pb.collection("users").create({
-          name,
-          email,
-          password,
-          passwordConfirm: password,
-          plan: "free",
-        });
-        await pb.collection("users").authWithPassword(email, password);
+        await signup(email, password, name, "personal");
       } else {
-        await pb.collection("users").authWithPassword(email, password);
+        await login(email, password);
       }
       onSuccess?.();
       onClose?.();

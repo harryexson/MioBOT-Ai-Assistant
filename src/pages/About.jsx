@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { pb, backendConfigured } from "../lib/pb.js";
+import { mioApi } from "../lib/mio-api.js";
+import { authBackendConfigured } from "../lib/auth-client.js";
 
 // SVG icons
 const IconMail = () => (
@@ -48,7 +49,7 @@ export default function About() {
     e.preventDefault();
     setStatus("sending");
     try {
-      await pb.collection("waitlist").create({
+      await mioApi.submitWaitlist({
         email: form.email,
         name: form.name,
         subject: form.subject,
@@ -320,8 +321,8 @@ export default function About() {
                     Your message could not be sent. Please try again later or visit the project on GitHub.
                   </div>
                 )}
-                {!backendConfigured && <p className="connection-note">The contact form is not available in this preview. You can leave project feedback on GitHub.</p>}
-                <button type="submit" style={{ ...s.submitBtn, opacity: backendConfigured ? 1 : .5 }} disabled={!backendConfigured || status === "sending"}>
+                {!authBackendConfigured && <p className="connection-note">The contact form is not available in this preview. You can leave project feedback on GitHub.</p>}
+                <button type="submit" style={{ ...s.submitBtn, opacity: authBackendConfigured ? 1 : .5 }} disabled={!authBackendConfigured || status === "sending"}>
                   {status === "sending" ? "Sending…" : "Send Message"}
                 </button>
               </form>

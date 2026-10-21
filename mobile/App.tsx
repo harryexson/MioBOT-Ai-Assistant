@@ -18,7 +18,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
-import { friendlyBackendError, mobilePb, restoreSession, signIn, signOut, signUp } from "./src/services/pocketbase";
+import { friendlyBackendError, restoreSession, signIn, signOut, signUp } from "./src/services/auth";
 const purple = "#7645e8";
 const picks = [
   {
@@ -211,11 +211,8 @@ function MioPreview() {
   const scroll = useRef<ScrollView>(null);
   useEffect(() => {
     let alive = true;
-    const unsubscribe = mobilePb.authStore.onChange((_token, record) => {
-      if (alive) setAccount(record);
-    }, true);
     restoreSession().then((record) => { if (alive) setAccount(record); }).catch(() => {});
-    return () => { alive = false; unsubscribe(); };
+    return () => { alive = false; };
   }, []);
   async function submitAuth() {
     setAuthLoading(true);
@@ -529,7 +526,7 @@ function MioPreview() {
                 <Text style={s.muted}>{account.email}</Text>
                 <View style={s.planBadge}><Text style={s.planBadgeText}>{account.plan === "business" ? "Business account" : "Personal account"}</Text></View>
                 <Text style={[s.muted, { textAlign: "center" }]}>Your sign-in is stored securely on this device. Orders and provider services are not connected yet.</Text>
-                <TouchableOpacity accessibilityRole="button" style={s.authSecondary} onPress={() => { signOut(); setAccount(null); }}>
+                <TouchableOpacity accessibilityRole="button" style={s.authSecondary} onPress={async () => { await signOut(); setAccount(null); }}>
                   <Text style={s.authSecondaryText}>Sign out</Text>
                 </TouchableOpacity>
               </View>
@@ -570,7 +567,7 @@ function MioPreview() {
               <View style={s.profileCard}>
                 <Icon name="user" size={34} />
                 <Text style={s.emptyTitle}>Make Mio yours.</Text>
-                <Text style={[s.muted, { textAlign: "center" }]}>Sign in or create a personal or business account. Account access uses Mio’s PocketBase service.</Text>
+                <Text style={[s.muted, { textAlign: "center" }]}>Sign in or create a personal or business account. Your Mio account works across the website and mobile app.</Text>
                 <TouchableOpacity accessibilityRole="button" style={s.primary} onPress={() => { setAuthMode("signin"); setAuthError(""); }}>
                   <Text style={s.primaryText}>Sign in</Text><Icon name="arrow-up-right" color="white" />
                 </TouchableOpacity>
@@ -584,7 +581,7 @@ function MioPreview() {
               [
                 "shield",
                 "Your information",
-                account ? "Sign-in credentials are stored in device secure storage. Connect the production backend before using real orders or payment details." : "No account is needed to explore. Sign-in becomes available when the PocketBase server is reachable.",
+                account ? "Sign-in credentials are stored in device secure storage. Orders and provider services are not connected yet." : "No account is needed to explore. Sign in when Mio's Vercel API and Neon database are configured.",
               ],
               [
                 "message-circle",

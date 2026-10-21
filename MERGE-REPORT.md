@@ -23,9 +23,9 @@ There is one homepage (`Home.jsx`). Existing hero portrait, typography, warm-whi
 
 ## Backend boundary
 
-The supplied MioBot PocketBase endpoint is `https://pb-mzj62.aibuilder.ionos.com`; the web app now uses it by default. `VITE_POCKETBASE_URL` can override the endpoint for another environment. DNS lookup failed from the development host, so live authentication, CORS, and writes still need confirmation against the deployed service. Forms report backend errors rather than showing false success.
+The previous PocketBase host could not be resolved. The new account architecture uses Better Auth on Vercel Functions and Neon Postgres. `database/schema.sql` defines the auth and app-data tables; Vercel project variables are documented in `VERCEL-SETUP.md`. Until a Vercel project and Neon database are linked and configured, live signup and durable writes cannot be exercised.
 
-Collections used by the app: `users` (auth; name, email, plan), `orders`, `searches`, `subscriptions`, `commissions`, `partner_signups`, `waitlist`, and `voice_sessions`. Account-owned collections require a `user_id` relation and server-side rules that restrict records to their authenticated owner. Client queries are also scoped to the current user. Payment, subscription and commission mutations must be handled by trusted server integrations rather than client-chosen fields. No administrative credentials belong in frontend environment variables. The client currently reads commission records; it does not create them or claim to process real payouts.
+The Neon schema includes users, orders, searches, subscriptions, commissions, partner applications, and waitlist/contact submissions. API reads scope account data to the authenticated user. Order, subscription, and commission mutation endpoints are not exposed; trusted payment/provider services must own those writes. Admin routes remain sample dashboards and have no admin API or privileges. No administrative credentials belong in frontend environment variables.
 
 Search and voice results remain static examples. Browser speech recognition is opt-in, aborts on unmount, and does not imply a live AI/provider connection. Commission figures are sample records when the backend is absent; a configured backend never falls back to sample earnings after an error.
 

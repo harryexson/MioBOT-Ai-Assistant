@@ -3,7 +3,8 @@ import { Link } from "react-router";
 import { ArrowUpRight, ShoppingBag, Utensils, Plane, CalendarDays, CreditCard, Ticket, Radio, Search, Mic, Layers, SlidersHorizontal, Code, BarChart3, ShieldCheck, Check, Smartphone, Hotel, ShoppingBasket, Car, ChevronRight } from "lucide-react";
 import { SERVICE_MODULES } from "../data/services";
 import { PARTNERS, CATEGORIES } from "../data/partners";
-import { pb, backendConfigured } from "../lib/pb";
+import { mioApi } from "../lib/mio-api.js";
+import { authBackendConfigured } from "../lib/auth-client.js";
 const icons = [ShoppingBag, Utensils, ShoppingBasket, Hotel, Plane, Car, CalendarDays, Ticket, CreditCard, Radio];
 const purposes = ["Find products and compare your options.", "Discover delivery, pickup and dining.", "Bring your weekly shopping together.", "Find a place that feels right.", "Explore routes and travel possibilities.", "Get from here to somewhere new.", "Make time for services and appointments.", "Discover concerts and local experiences.", "Explore billing and checkout concepts.", "Bring the conversation into the store."];
 
@@ -67,8 +68,8 @@ export function EarlyAccess() {
   const [status, setStatus] = useState("idle");
   async function submit(event) {
     event.preventDefault(); setStatus("saving");
-    try { await pb.collection("waitlist").create({ email }); setStatus("saved"); setEmail(""); }
+    try { await mioApi.submitWaitlist({ email }); setStatus("saved"); setEmail(""); }
     catch { setStatus("error"); }
   }
-  return <section className="wrap platform-section" id="early-access"><div className="early-access"><div><span className="eyebrow">THE NEXT CHAPTER OF MIO</span><h2>A little more<br /><span>to look forward to.</span></h2><p>Explore the preview today and follow the product as connected experiences take shape.</p></div><div>{status === "saved" ? <p role="status" className="connection-note">Your email was saved to the early-access list.</p> : <form onSubmit={submit}><label htmlFor="early-email">Early-access updates</label><input id="early-email" type="email" autoComplete="email" required placeholder="Your email address" value={email} onChange={event => setEmail(event.target.value)} /><button className="button-primary" disabled={!backendConfigured || status === "saving"}>{status === "saving" ? "Saving…" : "Join the early-access list"}<ArrowUpRight size={16} /></button><small>{backendConfigured ? "Submit your email only if you’d like Mio product updates." : "Email updates are not available in this preview yet. You can explore the interactive app today."}</small>{status === "error" && <p role="alert">We couldn’t save your email. Please try again later.</p>}</form>}<Link to="/about" className="text-link">Meet the project <ArrowUpRight size={15} /></Link></div></div></section>;
+  return <section className="wrap platform-section" id="early-access"><div className="early-access"><div><span className="eyebrow">THE NEXT CHAPTER OF MIO</span><h2>A little more<br /><span>to look forward to.</span></h2><p>Explore the preview today and follow the product as connected experiences take shape.</p></div><div>{status === "saved" ? <p role="status" className="connection-note">Your email was saved to the early-access list.</p> : <form onSubmit={submit}><label htmlFor="early-email">Early-access updates</label><input id="early-email" type="email" autoComplete="email" required placeholder="Your email address" value={email} onChange={event => setEmail(event.target.value)} /><button className="button-primary" disabled={!authBackendConfigured || status === "saving"}>{status === "saving" ? "Saving…" : "Join the early-access list"}<ArrowUpRight size={16} /></button><small>{authBackendConfigured ? "Submit your email only if you’d like Mio product updates." : "Email updates are not available in this preview yet. You can explore the interactive app today."}</small>{status === "error" && <p role="alert">We couldn’t save your email. Please try again later.</p>}</form>}<Link to="/about" className="text-link">Meet the project <ArrowUpRight size={15} /></Link></div></div></section>;
 }

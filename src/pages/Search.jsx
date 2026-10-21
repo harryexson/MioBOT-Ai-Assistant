@@ -2,11 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { Search, Mic, ArrowUpRight, ShoppingBag, Utensils, Plane, CalendarDays, Ticket, Star } from "lucide-react";
 import { searchProducts, inferCategory } from "../lib/mockProviders";
-import { pb, backendConfigured } from "../lib/pb";
+import { mioApi } from "../lib/mio-api.js";
+import { useAuth } from "../lib/useAuth.jsx";
 import useSpeechInput from "../components/useSpeechInput";
 const categories = [["shopping","Shopping",ShoppingBag],["food","Food & dining",Utensils],["travel","Travel & hotels",Plane],["events","Events",Ticket],["services","Services",CalendarDays]];
 const suggestions = { shopping: ["running shoes under $150","noise cancelling headphones","laptop bag"], food: ["pizza","sushi","burrito"], travel: ["hotels in Chicago","Airbnb"], events: ["concert tickets","NBA","jazz"], services: ["house cleaning","plumber","personal trainer"] };
 export default function SearchPage({ voiceMode = false }) {
+  const { user } = useAuth();
   const [params] = useSearchParams();
   const initialQuery = params.get("q") || "";
   const initialCategory = categories.some(item => item[0] === params.get("cat")) ? params.get("cat") : inferCategory(initialQuery);
@@ -26,10 +28,10 @@ export default function SearchPage({ voiceMode = false }) {
       const found = await searchProducts(text,cat);
       if (sequence !== request.current) return;
       setResults(found);
-      if (backendConfigured && pb.authStore.isValid && text) pb.collection("searches").create({ query: text, category: cat, results_count: found.length, user_id: pb.authStore.record.id }).catch(() => {});
+      if (user && text) mioApi.saveSearch({ query: text, category: cat, results_count: found.length }).catch(() => {});
     } catch { if (sequence === request.current) setError("Sample results could not load. Please try again."); }
     finally { if (sequence === request.current) setLoading(false); }
-  }, []);
+  }, [user?.id]);
   useEffect(() => { setQuery(initialQuery); setCategory(initialCategory); if(initialQuery) run(initialQuery,initialCategory); return () => { request.current++; }; }, [initialQuery,initialCategory,run]);
   const sorted = [...results].sort((a,b) => sort === "price" ? a.price - b.price : sort === "rating" ? b.rating - a.rating : 0);
   const Icon = categories.find(item => item[0] === category)?.[2] || ShoppingBag;

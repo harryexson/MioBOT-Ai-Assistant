@@ -21,11 +21,9 @@ the double render as a bug or try to suppress it; just write idempotent,
 effect-safe code and it behaves correctly in production (where StrictMode adds
 no double-invocation).
 
-Provided by the platform (available at runtime — never add these to
-`package.json`): React, react-dom, react-router, Vite, @vitejs/plugin-react,
-lucide-react, pocketbase, `tailwind-merge`, and the Tailwind v4 engine itself.
-This project has **no dependencies of its own** — `package.json` is empty and
-there is no `node_modules`. Do not `npm install` anything for styling.
+Project dependencies are declared and locked in the root `package.json` and in
+`mobile/package.json`. Run `npm install` from the relevant project directory.
+The website is deployed as Vite static output plus Vercel Node API functions.
 
 ## Tailwind v4 notes
 
@@ -127,12 +125,12 @@ Note: Push requires GitHub credentials — provide a personal access token or SS
 - `package.local.json` + `scripts/setup-local.mjs` install a local runtime without changing the platform dependency manifest.
 - `Experience.jsx` implements `/app`, with in-memory sample conversations and localStorage saved item IDs.
 - `Marketing.jsx` implements associated marketing, pricing, and preview disclosure pages.
-- `mobile/App.tsx` is a credential-free React Native preview; the original entry is `mobile/LegacyApp.tsx`.
+- `mobile/App.tsx` is the active React Native app; it shares Better Auth with the website and stores native sessions in Expo SecureStore. The original entry is `mobile/LegacyApp.tsx`.
 - Root website uses DM Sans, warm off-white and violet; custom imagery is in `public/images`.
 - Active source and standalone runtime are in this repository root.
 
 ## Unified upstream merge (2026-10-20)
 - One homepage retains the custom portrait and motion while exposing ten service modules, eight app journeys, voice/search, partner ecosystem, EasyTap and engine features.
 - Shared content is in src/data; /integrations and /partners redirect to /providers; /voice shares Search and useSpeechInput.
-- AuthProvider and incoming account modules use optional PocketBase configured by VITE_POCKETBASE_URL. Unconfigured write forms are unavailable; search and commission previews are explicitly sample data.
+- Web and Expo accounts use Better Auth with a Vercel Function and Neon Postgres, configured by server environment variables. Keep backend credentials out of Vite and Expo public variables; search and commission previews remain sample data.
 - MERGE-REPORT.md maps the upstream source and verification; scripts/verify-unified.mjs checks browser parity.

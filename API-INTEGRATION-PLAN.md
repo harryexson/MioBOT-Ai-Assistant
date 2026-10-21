@@ -21,14 +21,14 @@ Booking.com Demand API requires a Managed Affiliate Partner account, partner-cen
 
 ## Architecture and secrets
 
-The web app and Expo app are clients. Never place Amadeus client secrets, eBay client secrets, Square access tokens, payment secrets, affiliate bearer tokens, or PocketBase admin credentials in either app, a `VITE_*` variable, or a public GitHub repository. Provider secrets belong in a server-side integration service. The server should authenticate the Mio user, validate inputs, apply request limits, call the providers, normalize results, and write only authorized records. Checkout should be a separate server-side operation with explicit user confirmation, idempotency keys, and provider webhooks.
+The web app and Expo app are clients. Never place Amadeus client secrets, eBay client secrets, Square access tokens, payment secrets, or affiliate bearer tokens in either app, a `VITE_*` variable, or a public GitHub repository. Mio's active backend is being moved to Vercel Functions + Neon Postgres. The Vercel API authenticates account requests, stores account history and applications, and keeps provider credentials server-side. Provider search and commerce connectors are still not implemented; the interactive search and commission figures remain sample data.
 
-The currently configured PocketBase hostname (`pb-mzj62.aibuilder.ionos.com`) fails DNS resolution. Until a working backend URL or a reachable backend deployment is available, there is no safe place to store server-side provider credentials or host provider proxy endpoints. Mobile PocketBase sign-up/sign-in has been implemented, but it cannot complete against the unresolved hostname.
+The former PocketBase hostname (`pb-mzj62.aibuilder.ionos.com`) failed DNS resolution, so there is no confirmed live PocketBase export to migrate. New Neon tables start empty. A separate data export is needed if the old backend becomes reachable and contains records worth retaining.
 
 ## Suggested rollout
 
-1. Restore the PocketBase DNS/backend and confirm its users, orders, searches, and partner-signup collection schemas and access rules.
-2. Register developer apps for Amadeus, Ticketmaster, eBay Sandbox, and Square Sandbox. Keep all secret credentials out of chat and source files; configure them in the chosen server host's secret manager.
+1. Connect Neon to the Vercel project, apply `database/schema.sql`, and set the server environment variables in `VERCEL-SETUP.md`. Verify account creation, sign-in, session persistence, waitlist submissions, partner applications, and account-scoped history before adding live providers.
+2. Register developer apps for Amadeus, Ticketmaster, eBay Sandbox, and Square Sandbox. Keep all secret credentials out of chat and source files; configure them as Vercel server environment variables.
 3. Build and test one server-side connector at a time, beginning with non-purchase discovery. Add provider attribution, rate-limit handling, privacy notices, and monitoring.
 4. Apply to the required affiliate/partner programs after the user journey and company website are reviewable. Do not rely on advertised commission percentages until a signed program agreement confirms them.
 5. Complete payment, order confirmation, refunds, support, privacy/legal, security, accessibility, and app-store reviews before production release.

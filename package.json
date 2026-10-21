@@ -1,14 +1,29 @@
 {
-  "name": "my-site",
+  "name": "miobot-ai-assistant",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:vercel": "vercel dev",
     "build": "vite build --mode preview",
     "build:prod": "vite build",
     "preview": "vite preview"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@better-auth/expo": "1.7.12",
+    "better-auth": "1.7.12",
+    "pg": "8.23.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@tailwindcss/vite": "^4.2.1",
+    "@vitejs/plugin-react": "^4.5.2",
+    "tailwindcss": "^4.2.1",
+    "vite": "^7.0.0",
+    "lucide-react": "^0.468.0"
+  }
 }

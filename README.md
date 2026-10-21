@@ -1,54 +1,27 @@
 # Mio — everyday AI, thoughtfully designed
 
-A redesigned React website and Expo / React Native preview for iOS and Android, based on the original MioBOT repository and supplied visual reference.
+Mio brings the original assistant concept, mobile journeys, partner directory, EasyTap experience, merchant concepts, and animated violet-and-warm-white design into one web and Expo codebase.
 
-## Website
+## Run the website
 
-The original root package deliberately leaves platform-supplied dependencies empty. For a standalone checkout, install the local runtime manifest into the project root:
+Install dependencies with `npm install`. `npm run dev` starts the Vite website preview. Vite alone does not run Vercel API functions, so connected local account flows require the linked Vercel project and `npm run dev:vercel`.
 
-```powershell
-node scripts/setup-local.mjs
-npm run dev
-npm run build
-```
+For deployment, import this GitHub repository into Vercel. The project builds with `npm run build:prod`, serves `dist`, and includes server functions under `api/`. Follow [`VERCEL-SETUP.md`](VERCEL-SETUP.md) to connect Neon, apply the database schema, and set server environment variables.
 
-The setup script installs the packages listed in `package.local.json` without replacing the platform manifest. Node 22+ is recommended. The standalone Vite config replaces the original IONOS-only import and uses Lucide icons.
+## Features and service status
 
-One homepage merges the preserved hero and motion with service modules, eight mobile journeys, voice/typed discovery, integrations, merchant/admin links, EasyTap, engine features and early access. See MERGE-REPORT.md.
+The landing page retains the Mio portrait and motion, ten service modules, eight mobile journeys, voice/typed discovery, integrations catalog, EasyTap, AI engine features, early access, and links to account and merchant concepts. Existing routes include `/search`, `/voice`, `/signin`, `/dashboard`, `/commissions`, `/providers`, `/merchant`, and `/admin`.
 
-Routes include /search, /voice, /signin, /dashboard, /commissions and /about alongside the existing previews. /onboarding and /widget mount their dedicated flows. /integrations and /partners redirect to the canonical /providers catalog.
+The provider directory contains prospective partners. Its displayed rates and audience metrics are illustrative and require partner approval and verification. Search results, order/checkout behavior, provider availability, AI responses, and merchant/admin dashboard figures remain sample concepts. Real payments, bookings, AI, and provider APIs are not connected.
 
-The web app and native app use the MioBot PocketBase endpoint at `https://pb-mzj62.aibuilder.ionos.com` for account flows. Set `VITE_POCKETBASE_URL` or `EXPO_PUBLIC_POCKETBASE_URL` to override it. The supplied hostname currently fails DNS resolution, so account creation and sign-in cannot complete until IONOS restores the host or supplies the correct URL. Backend collection fields and access rules are in MERGE-REPORT.md. Discovery previews work without signing in.
+## Shared web and mobile accounts
 
-The `/providers` page is a searchable, filterable directory of 31 prospective partner integrations. Its commission figures and audience metrics come from the planning brief and are illustrative only; partner agreements, API availability, rates, and eligibility are not verified. Saved shortlist selections stay in browser `localStorage`.
+Web and iOS/Android signup use Better Auth with Vercel Functions and Neon Postgres. The API supports personal/business account labels, secure browser sessions, Expo SecureStore sessions, database-backed authentication limits, waitlist/contact submissions, provider application interest, and user-scoped account history reads. New Neon tables start empty; no data export from the old PocketBase hostname was available.
 
-See [API-INTEGRATION-PLAN.md](API-INTEGRATION-PLAN.md) for a vetted provider matrix, sandbox options, access requirements, and the server-side credential plan.
+To use account flows, deploy the Vercel project, connect Neon, apply [`database/schema.sql`](database/schema.sql), and configure `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and `BETTER_AUTH_TRUSTED_ORIGINS`. Use the Vercel deployment URL as `EXPO_PUBLIC_API_URL` in `mobile/.env`. Password reset and verified signup mail also require a verified sender and Resend settings.
 
-The web app supports sample discovery scenarios, free-text prompts, saving/unsaving suggestions, and a saved collection. Saved identifiers use browser localStorage; messages stay in memory. No AI or payment network calls are made by the sample discovery flow.
+## Expo apps
 
-## Mobile
+The active native app is `mobile/App.tsx`, with iOS and Android identifiers already set in `mobile/app.json`. See [`mobile/README.md`](mobile/README.md) for Expo Go and EAS steps. TypeScript and JS bundle export verify the app builds, but do not create installable APK/IPA files; EAS requires a reachable Expo account and configured deployment.
 
-See `mobile/README.md`. The new default `mobile/App.tsx` is a self-contained preview that does not require Supabase or Stripe secrets. The original entry point is preserved as `mobile/LegacyApp.tsx`; legacy screens/services remain in `mobile/src` for future integration. They are not imported by the new preview.
-
-## Design
-
-Warm off-white surfaces, violet accents, DM Sans typography, custom hero photography, CSS product illustrations, an animated voice orb, floating conversation cards, responsive navigation, keyboard focus indicators, and reduced-motion support.
-
-The hero image is AI-generated specifically for this project, inspired by the user’s supplied reference. It is not a customer testimonial. No unverified user counts, store ratings, or live partner relationships are claimed in the new marketing pages.
-
-## Deployment and real-service work
-
-The website and mobile app contain implemented PocketBase account flows, but the configured server is currently unreachable. Search, commerce, payments, and merchant/admin dashboards are still previews, not live services. Before public launch:
-- Restore the PocketBase host and confirm collection fields, access rules, email delivery, backups, and admin protection.
-- Connect a server-side AI service and approved provider APIs.
-- Validate all prices and inventory on the server; require an explicit confirmation for every real transaction.
-- Configure Stripe server-side payment intents and webhooks; never ship secret keys to clients.
-- Replace example dashboard data with authorized merchant data.
-- Upgrade and audit the inherited Expo SDK before store release; test on real iOS and Android devices.
-- Configure EAS project credentials, signing, store listings, support information, and final legal policies.
-
-Website hosting must serve `index.html` for SPA routes. `index.html` currently uses a root base; adjust the base and Vite base together for a subdirectory deployment. The IONOS preview could not be fetched by the web reader; the GitHub source was used as the implementation baseline.
-
-## Canonical workspace
-
-The active unified project is this repository root, with one Home.jsx and one active native mobile/App.tsx. Start the current website with npm run dev; a separate local port may be used if another project occupies 5173. Preserved legacy mobile source is a reference, not a second running application.
+Keep database, email, payment, AI, and provider secrets on the server. Never commit `.env`, Vercel tokens, signing credentials, or API secrets.

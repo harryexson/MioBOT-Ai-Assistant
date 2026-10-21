@@ -1,47 +1,31 @@
-import { useState, useEffect, createContext, useContext } from "react";
-import { pb, backendConfigured } from "./pb.js";
+import { createContext, useContext } from "react";
+import { assertAuthResult, authClient } from "./auth-client.js";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(backendConfigured && pb.authStore.isValid ? pb.authStore.record : null);
-
-  useEffect(() => {
-    // Refresh token on startup if already logged in
-    if (backendConfigured && pb.authStore.isValid) {
-      pb.collection("users").authRefresh().catch(() => pb.authStore.clear());
-    }
-
-    const unsub = pb.authStore.onChange((token, record) => {
-      setUser(backendConfigured && pb.authStore.isValid ? record : null);
-    });
-    return () => unsub();
-  }, []);
+  const { data, isPending } = authClient.useSession();
+  const user = data?.user || null;
 
   const login = async (email, password) => {
-    const result = await pb.collection("users").authWithPassword(email, password);
-    setUser(result.record);
-    return result.record;
+    const result = assertAuthResult(await authClient.signIn.email({ email: email.trim(), password }));
+    return result?.user || user;
   };
 
-  const signup = async (email, password, name, plan = "free") => {
-    await pb.collection("users").create({
-      email,
+  const signup = async (email, password, name, plan = "personal") => {
+    const result = assertAuthResult(await authClient.signUp.email({
+      email: email.trim(),
       password,
-      passwordConfirm: password,
-      name,
+      name: name.trim(),
       plan,
-    });
-    return login(email, password);
+    }));
+    return result?.user || user;
   };
 
-  const logout = () => {
-    pb.authStore.clear();
-    setUser(null);
-  };
+  const logout = async () => assertAuthResult(await authClient.signOut());
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isLoggedIn: !!user }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isPending, isLoggedIn: !!user }}>
       {children}
     </AuthContext.Provider>
   );

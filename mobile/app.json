@@ -2,6 +2,7 @@
   "expo": {
     "name": "Mio AI",
     "slug": "mio-ai",
+    "scheme": "mioai",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",

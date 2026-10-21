@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
-import { backendConfigured, unavailableMessage } from "../lib/pb";
+import { authBackendConfigured } from "../lib/auth-client.js";
 import { Zap as ZapIcon } from "lucide-react";
 import { useAuth } from "../lib/useAuth.jsx";
 
@@ -40,7 +40,7 @@ export default function SignIn() {
       } else if (msg.includes("already exists")) {
         setErrorMsg("An account with this email already exists. Sign in instead.");
       } else if (err?.status === 0 || /failed to fetch|network|load failed/i.test(msg)) {
-        setErrorMsg("Mio’s account service could not be reached. Check that the PocketBase server is online and its URL is correct, then try again.");
+        setErrorMsg("Mio’s account service could not be reached. Run the Vercel development server or check that the deployed Neon and auth settings are complete.");
       } else {
         setErrorMsg(msg);
       }
@@ -83,7 +83,7 @@ export default function SignIn() {
             ))}
           </div>
 
-          {!backendConfigured && <p role="status" className="connection-note">{unavailableMessage} <Link to="/app">Explore the preview →</Link></p>}
+          {!authBackendConfigured && <p role="status" className="connection-note">Account services are disabled for this deployment. You can still <Link to="/app">explore Mio</Link>.</p>}
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {mode === "signup" && (
               <div>
@@ -139,7 +139,7 @@ export default function SignIn() {
               </div>
             )}
 
-            <button type="submit" className="btn-primary" disabled={!backendConfigured || status === "loading"} style={{ width: "100%", justifyContent: "center", marginTop: 4, fontSize: 15 }}>
+            <button type="submit" className="btn-primary" disabled={!authBackendConfigured || status === "loading"} style={{ width: "100%", justifyContent: "center", marginTop: 4, fontSize: 15 }}>
               {status === "loading" ? (mode === "login" ? "Signing in…" : "Creating account…") : (mode === "login" ? "Sign In" : "Create Account")}
             </button>
           </form>

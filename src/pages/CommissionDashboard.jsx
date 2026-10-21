@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router";
 import { ArrowUpRight, TrendingUp } from "lucide-react";
-import { pb, backendConfigured } from "../lib/pb";
+import { mioApi } from "../lib/mio-api.js";
+import { authBackendConfigured } from "../lib/auth-client.js";
 import { useAuth } from "../lib/useAuth";
 import { SEED_COMMISSIONS } from "../data/commissions";
 const money = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 export default function CommissionDashboard() {
-  const { user } = useAuth();
-  const preview = !backendConfigured;
+  const { user, isPending } = useAuth();
+  const preview = !authBackendConfigured;
   const [records, setRecords] = useState(preview ? SEED_COMMISSIONS : []);
   const [filter, setFilter] = useState("all");
   const [notice, setNotice] = useState("");
   useEffect(() => {
-    if (preview || !user) return;
+    if (preview || isPending || !user) return;
     const controller = new AbortController();
-    pb.collection("commissions").getList(1, 100, { sort: "-created", filter: pb.filter("user_id = {:id}", { id: user.id }), signal: controller.signal })
-      .then(result => { if (!controller.signal.aborted) setRecords(result.items); })
-      .catch(error => { if (!error.isAbort && !controller.signal.aborted) setNotice("Commission data could not be loaded. Please try again later."); });
+    mioApi.getCommissions()
+      .then(result => { if (!controller.signal.aborted) setRecords((result.items || []).map(row => ({ ...row, order_value: Number(row.order_value || 0), commission_earned: Number(row.commission_earned || 0) }))); })
+      .catch(() => { if (!controller.signal.aborted) setNotice("Commission data could not be loaded. Please try again later."); });
     return () => controller.abort();
-  }, [preview, user?.id]);
+  }, [preview, isPending, user?.id]);
+  if (!preview && isPending) return <main id="main" className="wrap platform-section" aria-busy="true">Loading your Mio account…</main>;
   if (!preview && !user) return <Navigate to="/signin?next=/commissions" replace />;
   const sum = status => records.filter(row => !status || row.status === status).reduce((total,row) => total + Number(row.commission_earned || 0), 0);
   const visible = records.filter(row => filter === "all" || row.status === filter);
