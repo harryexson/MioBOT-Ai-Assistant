@@ -13,7 +13,7 @@ export default function useSpeechInput(onTranscript) {
     const engine = new SpeechRecognition();
     engine.lang = "en-US";
     engine.interimResults = false;
-    engine.onresult = event => { callback.current(event.results[0][0].transcript); setNotice("Transcript ready. Review it, then explore the sample results."); };
+    engine.onresult = event => { callback.current(event.results[0][0].transcript); setNotice("Transcript ready. Review it, then send your request."); };
     engine.onstart = () => setListening(true);
     engine.onend = () => setListening(false);
     engine.onerror = () => { setListening(false); setNotice("Voice input could not start. You can type instead."); };
