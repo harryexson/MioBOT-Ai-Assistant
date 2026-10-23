@@ -19,6 +19,7 @@ import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
 import { friendlyBackendError, restoreSession, signIn, signOut, signUp } from "./src/services/auth";
+import { sendMessage, type ChatMessage } from "./src/services/chat";
 const purple = "#7645e8";
 const picks = [
   {
@@ -133,7 +134,7 @@ const picks = [
   },
 ] as const;
 type Pick = (typeof picks)[number];
-type Message = { text: string; pick?: Pick };
+type Message = { text: string; reply?: string; pick?: Pick; failed?: boolean };
 function Icon({
   name,
   size = 22,
@@ -194,6 +195,8 @@ function MioPreview() {
   const [welcome, setWelcome] = useState(true);
   const [tab, setTab] = useState("home");
   const [query, setQuery] = useState("");
+  const [conversationId, setConversationId] = useState<string | undefined>();
+  const [chatLoading, setChatLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
   const [voiceEnabled, setVoiceEnabled] = useState(false);
@@ -231,8 +234,8 @@ function MioPreview() {
       setAuthLoading(false);
     }
   }
-  function ask(text: string) {
-    if (!text.trim()) return;
+  async function ask(text: string) {
+    if (!text.trim() || chatLoading) return;
     const q = text.trim();
     const pick = /pizza|food|dinner|eat/i.test(q)
       ? picks[1]
@@ -257,9 +260,25 @@ function MioPreview() {
           : /headphone|shop|buy|shoe/i.test(q)
             ? picks[0]
             : undefined;
-    setMessages((m) => [...m, { text: q, pick }]);
+    const history: ChatMessage[] = messages.flatMap((message) => [
+      { role: "user" as const, content: message.text },
+      ...(message.reply && !message.failed ? [{ role: "assistant" as const, content: message.reply }] : []),
+    ]).slice(-19);
+    history.push({ role: "user", content: q });
+    const itemIndex = messages.length;
+    setMessages((m) => [...m, { text: q }]);
     setQuery("");
     setTab("chat");
+    setChatLoading(true);
+    try {
+      const result = await sendMessage({ conversationId, category: pick?.id || "general", messages: history });
+      setConversationId(result.conversationId);
+      setMessages((current) => current.map((message, index) => index === itemIndex ? { ...message, reply: result.message } : message));
+    } catch (error) {
+      setMessages((current) => current.map((message, index) => index === itemIndex ? { ...message, reply: friendlyBackendError(error), failed: true } : message));
+    } finally {
+      setChatLoading(false);
+    }
   }
   function toggle(id: string) {
     setSaved((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]));
@@ -310,7 +329,7 @@ function MioPreview() {
             <Text style={s.logo}>
               mio<Text style={{ color: purple }}>✳</Text>
             </Text>
-            <Text style={s.badge}>PRODUCT PREVIEW</Text>
+          <Text style={s.badge}>MIO · EARLY ACCESS</Text>
           </View>
           <View style={{ flex: 1 }} />
           <Text style={s.eyebrow}>A LITTLE AI. A LOT MORE LIFE.</Text>
@@ -330,7 +349,7 @@ function MioPreview() {
             <Icon name="arrow-up-right" color="white" size={20} />
           </TouchableOpacity>
           <Text style={s.disclaimer}>
-            Sample experiences. No account or payment needed.
+            Sign in to chat. Purchases and bookings always need your approval.
           </Text>
         </SafeAreaView>
       </View>
@@ -411,7 +430,7 @@ function MioPreview() {
               <TouchableOpacity
                 accessibilityRole="button"
                 accessibilityLabel="New conversation"
-                onPress={() => setMessages([])}
+                onPress={() => { setMessages([]); setConversationId(undefined); }}
                 style={{ padding: 8 }}
               >
                 <Icon name="edit" size={20} />
@@ -430,7 +449,7 @@ function MioPreview() {
                   <Orb />
                   <Text style={s.chatTitle}>Start with a little ask.</Text>
                   <Text style={s.muted}>
-                    Try one of these sample conversations.
+                    Ask about your day, a trip, dinner, or anything you’re planning.
                   </Text>
                   {picks.map((p) => (
                     <TouchableOpacity
@@ -453,13 +472,8 @@ function MioPreview() {
                     </View>
                     <View style={s.assistant}>
                       <Orb small />
-                      <Text style={s.reply}>
-                        {m.pick
-                          ? "Let’s make a little room for the good stuff. Here’s a sample suggestion to get you started."
-                          : "I can show sample shopping, dining, travel, and planning experiences. Try “Find headphones under $200”."}
-                      </Text>
+                      <Text style={[s.reply, m.failed && { color: "#a43838" }]}>{m.reply || (chatLoading && i === messages.length - 1 ? "Mio is thinking…" : "")}</Text>
                     </View>
-                    {m.pick && card(m.pick)}
                   </View>
                 ))
               )}
@@ -479,15 +493,15 @@ function MioPreview() {
               <TouchableOpacity
                 accessibilityRole="button"
                 accessibilityLabel="Send message"
-                disabled={!query.trim()}
-                style={[s.send, { opacity: query.trim() ? 1 : 0.4 }]}
+                disabled={!query.trim() || chatLoading}
+                style={[s.send, { opacity: query.trim() && !chatLoading ? 1 : 0.4 }]}
                 onPress={() => ask(query)}
               >
                 <Icon name="arrow-up" color="white" />
               </TouchableOpacity>
             </View>
             <Text style={s.composeNote}>
-              Sample suggestions · No live AI or transactions
+              Mio AI runs securely through your account. Purchases are never automatic.
             </Text>
           </>
         ) : tab === "saved" ? (

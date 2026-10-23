@@ -71,8 +71,10 @@ export default function Experience() {
   const [saved, setSaved] = useState(readSaved);
   const [tab, setTab] = useState("chat");
   const [notice, setNotice] = useState("");
-  function ask(text) {
-    if (!text.trim()) return;
+  const [conversationId, setConversationId] = useState();
+  const [loading, setLoading] = useState(false);
+  async function ask(text) {
+    if (!text.trim() || loading) return;
     const q = text.trim();
     const s = /pizza|food|dinner|eat/i.test(q)
       ? scenarios[1]
@@ -83,9 +85,32 @@ export default function Experience() {
           : /headphone|shop|buy|shoe/i.test(q)
             ? scenarios[0]
             : null;
+    const index = messages.length;
+    const history = messages.flatMap((message) => [
+      { role: "user", content: message.q },
+      ...(message.reply && !message.error ? [{ role: "assistant", content: message.reply }] : []),
+    ]).slice(-19);
+    history.push({ role: "user", content: q });
     setMessages((m) => [...m, { q, s }]);
     setInput("");
     setTab("chat");
+    setLoading(true);
+    try {
+      const response = await fetch(new URL("api/ai/chat", document.baseURI), {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ conversationId, category: s?.key || "general", messages: history }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || "Mio could not complete that request.");
+      setConversationId(result.conversationId);
+      setMessages((current) => current.map((message, itemIndex) => itemIndex === index ? { ...message, reply: result.message } : message));
+    } catch (error) {
+      setMessages((current) => current.map((message, itemIndex) => itemIndex === index ? { ...message, reply: error.message || "Mio could not reach its backend.", error: true } : message));
+    } finally {
+      setLoading(false);
+    }
   }
   function save(s) {
     const next = saved.includes(s.key)
@@ -155,6 +180,7 @@ export default function Experience() {
           <button
             onClick={() => {
               setMessages([]);
+              setConversationId(undefined);
               setTab("chat");
             }}
           >
@@ -162,15 +188,15 @@ export default function Experience() {
           </button>
         </div>
         <p className="preview-note">
-          PRODUCT PREVIEW
+          MIO AI · EARLY ACCESS
           <br />
-          Sample results. No live AI, orders, bookings, or payments.
+          Chat requires an account and a configured AI provider. Saved inspiration is sample content.
         </p>
       </aside>
       <section className="experience-main">
         <header>
           <span>YOUR SPACE</span>
-          <span className="preview-tag">Interactive preview</span>
+          <span className="preview-tag">AI conversation</span>
         </header>
         {tab === "saved" ? (
           <div className="saved-picks">
@@ -222,12 +248,8 @@ export default function Experience() {
                     <div className="assistant-message">
                       <Orb small />
                       <div>
-                        <p>
-                          {m.s
-                            ? m.s.reply
-                            : "This preview can walk you through shopping, dining, travel, or planning. Try “Find headphones under $200” or choose a suggestion below."}
-                        </p>
-                        {m.s && card(m.s)}
+                        <p>{m.reply || (loading && i === messages.length - 1 ? "Mio is thinking…" : "")}</p>
+                        {m.error && /sign in/i.test(m.reply || "") && <Link to="/signin" className="text-link">Sign in to continue</Link>}
                       </div>
                     </div>
                   </article>
@@ -251,13 +273,12 @@ export default function Experience() {
                 placeholder="Ask Mio anything…"
                 maxLength={500}
               />
-              <button disabled={!input.trim()} aria-label="Send message">
+              <button disabled={!input.trim() || loading} aria-label="Send message">
                 <Send size={19} />
               </button>
             </form>
             <p className="compose-note">
-              A concept demo with sample suggestions. Your conversation stays in
-              this session.
+              Mio AI responses are saved to your account. Provider search and transactions need separate connections.
             </p>
           </>
         )}

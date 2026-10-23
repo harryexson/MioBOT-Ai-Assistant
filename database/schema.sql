@@ -98,6 +98,24 @@ create table if not exists mio_searches (
 );
 create index if not exists mio_searches_user_created_idx on mio_searches(user_id, created_at desc);
 
+create table if not exists mio_conversations (
+  id text primary key,
+  user_id text not null references "user"(id) on delete cascade,
+  category text not null default 'general',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists mio_conversations_user_updated_idx on mio_conversations(user_id, updated_at desc);
+
+create table if not exists mio_messages (
+  id bigserial primary key,
+  conversation_id text not null references mio_conversations(id) on delete cascade,
+  role text not null check (role in ('user', 'assistant')),
+  content text not null check (length(content) <= 4000),
+  created_at timestamptz not null default now()
+);
+create index if not exists mio_messages_conversation_created_idx on mio_messages(conversation_id, created_at);
+
 create table if not exists mio_orders (
   id bigserial primary key,
   user_id text not null references "user"(id) on delete cascade,

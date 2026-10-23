@@ -4,10 +4,10 @@ import * as SecureStore from "expo-secure-store";
 
 declare const process: { env: { EXPO_PUBLIC_API_URL?: string } };
 
-export const apiUrl = process.env.EXPO_PUBLIC_API_URL?.trim().replace(/\/$/, "") || "http://localhost:5173";
+export const apiUrl = process.env.EXPO_PUBLIC_API_URL?.trim().replace(/\/$/, "") || "";
 
 export const authClient = createAuthClient({
-  baseURL: `${apiUrl}/api/auth`,
+  baseURL: `${apiUrl || "http://localhost:5173"}/api/auth`,
   plugins: [
     expoClient({
       scheme: "mioai",
@@ -57,4 +57,13 @@ export function friendlyBackendError(error: unknown) {
   if (/already exists|already been used/i.test(message)) return "An account with this email already exists. Sign in instead.";
   if (/invalid email or password|failed to authenticate|invalid credentials/i.test(message)) return "That email and password combination was not recognized.";
   return message;
+}
+
+export async function authenticatedRequest<T>(path: string, body: unknown): Promise<T> {
+  if (!apiUrl) throw new Error("Set EXPO_PUBLIC_API_URL to your deployed Mio backend before using the mobile app.");
+  const fetchWithSession = authClient.$fetch as unknown as (
+    url: string,
+    options: { method: string; json: unknown; throw: true },
+  ) => Promise<T>;
+  return fetchWithSession(`${apiUrl}${path}`, { method: "POST", json: body, throw: true });
 }
