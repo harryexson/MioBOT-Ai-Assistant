@@ -4,32 +4,55 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Speech from "expo-speech";
+import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from "expo-speech-recognition";
 import { useMioStore } from "../store/useStore";
-import { sendMessage } from "../services/mioApi";
+import { sendMessage } from "../services/chat";
 
 type VoiceState = "idle" | "listening" | "processing" | "speaking";
-
-const PROMPTS = [
-  "Try: \"Order pizza from a nearby restaurant\"",
-  "Try: \"Find me a hotel in London this weekend\"",
-  "Try: \"What are the latest Sony headphones?\"",
-  "Try: \"Book a haircut for Saturday morning\"",
-  "Try: \"Pay my electricity bill\"",
-];
 
 export default function VoiceChatScreen({ navigation }: any) {
   const [state, setState] = useState<VoiceState>("idle");
   const [transcript, setTranscript] = useState("");
   const [response, setResponse] = useState("");
-  const [promptIdx, setPromptIdx] = useState(0);
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const latestTranscript = useRef("");
+  const processedTranscript = useRef("");
   const conversation = useMioStore((s) => s.conversation);
   const startConversation = useMioStore((s) => s.startConversation);
 
   useEffect(() => {
     startConversation("general");
-    const t = setInterval(() => setPromptIdx((i) => (i + 1) % PROMPTS.length), 3000);
-    return () => clearInterval(t);
+  }, []);
+
+  useSpeechRecognitionEvent("start", () => setState("listening"));
+  useSpeechRecognitionEvent("result", (event) => {
+    const recognized = event.results[0]?.transcript?.trim();
+    if (!recognized) return;
+    latestTranscript.current = recognized;
+    setTranscript(recognized);
+  });
+  useSpeechRecognitionEvent("end", () => {
+    const recognized = latestTranscript.current.trim();
+    if (recognized && recognized !== processedTranscript.current) {
+      processedTranscript.current = recognized;
+      setState("processing");
+      void processVoiceInput(recognized);
+    } else {
+      setState("idle");
+    }
+  });
+  useSpeechRecognitionEvent("error", (event) => {
+    setResponse(event.error === "not-allowed"
+      ? "Microphone or speech recognition permission was denied. Allow access in your device settings and try again."
+      : event.error === "no-speech" || event.error === "speech-timeout"
+        ? "I didn't catch that. Tap the microphone and try again."
+        : "Voice input is unavailable right now. Please try again or continue in text chat.");
+    setState("idle");
+  });
+
+  useEffect(() => () => {
+    ExpoSpeechRecognitionModule.abort();
+    Speech.stop();
   }, []);
 
   // Pulse animation when listening
@@ -53,34 +76,37 @@ export default function VoiceChatScreen({ navigation }: any) {
       return;
     }
     if (state === "listening") {
-      // Simulate end of voice input
       setState("processing");
-      const fakeTranscript = "Find me running shoes under $150";
-      setTranscript(fakeTranscript);
-      await processVoiceInput(fakeTranscript);
+      ExpoSpeechRecognitionModule.stop();
       return;
     }
-    // Start listening
-    setState("listening");
+    if (state === "processing") return;
     setTranscript("");
     setResponse("");
-    // In production: use expo-voice or @react-native-voice/voice to record
-    // Here we simulate after 2s
-    setTimeout(async () => {
-      const fakeTranscript = "Find me running shoes under $150";
-      setTranscript(fakeTranscript);
-      setState("processing");
-      await processVoiceInput(fakeTranscript);
-    }, 2500);
+    latestTranscript.current = "";
+    processedTranscript.current = "";
+    try {
+      const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+      if (!permission.granted) {
+        setResponse("Mio needs microphone and speech recognition access to hear your request. You can enable it in device settings.");
+        setState("idle");
+        return;
+      }
+      setState("listening");
+      ExpoSpeechRecognitionModule.start({ lang: "en-US", interimResults: true, continuous: false, maxAlternatives: 1 });
+    } catch {
+      setResponse("Voice input could not start on this device. Please continue in text chat.");
+      setState("idle");
+    }
   }
 
   async function processVoiceInput(text: string) {
     try {
-      const res = await sendMessage(
-        conversation?.id ?? "voice-session",
-        [{ role: "user", content: text }],
-        "shopping"
-      );
+      const res = await sendMessage({
+        conversationId: conversation?.id,
+        messages: [{ role: "user", content: text }],
+        category: "general",
+      });
       setResponse(res.message);
       setState("speaking");
       Speech.speak(res.message, {
@@ -95,7 +121,7 @@ export default function VoiceChatScreen({ navigation }: any) {
     }
   }
 
-  const orbColor = state === "listening"
+  const orbColor: [string, string] = state === "listening"
     ? ["#7c3aed", "#4f46e5"]
     : state === "processing"
     ? ["#f59e0b", "#d97706"]
@@ -128,7 +154,7 @@ export default function VoiceChatScreen({ navigation }: any) {
           {state === "listening" && (
             <Animated.View style={[styles.orbRing, { transform: [{ scale: pulseAnim }] }]} />
           )}
-          <TouchableOpacity onPress={handleMicPress} activeOpacity={0.85}>
+        <TouchableOpacity onPress={handleMicPress} activeOpacity={0.85} disabled={state === "processing"} accessibilityRole="button" accessibilityLabel={state === "listening" ? "Stop voice input" : state === "speaking" ? "Stop spoken response" : "Start voice input"}>
             <LinearGradient colors={orbColor} style={styles.orb}>
               {state === "listening" && (
                 <View style={styles.waveRow}>
@@ -156,7 +182,7 @@ export default function VoiceChatScreen({ navigation }: any) {
           </View>
         ) : (
           <View style={styles.promptWrap}>
-            <Text style={styles.promptText}>{PROMPTS[promptIdx]}</Text>
+            <Text style={styles.promptText}>{state === "listening" ? "Speak naturally. Mio is listening." : "Tap the microphone and say what you need."}</Text>
           </View>
         )}
 

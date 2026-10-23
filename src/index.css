@@ -1887,11 +1887,33 @@ h2 {
   opacity: 0.4;
   cursor: default;
 }
+.chat-compose .voice-compose-button {
+  background: #f5effa;
+  color: #7040a8;
+  border: 1px solid #e7d9f0;
+  flex: 0 0 39px;
+}
+.chat-compose .voice-compose-button:hover:not(:disabled) {
+  background: #eee2f8;
+}
+.chat-compose .voice-compose-button.is-listening {
+  background: #f3e8ff;
+  color: #7c3aed;
+  box-shadow: 0 0 0 4px #7c3aed1c;
+  animation: voice-pulse 1.4s ease-in-out infinite;
+}
+@keyframes voice-pulse {
+  50% { box-shadow: 0 0 0 8px #7c3aed0a; }
+}
 .compose-note {
-  font-size: 8px;
+  font-size: 11px;
   color: #a597af;
   text-align: center;
   margin-top: 10px;
+  line-height: 1.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-compose .voice-compose-button.is-listening { animation: none; }
 }
 .message-pair {
   padding-top: 28px;

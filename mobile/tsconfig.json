@@ -1,5 +1,5 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": { "strict": true },
-  "include": ["App.tsx", "src/services/auth.ts"]
+  "include": ["App.tsx", "src/services/auth.ts", "src/screens/VoiceChatScreen.tsx"]
 }

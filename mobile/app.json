@@ -26,7 +26,14 @@
       }
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Mio uses the microphone when you tap the voice button to hear your request.",
+          "speechRecognitionPermission": "Mio uses speech recognition to turn your spoken request into text."
+        }
+      ]
     ],
     "owner": "exsonlogistics"
   }

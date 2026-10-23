@@ -3,6 +3,8 @@ import { Link } from "react-router";
 import {
   ArrowUpRight,
   Send,
+  Mic,
+  MicOff,
   ShoppingBag,
   Utensils,
   Plane,
@@ -13,6 +15,7 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import { Orb, Footer } from "./Home";
+import useSpeechInput from "../components/useSpeechInput";
 const scenarios = [
   {
     key: "shop",
@@ -73,6 +76,7 @@ export default function Experience() {
   const [notice, setNotice] = useState("");
   const [conversationId, setConversationId] = useState();
   const [loading, setLoading] = useState(false);
+  const voice = useSpeechInput(setInput);
   async function ask(text) {
     if (!text.trim() || loading) return;
     const q = text.trim();
@@ -273,12 +277,25 @@ export default function Experience() {
                 placeholder="Ask Mio anything…"
                 maxLength={500}
               />
+              <button
+                type="button"
+                className={`voice-compose-button${voice.listening ? " is-listening" : ""}`}
+                onClick={voice.toggle}
+                disabled={!voice.supported || loading}
+                aria-label={voice.listening ? "Stop voice input" : "Start voice input"}
+                aria-pressed={voice.listening}
+                title={voice.supported ? (voice.listening ? "Stop listening" : "Ask by voice") : "Voice input is unavailable in this browser"}
+              >
+                {voice.listening ? <MicOff size={18} /> : <Mic size={18} />}
+              </button>
               <button disabled={!input.trim() || loading} aria-label="Send message">
                 <Send size={19} />
               </button>
             </form>
-            <p className="compose-note">
-              Mio AI responses are saved to your account. Provider search and transactions need separate connections.
+            <p className="compose-note" role="status" aria-live="polite">
+              {voice.notice || (voice.supported
+                ? "Type or tap the microphone to say your request. Review the transcript before sending."
+                : "Voice input is unavailable in this browser. You can still type your request.")}
             </p>
           </>
         )}
