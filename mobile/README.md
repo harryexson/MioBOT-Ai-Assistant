@@ -20,11 +20,13 @@ npm run typecheck
 npx expo export --platform ios --platform android
 npx eas-cli login
 npx eas-cli init
-npm run build:android
-npm run build:ios
+npm run build:dev:android
+npm run build:dev:ios
 ```
 
 `expo export` verifies JavaScript bundling; it does not produce an installable app. Sign in with your own Expo account, then run `eas init` once to create/link the EAS project and add its project ID to `app.json`. `npm run build:android` creates an internal-distribution APK you can download and install on an Android device. For iOS, EAS needs Apple signing credentials; internal device builds also require registered devices. Store publishing is not configured.
+
+The `development` EAS profile installs a development client, which is required for native speech recognition and other native modules that Expo Go does not include. Android development builds are APKs; iOS development builds are signed for the registered test devices.
 
 Better Auth account creation and sign-in are implemented. They require the Vercel API and Neon database setup before they can be used. The web routes `/merchant` and `/admin` are sample dashboards for design review and contain mock data; they do not provide secure business administration or platform admin access. Keep all server secrets out of the app and Git.
 
